@@ -6,6 +6,8 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffle;
+using TomCatRaffleProgram.Program.Framework.Presentation.CreateRaffle;
 
 namespace TomCatRaffleProgram.Program
 {
@@ -14,9 +16,12 @@ namespace TomCatRaffleProgram.Program
     /// </summary>
     public partial class App : Application
     {
+        private static string FilePath = $"{Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"TomCatRaffle\")}RaffleData.xml";
+
         private void ApplicationStartup(object sender, StartupEventArgs e)
         {
             this.CreateFileOnStartup();
+            this.Test().Wait();
             Window mainWindow = new MainWindow();
             mainWindow.Show();
         }
@@ -36,7 +41,16 @@ namespace TomCatRaffleProgram.Program
                     sw.Close();
                 }
             }
+        }
 
+        public static string GetFilePath()
+            => FilePath;
+        
+        private async Task Test()
+        {
+            var function = new CreateRaffleEntityExistenceChecker();
+            var presenter = new CreateRafflePresenter();
+            await function.ValidateAsync(new CreateRaffleInputPort { RaffleName = "Test" }, presenter);
         }
     }
 }

@@ -18,8 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ApplicationLayer\UseCases\" />
-    <Folder Include="Domain\Entities\" />
+    <Folder Include="Framework\Controllers\" />
     <Folder Include="Framework\Views\" />
     <Folder Include="InterfaceAdapters\" />
   </ItemGroup>
