@@ -7,7 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Application\" />
+    <Compile Remove="ApplicationLayer\UseCases - Copy\**" />
+    <Compile Remove="Application\**" />
+    <EmbeddedResource Remove="ApplicationLayer\UseCases - Copy\**" />
+    <EmbeddedResource Remove="Application\**" />
+    <None Remove="ApplicationLayer\UseCases - Copy\**" />
+    <None Remove="Application\**" />
+    <Page Remove="ApplicationLayer\UseCases - Copy\**" />
+    <Page Remove="Application\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ApplicationLayer\UseCases\" />
     <Folder Include="Domain\Entities\" />
     <Folder Include="Framework\Views\" />
     <Folder Include="InterfaceAdapters\" />
