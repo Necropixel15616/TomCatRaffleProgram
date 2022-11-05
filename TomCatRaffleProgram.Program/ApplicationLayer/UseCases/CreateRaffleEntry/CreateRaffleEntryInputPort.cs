@@ -13,5 +13,7 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffleEntr
 
         public int Tickets { get; set; }
 
+        public int RaffleId { get; set; }
+
     }
 }

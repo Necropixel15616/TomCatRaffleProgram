@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffle;
+using TomCatRaffleProgram.Program.Framework.Presentation.CommonViewModels;
 using TomCatRaffleProgram.Program.Framework.Presentation.CreateRaffle;
+using TomCatRaffleProgram.Program.InterfaceAdapters.Controllers;
 
 namespace TomCatRaffleProgram.Program
 {
@@ -46,11 +44,12 @@ namespace TomCatRaffleProgram.Program
         public static string GetFilePath()
             => FilePath;
         
-        private async Task Test()
+        private async Task<IViewModel> Test()
         {
-            var function = new CreateRaffleEntityExistenceChecker();
+            var raffleController = new RaffleController();
             var presenter = new CreateRafflePresenter();
-            await function.ValidateAsync(new CreateRaffleInputPort { RaffleName = "Test" }, presenter);
+            await raffleController.CreateRaffleAsync(new CreateRaffleInputPort {RaffleName = "Test1"}, presenter);
+            return presenter.Result.Result;
         }
     }
 }

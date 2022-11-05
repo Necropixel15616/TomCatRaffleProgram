@@ -3,18 +3,20 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using TomCatRaffleProgram.Program.ApplicationLayer.Dtos;
+using TomCatRaffleProgram.Program.Framework.Presentation.Common;
+using TomCatRaffleProgram.Program.Framework.Presentation.CommonViewModels;
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffle
 {
     interface ICreateRaffleOutputPort
     {
-        Task ValidationFailure();
+        Task<RaffleViewModel> PresentValidationFailureAsync(List<string> failures);
 
-        Task FileNotFound();
+        Task<RaffleViewModel> PresentFileNotFoundAsync();
 
-        Task RaffleExists(string name);
+        Task<RaffleViewModel> PresentRaffleExistsAsync(string name);
 
-        Task RaffleCreated(RaffleDto raffle);
+        Task<RaffleViewModel> PresentRaffleCreatedAsync(RaffleDto raffle);
 
     }
 }

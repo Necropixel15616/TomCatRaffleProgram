@@ -20,7 +20,6 @@
   <ItemGroup>
     <Folder Include="Framework\Controllers\" />
     <Folder Include="Framework\Views\" />
-    <Folder Include="InterfaceAdapters\" />
   </ItemGroup>
 
 </Project>

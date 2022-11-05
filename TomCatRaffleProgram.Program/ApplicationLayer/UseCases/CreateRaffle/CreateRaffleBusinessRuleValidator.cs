@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TomCatRaffleProgram.Program.ApplicationLayer.Services;
+using TomCatRaffleProgram.Program.Framework.Presentation.Common;
+using TomCatRaffleProgram.Program.Framework.Presentation.CommonViewModels;
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffle
 {
@@ -16,12 +19,16 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffle
         public CreateRaffleBusinessRuleValidator(StringServices stringServices)
             => this.StringServices = stringServices ?? new StringServices();
 
-        public async Task ValidateAsync(CreateRaffleInputPort inputPort, ICreateRaffleOutputPort outputPort)
+        public async Task<IViewModel> ValidateAsync(CreateRaffleInputPort inputPort, ICreateRaffleOutputPort outputPort)
         {
+            List<string> validationFailures = new List<string>();
             if (this.StringServices.IsNullOrWhitespaceOrEmpty(inputPort.RaffleName))
-                await outputPort.ValidationFailure();
+                validationFailures.Add("Raffle Names must not be empty.");
 
-            await this.EntityExistenceChecker.ValidateAsync(inputPort, outputPort);
+            if (validationFailures.Any())
+                return await outputPort.PresentValidationFailureAsync(validationFailures);
+
+            return await this.EntityExistenceChecker.ValidateAsync(inputPort, outputPort);
         }
 
     }

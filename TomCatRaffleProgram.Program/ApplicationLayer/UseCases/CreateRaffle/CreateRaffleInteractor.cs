@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using TomCatRaffleProgram.Program.ApplicationLayer.Dtos;
 using TomCatRaffleProgram.Program.Domain.Entities;
+using TomCatRaffleProgram.Program.Framework.Presentation.Common;
+using TomCatRaffleProgram.Program.Framework.Presentation.CommonViewModels;
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffle
 {
@@ -14,7 +16,7 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffle
 
         public CreateRaffleInteractor() { }
 
-        public async Task CreateRaffleAsync(CreateRaffleInputPort inputPort, ICreateRaffleOutputPort outputPort)
+        public async Task<IViewModel> CreateRaffleAsync(CreateRaffleInputPort inputPort, ICreateRaffleOutputPort outputPort)
         {
             var file = XDocument.Load(App.GetFilePath());
 
@@ -28,10 +30,11 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffle
             XElement raffle = new XElement("Raffle");
             raffle.Add(new XAttribute("Name", inputPort.RaffleName));
             raffle.Add(new XAttribute("Id", id));
+            raffle.Add(new XAttribute("Open", true));
 
             file.Root.Add(raffle);
             file.Save(App.GetFilePath());
-            await outputPort.RaffleCreated(new RaffleDto(new Raffle(inputPort.RaffleName, id)));
+            return await outputPort.PresentRaffleCreatedAsync(new RaffleDto(new Raffle(inputPort.RaffleName, id)));
         }
 
     }
