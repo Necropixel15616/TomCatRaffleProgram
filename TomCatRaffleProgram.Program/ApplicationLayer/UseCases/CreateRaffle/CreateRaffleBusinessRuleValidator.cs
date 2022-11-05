@@ -12,9 +12,9 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffle
     class CreateRaffleBusinessRuleValidator
     {
 
-        public StringServices StringServices;
+        private readonly StringServices StringServices;
 
-        public CreateRaffleEntityExistenceChecker EntityExistenceChecker = new CreateRaffleEntityExistenceChecker();
+        private readonly CreateRaffleEntityExistenceChecker EntityExistenceChecker = new CreateRaffleEntityExistenceChecker();
 
         public CreateRaffleBusinessRuleValidator(StringServices stringServices)
             => this.StringServices = stringServices ?? new StringServices();

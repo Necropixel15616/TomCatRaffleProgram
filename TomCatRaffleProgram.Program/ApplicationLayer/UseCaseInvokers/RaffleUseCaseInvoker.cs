@@ -10,7 +10,7 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCaseInvokers
 {
     class RaffleUseCaseInvoker
     {
-        private CreateRaffleBusinessRuleValidator BusinessRuleValidator = new CreateRaffleBusinessRuleValidator(new StringServices());
+        private readonly CreateRaffleBusinessRuleValidator BusinessRuleValidator = new CreateRaffleBusinessRuleValidator(new StringServices());
 
         public async Task<IViewModel> InvokeCreateRaffle(CreateRaffleInputPort inputPort, ICreateRaffleOutputPort outputPort)
             => await this.BusinessRuleValidator.ValidateAsync(inputPort, outputPort);

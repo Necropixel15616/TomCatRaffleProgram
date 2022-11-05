@@ -10,7 +10,7 @@ namespace TomCatRaffleProgram.Program.InterfaceAdapters.Controllers
 {
     class RaffleController
     {
-        public RaffleUseCaseInvoker RaffleUseCaseInvoker = new RaffleUseCaseInvoker();
+        public readonly RaffleUseCaseInvoker RaffleUseCaseInvoker = new RaffleUseCaseInvoker();
 
         public async Task<IViewModel> CreateRaffleAsync(CreateRaffleInputPort inputPort, ICreateRaffleOutputPort outputPort)
             => await this.RaffleUseCaseInvoker.InvokeCreateRaffle(inputPort, outputPort);

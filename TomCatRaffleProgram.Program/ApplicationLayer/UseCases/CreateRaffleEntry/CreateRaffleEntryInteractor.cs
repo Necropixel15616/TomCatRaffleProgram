@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using TomCatRaffleProgram.Program.ApplicationLayer.Dtos;
+using TomCatRaffleProgram.Program.ApplicationLayer.Services;
 using TomCatRaffleProgram.Program.Domain.Entities;
 using TomCatRaffleProgram.Program.Framework.Presentation.CommonViewModels;
 
@@ -13,11 +14,14 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffleEntr
     class CreateRaffleEntryInteractor
     {
 
-        public CreateRaffleEntryInteractor() { }
+        private readonly FileServices FileServices;
+
+        public CreateRaffleEntryInteractor(FileServices fileServices)
+            => this.FileServices = fileServices ?? new FileServices();
 
         public async Task<IViewModel> HandleAsync(CreateRaffleEntryInputPort inputPort, ICreateRaffleEntryOutputPort outputPort)
         {
-            var file = XDocument.Load(App.GetFilePath());
+            var file = XDocument.Load(this.FileServices.GetFilePath());
             var raffle = file.Root.Descendants("Raffle").Where(r => int.Parse(r.Attribute("Id").Value) == inputPort.RaffleId).Single();
 
             var raffleEntry = raffle.Elements("RaffleEntry").Where(re => re.Attribute("FullName").Value.ToUpper().Equals(string.Concat(inputPort.FirstName, " ", inputPort.LastName).ToUpper())).SingleOrDefault();
@@ -33,7 +37,7 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffleEntr
                 raffle.Add(raffleEntry);
             }
 
-            file.Save(App.GetFilePath());
+            file.Save(this.FileServices.GetFilePath());
 
             return await outputPort.PresentRaffleEntryAsync(new EntryDto(new Entry(inputPort.FirstName, inputPort.LastName, inputPort.Tickets)));
         }

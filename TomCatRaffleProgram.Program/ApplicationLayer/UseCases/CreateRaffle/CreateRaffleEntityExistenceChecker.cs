@@ -15,18 +15,19 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffle
     class CreateRaffleEntityExistenceChecker
     {
 
-        private FileServices FileServices = new FileServices();
+        private readonly FileServices FileServices = new FileServices();
 
-        public CreateRaffleInteractor Interactor = new CreateRaffleInteractor();
+        private readonly CreateRaffleInteractor Interactor;
 
-        public CreateRaffleEntityExistenceChecker() { }
+        public CreateRaffleEntityExistenceChecker()
+            => this.Interactor = new CreateRaffleInteractor(this.FileServices);
 
         public async Task<IViewModel> ValidateAsync(CreateRaffleInputPort inputPort, ICreateRaffleOutputPort outputPort)
         {
             if (!this.FileServices.DoesFileExist())
                 await outputPort.PresentFileNotFoundAsync();
 
-            var file = XDocument.Load(App.GetFilePath());
+            var file = XDocument.Load(this.FileServices.GetFilePath());
             if (file.Root.Descendants("Raffle").Where(r => r.Attribute("Name").Value.ToUpper().Equals(inputPort.RaffleName.ToUpper())).SingleOrDefault() != null)
                 return await outputPort.PresentRaffleExistsAsync(inputPort.RaffleName);
 

@@ -3,8 +3,12 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffle;
+using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffleEntry;
+using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.GetRaffleEntries;
 using TomCatRaffleProgram.Program.Framework.Presentation.CommonViewModels;
 using TomCatRaffleProgram.Program.Framework.Presentation.CreateRaffle;
+using TomCatRaffleProgram.Program.Framework.Presentation.CreateRaffleEntry;
+using TomCatRaffleProgram.Program.Framework.Presentation.GetRaffleEntries;
 using TomCatRaffleProgram.Program.InterfaceAdapters.Controllers;
 
 namespace TomCatRaffleProgram.Program
@@ -14,7 +18,6 @@ namespace TomCatRaffleProgram.Program
     /// </summary>
     public partial class App : Application
     {
-        private static string FilePath = $"{Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"TomCatRaffle\")}RaffleData.xml";
 
         private void ApplicationStartup(object sender, StartupEventArgs e)
         {
@@ -40,15 +43,13 @@ namespace TomCatRaffleProgram.Program
                 }
             }
         }
-
-        public static string GetFilePath()
-            => FilePath;
         
         private async Task<IViewModel> Test()
         {
-            var raffleController = new RaffleController();
-            var presenter = new CreateRafflePresenter();
-            await raffleController.CreateRaffleAsync(new CreateRaffleInputPort {RaffleName = "Test1"}, presenter);
+            var raffleController = new RaffleEntryController();
+            var presenter = new GetRaffleEntriesPresenter();
+            await raffleController.CreateRaffleEntryAsync(new CreateRaffleEntryInputPort { FirstName = "Test", LastName = "Test2", Tickets = 4, RaffleId = 4 }, new CreateRaffleEntryPresenter());
+            await raffleController.GetRaffleEntriesAsync(new GetRaffleEntriesInputPort { RaffleId = 4 }, presenter);
             return presenter.Result.Result;
         }
     }
