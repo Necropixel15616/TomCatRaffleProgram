@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using TomCatRaffleProgram.Program.ApplicationLayer.Dtos;
@@ -21,7 +18,7 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffleEntr
         public async Task<IViewModel> HandleAsync(CreateRaffleEntryInputPort inputPort, ICreateRaffleEntryOutputPort outputPort)
         {
 
-            var raffleEntry = this.PersistenceContext.GetEntities<Entry>().Where(re => re.Attribute("Full Name").Value == string.Concat(inputPort.FirstName, " ", inputPort.LastName)).SingleOrDefault();
+            var raffleEntry = this.PersistenceContext.GetEntities<RaffleEntry>().Where(re => re.Attribute("Full Name").Value == string.Concat(inputPort.FirstName, " ", inputPort.LastName)).SingleOrDefault();
             if (raffleEntry != null)
                 raffleEntry.Element("Tickets").Value = (int.Parse(raffleEntry.Element("Tickets").Value) + inputPort.Tickets).ToString();
             else
@@ -37,8 +34,7 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffleEntr
 
             this.PersistenceContext.Save();
 
-
-            return await outputPort.PresentRaffleEntryAsync(new EntryDto(new Entry(inputPort.FirstName, inputPort.LastName, inputPort.Tickets)));
+            return await outputPort.PresentRaffleEntryAsync(new RaffleEntryDto(new RaffleEntry(inputPort.FirstName, inputPort.LastName, inputPort.Tickets)));
         }
 
     }

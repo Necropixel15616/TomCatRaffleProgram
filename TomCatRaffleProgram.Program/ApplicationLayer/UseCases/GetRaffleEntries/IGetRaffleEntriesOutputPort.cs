@@ -8,7 +8,7 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.GetRaffleEntries
     interface IGetRaffleEntriesOutputPort
     {
 
-        Task<GetRaffleEntriesViewModel> PresentRaffleEntriesAsync(List<EntryDto> entries);
+        Task<GetRaffleEntriesViewModel> PresentRaffleEntriesAsync(List<RaffleEntryDto> entries);
 
         Task<GetRaffleEntriesViewModel> PresentFileNotFoundAsync();
 

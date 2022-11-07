@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using TomCatRaffleProgram.Program.ApplicationLayer.Services;
 using TomCatRaffleProgram.Program.Domain.Entities;
-using TomCatRaffleProgram.Program.Framework.Presentation.Common;
 using TomCatRaffleProgram.Program.Framework.Presentation.CommonViewModels;
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffle
@@ -31,7 +25,7 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffle
             if (!this.FileServices.DoesFileExist())
                 await outputPort.PresentFileNotFoundAsync();
 
-            if (this.PersistenceContext.GetEntities<Raffle>().Where(r => r.Attribute("Name").Value == inputPort.RaffleName) != null)
+            if (this.PersistenceContext.GetEntities<Raffle>().Where(r => r.Attribute("Name").Value == inputPort.RaffleName).SingleOrDefault() != null)
                 return await outputPort.PresentRaffleExistsAsync(inputPort.RaffleName);
 
             return await this.Interactor.CreateRaffleAsync(inputPort, outputPort);

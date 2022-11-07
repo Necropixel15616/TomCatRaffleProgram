@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using TomCatRaffleProgram.Program.ApplicationLayer.Services;
 using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffleEntry;
 using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.GetRaffleEntries;
@@ -11,12 +8,17 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCaseInvokers
 {
     class RaffleEntryUseCaseInvoker
     {
+        private readonly IPersistenceContext PersistenceContext;
 
-        private readonly GetRaffleEntriesEntityExistenceChecker GetRaffleEntriesEntityExistenceChecker = new GetRaffleEntriesEntityExistenceChecker();
+        private readonly GetRaffleEntriesEntityExistenceChecker GetRaffleEntriesEntityExistenceChecker;
         private readonly CreateRaffleEntryBusinessRuleValidator CreateRaffleEntryBusinessRuleValidator;
 
-        public RaffleEntryUseCaseInvoker()
-            => this.CreateRaffleEntryBusinessRuleValidator = new CreateRaffleEntryBusinessRuleValidator(new StringServices());
+        public RaffleEntryUseCaseInvoker(IPersistenceContext persistenceContext)
+        {
+            this.PersistenceContext = persistenceContext;
+            this.CreateRaffleEntryBusinessRuleValidator = new CreateRaffleEntryBusinessRuleValidator(this.PersistenceContext);
+            this.GetRaffleEntriesEntityExistenceChecker = new GetRaffleEntriesEntityExistenceChecker(this.PersistenceContext);
+        }
 
         public async Task<IViewModel> InvokeGetRaffleEntriesAsync(GetRaffleEntriesInputPort inputPort, IGetRaffleEntriesOutputPort outputPort)
             => await this.GetRaffleEntriesEntityExistenceChecker.ValidateAsync(inputPort, outputPort);

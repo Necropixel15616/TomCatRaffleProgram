@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Xml.Linq;
 using TomCatRaffleProgram.Program.ApplicationLayer.Services;
 
@@ -24,8 +22,8 @@ namespace TomCatRaffleProgram.Program.Framework.Infrastructure
 
         void IPersistenceContext.Remove<TEntity>(int id)
         {
-            var entity = this.File.Root.Elements(typeof(TEntity).Name).Where(e => int.Parse(e.Attribute("Id").Value) == id).Single();
-            entity.Remove();
+            var entity = this.File.Root.Elements(typeof(TEntity).Name).Where(e => int.Parse(e.Attribute("Id").Value) == id).SingleOrDefault();
+            entity?.Remove();
         }
 
         void IPersistenceContext.Save()

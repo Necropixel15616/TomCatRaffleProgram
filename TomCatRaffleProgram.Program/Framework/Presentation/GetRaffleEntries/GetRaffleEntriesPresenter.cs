@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using TomCatRaffleProgram.Program.ApplicationLayer.Dtos;
 using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.GetRaffleEntries;
@@ -21,11 +18,11 @@ namespace TomCatRaffleProgram.Program.Framework.Presentation.GetRaffleEntries
             return this.Result;
         }
 
-        public Task<GetRaffleEntriesViewModel> PresentRaffleEntriesAsync(List<EntryDto> entries)
+        public Task<GetRaffleEntriesViewModel> PresentRaffleEntriesAsync(List<RaffleEntryDto> entries)
         {
             this.PresentedSuccessfully = true;
             List<RaffleEntryViewModel> entriesViewModel = new List<RaffleEntryViewModel>();
-            entries.ForEach(re => entriesViewModel.Add(new RaffleEntryViewModel { FirstName = re.FirstName, LastName = re.LastName }));
+            entries.ForEach(re => entriesViewModel.Add(new RaffleEntryViewModel { FirstName = re.FirstName, LastName = re.LastName, Tickets = re.Tickets }));
             this.Result = Task.FromResult(new GetRaffleEntriesViewModel { RaffleEntries = entriesViewModel });
             return this.Result;
         }

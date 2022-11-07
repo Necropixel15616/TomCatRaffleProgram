@@ -12,7 +12,7 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffleEntr
     {
         Task<RaffleEntryViewModel> PresentFileNotFoundAsync();
 
-        Task<RaffleEntryViewModel> PresentRaffleEntryAsync(EntryDto entry);
+        Task<RaffleEntryViewModel> PresentRaffleEntryAsync(RaffleEntryDto entry);
 
         Task<RaffleEntryViewModel> PresentRaffleNotFoundAsync(int raffleId);
 

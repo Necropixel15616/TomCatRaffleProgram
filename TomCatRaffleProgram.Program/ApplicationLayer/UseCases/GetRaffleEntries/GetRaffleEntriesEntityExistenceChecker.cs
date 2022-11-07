@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
+﻿using System.Threading.Tasks;
 using TomCatRaffleProgram.Program.ApplicationLayer.Services;
+using TomCatRaffleProgram.Program.Domain.Entities;
 using TomCatRaffleProgram.Program.Framework.Presentation.CommonViewModels;
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.GetRaffleEntries
@@ -15,17 +11,20 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.GetRaffleEntries
         private readonly FileServices FileServices = new FileServices();
 
         private readonly GetRaffleEntriesInteractor Interactor;
+        private readonly IPersistenceContext PersistenceContext;
 
-        public GetRaffleEntriesEntityExistenceChecker()
-            => this.Interactor = new GetRaffleEntriesInteractor(this.FileServices);
+        public GetRaffleEntriesEntityExistenceChecker(IPersistenceContext persistenceContext)
+        {
+            this.PersistenceContext = persistenceContext;
+            Interactor = new GetRaffleEntriesInteractor(FileServices, this.PersistenceContext);
+        }
 
         public async Task<IViewModel> ValidateAsync(GetRaffleEntriesInputPort inputPort, IGetRaffleEntriesOutputPort outputPort)
         {
             if (!this.FileServices.DoesFileExist())
                 return await outputPort.PresentFileNotFoundAsync();
 
-            var file = XDocument.Load(this.FileServices.GetFilePath());
-            if (file.Root.Descendants("Raffle").Where(r => int.Parse(r.Attribute("Id").Value) == inputPort.RaffleId).SingleOrDefault() == null)
+            if (this.PersistenceContext.Find<Raffle>(inputPort.RaffleId) == null)
                 return await outputPort.PresentRaffleNotFound(inputPort.RaffleId);
 
             return await this.Interactor.HandleAsync(inputPort, outputPort);
