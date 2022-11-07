@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
+using TomCatRaffleProgram.Program.ApplicationLayer.Services;
 using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffle;
-using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffleEntry;
-using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.GetRaffleEntries;
+using TomCatRaffleProgram.Program.Framework.Infrastructure;
 using TomCatRaffleProgram.Program.Framework.Presentation.CommonViewModels;
 using TomCatRaffleProgram.Program.Framework.Presentation.CreateRaffle;
 using TomCatRaffleProgram.Program.Framework.Presentation.CreateRaffleEntry;
@@ -19,12 +21,29 @@ namespace TomCatRaffleProgram.Program
     public partial class App : Application
     {
 
+        private static string FilePath = $"{Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"TomCatRaffle\")}RaffleData.xml";
+
+        public IServiceProvider ServiceProvider { get; set; }
+        public IConfiguration Configuration { get; set; }
+
         private void ApplicationStartup(object sender, StartupEventArgs e)
         {
+            var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory());
+            Configuration = builder.Build();
+            var serviceCollection = new ServiceCollection();
+            ConfigureServices(serviceCollection);
+            this.ServiceProvider = serviceCollection.BuildServiceProvider();
+
             this.CreateFileOnStartup();
-            this.Test().Wait();
-            Window mainWindow = new MainWindow();
+            var mainWindow = this.ServiceProvider.GetRequiredService<MainWindow>();
             mainWindow.Show();
+        }
+
+        private void ConfigureServices(IServiceCollection services)
+        {
+            services.AddScoped<IPersistenceContext, PersistenceContext>();
+
+            services.AddTransient(typeof(MainWindow));
         }
 
         private void CreateFileOnStartup()
@@ -43,14 +62,8 @@ namespace TomCatRaffleProgram.Program
                 }
             }
         }
-        
-        private async Task<IViewModel> Test()
-        {
-            var raffleController = new RaffleEntryController();
-            var presenter = new GetRaffleEntriesPresenter();
-            await raffleController.CreateRaffleEntryAsync(new CreateRaffleEntryInputPort { FirstName = "Test", LastName = "Test2", Tickets = 4, RaffleId = 4 }, new CreateRaffleEntryPresenter());
-            await raffleController.GetRaffleEntriesAsync(new GetRaffleEntriesInputPort { RaffleId = 4 }, presenter);
-            return presenter.Result.Result;
-        }
+
+        public static string GetFilePath()
+            => FilePath;
     }
 }

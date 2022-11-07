@@ -13,18 +13,15 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffleEntr
 {
     class CreateRaffleEntryInteractor
     {
+        private readonly IPersistenceContext PersistenceContext;
 
-        private readonly FileServices FileServices;
-
-        public CreateRaffleEntryInteractor(FileServices fileServices)
-            => this.FileServices = fileServices ?? new FileServices();
+        public CreateRaffleEntryInteractor(IPersistenceContext persistenceContext)
+            => this.PersistenceContext = persistenceContext;
 
         public async Task<IViewModel> HandleAsync(CreateRaffleEntryInputPort inputPort, ICreateRaffleEntryOutputPort outputPort)
         {
-            var file = XDocument.Load(this.FileServices.GetFilePath());
-            var raffle = file.Root.Descendants("Raffle").Where(r => int.Parse(r.Attribute("Id").Value) == inputPort.RaffleId).Single();
 
-            var raffleEntry = raffle.Elements("RaffleEntry").Where(re => re.Attribute("FullName").Value.ToUpper().Equals(string.Concat(inputPort.FirstName, " ", inputPort.LastName).ToUpper())).SingleOrDefault();
+            var raffleEntry = this.PersistenceContext.GetEntities<Entry>().Where(re => re.Attribute("Full Name").Value == string.Concat(inputPort.FirstName, " ", inputPort.LastName)).SingleOrDefault();
             if (raffleEntry != null)
                 raffleEntry.Element("Tickets").Value = (int.Parse(raffleEntry.Element("Tickets").Value) + inputPort.Tickets).ToString();
             else
@@ -34,10 +31,12 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffleEntr
                 raffleEntry.Add(new XAttribute("LastName", inputPort.LastName));
                 raffleEntry.Add(new XAttribute("FullName", string.Concat(inputPort.FirstName, " ", inputPort.LastName)));
                 raffleEntry.Add(new XElement("Tickets", inputPort.Tickets));
+                var raffle = this.PersistenceContext.Find<Raffle>(inputPort.RaffleId);
                 raffle.Add(raffleEntry);
             }
 
-            file.Save(this.FileServices.GetFilePath());
+            this.PersistenceContext.Save();
+
 
             return await outputPort.PresentRaffleEntryAsync(new EntryDto(new Entry(inputPort.FirstName, inputPort.LastName, inputPort.Tickets)));
         }

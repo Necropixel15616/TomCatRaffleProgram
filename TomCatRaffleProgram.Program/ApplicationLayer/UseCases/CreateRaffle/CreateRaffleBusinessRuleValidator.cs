@@ -12,12 +12,16 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffle
     class CreateRaffleBusinessRuleValidator
     {
 
-        private readonly StringServices StringServices;
+        public StringServices StringServices;
+        private readonly IPersistenceContext PersistenceContext;
+        public CreateRaffleEntityExistenceChecker EntityExistenceChecker;
 
-        private readonly CreateRaffleEntityExistenceChecker EntityExistenceChecker = new CreateRaffleEntityExistenceChecker();
-
-        public CreateRaffleBusinessRuleValidator(StringServices stringServices)
-            => this.StringServices = stringServices ?? new StringServices();
+        public CreateRaffleBusinessRuleValidator(StringServices stringServices, IPersistenceContext persistenceContext)
+        {
+            StringServices = stringServices ?? new StringServices();
+            this.PersistenceContext = persistenceContext;
+            this.EntityExistenceChecker = new CreateRaffleEntityExistenceChecker(this.PersistenceContext);
+        }
 
         public async Task<IViewModel> ValidateAsync(CreateRaffleInputPort inputPort, ICreateRaffleOutputPort outputPort)
         {
