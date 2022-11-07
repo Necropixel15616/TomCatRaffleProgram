@@ -13,15 +13,19 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffleEntr
     {
         private FileServices FileServices = new FileServices();
 
-        public CreateRaffleEntryInteractor Interactor = new CreateRaffleEntryInteractor();
+        public CreateRaffleEntryInteractor Interactor;
+        private readonly IPersistenceContext PersistenceContext;
 
-        public CreateRaffleEntryEntityExistenceChecker() { }
+        public CreateRaffleEntryEntityExistenceChecker(IPersistenceContext persistenceContext)
+        {
+            this.PersistenceContext = persistenceContext;
+            this.Interactor = new CreateRaffleEntryInteractor(this.PersistenceContext);
+        }
 
         public async Task<IViewModel> ValidateAsync(CreateRaffleEntryInputPort inputPort, ICreateRaffleEntryOutputPort outputPort)
         {
             if (!this.FileServices.DoesFileExist())
                 return await outputPort.PresentFileNotFoundAsync();
-            var file = XDocument.Load(App.GetFilePath());
             if (file.Root.Elements("Raffle").Where(r => int.Parse(r.Attribute("Id").Value) == inputPort.RaffleId).SingleOrDefault() == null)
                 return await outputPort.PresentRaffleNotFoundAsync(inputPort.RaffleId);
 

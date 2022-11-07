@@ -10,7 +10,14 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCaseInvokers
 {
     class RaffleUseCaseInvoker
     {
-        private CreateRaffleBusinessRuleValidator BusinessRuleValidator = new CreateRaffleBusinessRuleValidator(new StringServices());
+        private readonly IPersistenceContext PersistenceContext;
+        private CreateRaffleBusinessRuleValidator BusinessRuleValidator;
+
+        public RaffleUseCaseInvoker(IPersistenceContext persistenceContext)
+        {
+            this.PersistenceContext = persistenceContext;
+            this.BusinessRuleValidator = new CreateRaffleBusinessRuleValidator(new StringServices(), this.PersistenceContext);
+        }
 
         public async Task<IViewModel> InvokeCreateRaffle(CreateRaffleInputPort inputPort, ICreateRaffleOutputPort outputPort)
             => await this.BusinessRuleValidator.ValidateAsync(inputPort, outputPort);

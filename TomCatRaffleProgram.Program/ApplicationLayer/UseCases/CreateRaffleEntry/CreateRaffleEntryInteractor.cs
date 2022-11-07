@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using TomCatRaffleProgram.Program.ApplicationLayer.Dtos;
+using TomCatRaffleProgram.Program.ApplicationLayer.Services;
 using TomCatRaffleProgram.Program.Domain.Entities;
 using TomCatRaffleProgram.Program.Framework.Presentation.CommonViewModels;
 
@@ -12,15 +13,15 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffleEntr
 {
     class CreateRaffleEntryInteractor
     {
+        private readonly IPersistenceContext PersistenceContext;
 
-        public CreateRaffleEntryInteractor() { }
+        public CreateRaffleEntryInteractor(IPersistenceContext persistenceContext)
+            => this.PersistenceContext = persistenceContext;
 
         public async Task<IViewModel> HandleAsync(CreateRaffleEntryInputPort inputPort, ICreateRaffleEntryOutputPort outputPort)
         {
-            var file = XDocument.Load(App.GetFilePath());
-            var raffle = file.Root.Descendants("Raffle").Where(r => int.Parse(r.Attribute("Id").Value) == inputPort.RaffleId).Single();
 
-            var raffleEntry = raffle.Elements("RaffleEntry").Where(re => re.Attribute("FullName").Value.ToUpper().Equals(string.Concat(inputPort.FirstName, " ", inputPort.LastName).ToUpper())).SingleOrDefault();
+            var raffleEntry = this.PersistenceContext.GetEntities<Entry>().Where(re => re.Attribute("Full Name").Value == string.Concat(inputPort.FirstName, " ", inputPort.LastName)).SingleOrDefault();
             if (raffleEntry != null)
                 raffleEntry.Element("Tickets").Value = (int.Parse(raffleEntry.Element("Tickets").Value) + inputPort.Tickets).ToString();
             else
@@ -30,10 +31,12 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffleEntr
                 raffleEntry.Add(new XAttribute("LastName", inputPort.LastName));
                 raffleEntry.Add(new XAttribute("FullName", string.Concat(inputPort.FirstName, " ", inputPort.LastName)));
                 raffleEntry.Add(new XElement("Tickets", inputPort.Tickets));
+                var raffle = this.PersistenceContext.Find<Raffle>(inputPort.RaffleId);
                 raffle.Add(raffleEntry);
             }
 
-            file.Save(App.GetFilePath());
+            this.PersistenceContext.Save();
+
 
             return await outputPort.PresentRaffleEntryAsync(new EntryDto(new Entry(inputPort.FirstName, inputPort.LastName, inputPort.Tickets)));
         }
