@@ -12,12 +12,10 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffleEntr
     {
         private readonly CreateRaffleEntryEntityExistenceChecker EntityExistencePipeline;
 
-        private readonly StringServices StringServices;
         private readonly IPersistenceContext PersistenceContext;
 
-        public CreateRaffleEntryBusinessRuleValidator(StringServices stringServices, IPersistenceContext persistenceContext)
+        public CreateRaffleEntryBusinessRuleValidator(IPersistenceContext persistenceContext)
         {
-            StringServices = stringServices ?? new StringServices();
             this.PersistenceContext = persistenceContext;
             this.EntityExistencePipeline = new CreateRaffleEntryEntityExistenceChecker(this.PersistenceContext);
         }
@@ -25,9 +23,9 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffleEntr
         public async Task<IViewModel> ValidateAsync(CreateRaffleEntryInputPort inputPort, ICreateRaffleEntryOutputPort outputPort)
         {
             List<string> validationFailures = new List<string>();
-            if (this.StringServices.IsNullOrWhitespaceOrEmpty(inputPort.FirstName))
+            if (inputPort.FirstName.IsNullOrWhitespaceOrEmpty())
                 validationFailures.Add("The First Name of a customer cannot be empty.");
-            if (this.StringServices.IsNullOrWhitespaceOrEmpty(inputPort.LastName))
+            if (inputPort.LastName.IsNullOrWhitespaceOrEmpty())
                 validationFailures.Add("The Last Name of a customer cannot be empty.");
 
             if (validationFailures.Any())

@@ -9,6 +9,8 @@ using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffle;
 using TomCatRaffleProgram.Program.Framework.Infrastructure;
 using TomCatRaffleProgram.Program.Framework.Presentation.CommonViewModels;
 using TomCatRaffleProgram.Program.Framework.Presentation.CreateRaffle;
+using TomCatRaffleProgram.Program.Framework.Presentation.CreateRaffleEntry;
+using TomCatRaffleProgram.Program.Framework.Presentation.GetRaffleEntries;
 using TomCatRaffleProgram.Program.InterfaceAdapters.Controllers;
 
 namespace TomCatRaffleProgram.Program

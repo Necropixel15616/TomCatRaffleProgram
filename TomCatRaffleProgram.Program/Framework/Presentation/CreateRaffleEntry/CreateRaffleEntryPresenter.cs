@@ -21,7 +21,7 @@ namespace TomCatRaffleProgram.Program.Framework.Presentation.CreateRaffleEntry
             return this.Result;
         }
 
-        Task<RaffleEntryViewModel> ICreateRaffleEntryOutputPort.PresentRaffleEntryAsync(EntryDto entry)
+        Task<RaffleEntryViewModel> ICreateRaffleEntryOutputPort.PresentRaffleEntryAsync(RaffleEntryDto entry)
         {
             this.PresentedSuccessfully = true;
             this.Result = Task.FromResult(new RaffleEntryViewModel { FirstName = entry.FirstName, LastName = entry.LastName });

@@ -16,7 +16,7 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCaseInvokers
         public RaffleUseCaseInvoker(IPersistenceContext persistenceContext)
         {
             this.PersistenceContext = persistenceContext;
-            this.BusinessRuleValidator = new CreateRaffleBusinessRuleValidator(new StringServices(), this.PersistenceContext);
+            this.BusinessRuleValidator = new CreateRaffleBusinessRuleValidator(this.PersistenceContext);
         }
 
         public async Task<IViewModel> InvokeCreateRaffle(CreateRaffleInputPort inputPort, ICreateRaffleOutputPort outputPort)

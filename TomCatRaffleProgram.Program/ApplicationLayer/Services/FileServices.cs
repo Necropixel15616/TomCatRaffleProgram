@@ -7,9 +7,14 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.Services
 {
     class FileServices
     {
-        private FileInfo File = new FileInfo(App.GetFilePath());
+
+        private string FilePath = $"{Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"TomCatRaffle\")}RaffleData.xml";
+        private FileInfo File = new FileInfo($"{Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"TomCatRaffle\")}RaffleData.xml");
 
         public bool DoesFileExist()
-            => File.Exists;
+            => this.File.Exists;
+
+        public string GetFilePath()
+            => this.FilePath;
     }
 }

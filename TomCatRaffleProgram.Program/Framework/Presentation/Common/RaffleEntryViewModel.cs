@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TomCatRaffleProgram.Program.Framework.Presentation.CommonViewModels;
+﻿using TomCatRaffleProgram.Program.Framework.Presentation.CommonViewModels;
 
 namespace TomCatRaffleProgram.Program.Framework.Presentation.Common
 {
@@ -12,5 +9,7 @@ namespace TomCatRaffleProgram.Program.Framework.Presentation.Common
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
+
+        public int Tickets { get; set; }
     }
 }

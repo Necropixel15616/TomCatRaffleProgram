@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TomCatRaffleProgram.Program.Domain.Entities
+﻿namespace TomCatRaffleProgram.Program.Domain.Entities
 {
-    class Entry
+    class RaffleEntry
     {
-        public Entry() { }
+        public RaffleEntry() { }
 
-        public Entry(string _firstName, string _lastName, int _tickets)
+        public RaffleEntry(string _firstName, string _lastName, int _tickets)
         {
             this.FirstName = _firstName;
             this.LastName = _lastName;
