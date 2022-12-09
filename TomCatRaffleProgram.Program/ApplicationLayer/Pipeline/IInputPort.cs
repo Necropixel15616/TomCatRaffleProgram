@@ -1,6 +1,6 @@
 ﻿namespace TomCatRaffleProgram.Program.ApplicationLayer.Pipeline
 {
-    public interface IInputPortPipe<out TOutputPort>
+    public interface IInputPort<out TOutputPort>
     {
     }
 }

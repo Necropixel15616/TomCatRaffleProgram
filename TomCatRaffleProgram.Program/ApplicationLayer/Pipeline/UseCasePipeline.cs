@@ -2,7 +2,7 @@
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.Pipeline
 {
-    public class UseCasePipeline<TInputPort, TOutputPort> where TInputPort : IInputPortPipe<TOutputPort>
+    public class UseCasePipeline<TInputPort, TOutputPort> where TInputPort : IInputPort<TOutputPort>
     {
 
         public UseCasePipeline(
