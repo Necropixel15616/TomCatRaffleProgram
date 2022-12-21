@@ -7,10 +7,7 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffle
 {
     class CreateRaffleInputPortValidator : IInputPortValidatorPipe<CreateRaffleInputPort, ICreateRaffleOutputPort>
     {
-        private readonly IRaffleRepository PersistenceContext;
-
-        public CreateRaffleInputPortValidator(IRaffleRepository persistenceContext)
-            => PersistenceContext = persistenceContext;
+        public CreateRaffleInputPortValidator() { }
 
         bool IInputPortValidatorPipe<CreateRaffleInputPort, ICreateRaffleOutputPort>.ValidateAsync(CreateRaffleInputPort inputPort, ICreateRaffleOutputPort outputPort)
         {
@@ -23,6 +20,7 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffle
                 outputPort.PresentValidationFailureAsync(validationFailures);
                 return false;
             }
+
             return true;
         }
     }

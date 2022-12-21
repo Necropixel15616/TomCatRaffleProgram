@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using TomCatRaffleProgram.Program.ApplicationLayer.Dtos;
 using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffleEntry;
@@ -14,28 +12,28 @@ namespace TomCatRaffleProgram.Program.Framework.Presentation.CreateRaffleEntry
 
         public bool PresentedSuccessfully { get; set; }
 
-        Task<RaffleEntryViewModel> ICreateRaffleEntryOutputPort.PresentFileNotFoundAsync()
+        Task ICreateRaffleEntryOutputPort.PresentFileNotFoundAsync()
         {
             this.PresentedSuccessfully = false;
             this.Result = Task.FromResult(new RaffleEntryViewModel { Errors = "The File was not found." });
             return this.Result;
         }
 
-        Task<RaffleEntryViewModel> ICreateRaffleEntryOutputPort.PresentRaffleEntryAsync(RaffleEntryDto entry)
+        Task ICreateRaffleEntryOutputPort.PresentRaffleEntryAsync(RaffleEntryDto entry)
         {
             this.PresentedSuccessfully = true;
             this.Result = Task.FromResult(new RaffleEntryViewModel { FirstName = entry.FirstName, LastName = entry.LastName });
             return this.Result;
         }
 
-        Task<RaffleEntryViewModel> ICreateRaffleEntryOutputPort.PresentRaffleNotFoundAsync(int raffleId)
+        Task ICreateRaffleEntryOutputPort.PresentRaffleNotFoundAsync(int raffleId)
         {
             this.PresentedSuccessfully = false;
             this.Result = Task.FromResult(new RaffleEntryViewModel { Errors = $"A raffle with the Id '{raffleId} was not found." });
             return this.Result;
         }
 
-        Task<RaffleEntryViewModel> ICreateRaffleEntryOutputPort.PresentValidationFailureAsync(List<string> failures)
+        Task ICreateRaffleEntryOutputPort.PresentValidationFailureAsync(List<string> failures)
         {
             this.PresentedSuccessfully = false;
             var errorMessages = string.Empty;

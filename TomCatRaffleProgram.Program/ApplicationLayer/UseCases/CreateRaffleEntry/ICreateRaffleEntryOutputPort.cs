@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using TomCatRaffleProgram.Program.ApplicationLayer.Dtos;
-using TomCatRaffleProgram.Program.Framework.Presentation.Common;
-using TomCatRaffleProgram.Program.Framework.Presentation.CommonViewModels;
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffleEntry
 {
     interface ICreateRaffleEntryOutputPort
     {
-        Task<RaffleEntryViewModel> PresentFileNotFoundAsync();
+        Task PresentFileNotFoundAsync();
 
-        Task<RaffleEntryViewModel> PresentRaffleEntryAsync(RaffleEntryDto entry);
+        Task PresentRaffleEntryAsync(RaffleEntryDto entry);
 
-        Task<RaffleEntryViewModel> PresentRaffleNotFoundAsync(int raffleId);
+        Task PresentRaffleNotFoundAsync(int raffleId);
 
-        Task<RaffleEntryViewModel> PresentValidationFailureAsync(List<string> failures);
+        Task PresentValidationFailureAsync(List<string> failures);
     }
 }

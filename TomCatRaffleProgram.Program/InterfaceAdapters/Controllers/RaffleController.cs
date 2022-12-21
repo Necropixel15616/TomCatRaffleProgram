@@ -1,26 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using TomCatRaffleProgram.Program.ApplicationLayer.Pipeline;
 using TomCatRaffleProgram.Program.ApplicationLayer.Services;
-using TomCatRaffleProgram.Program.ApplicationLayer.UseCaseInvokers;
 using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffle;
-using TomCatRaffleProgram.Program.Framework.Presentation.CommonViewModels;
 
 namespace TomCatRaffleProgram.Program.InterfaceAdapters.Controllers
 {
     class RaffleController
     {
+        private readonly IFileServices FileServices;
         private readonly IRaffleRepository PersistenceContext;
-        public RaffleUseCaseInvoker RaffleUseCaseInvoker;
 
-        public RaffleController(IRaffleRepository persistenceContext)
+        public RaffleController(IFileServices fileServices, IRaffleRepository persistenceContext)
         {
-            this.PersistenceContext = persistenceContext;
-            this.RaffleUseCaseInvoker = new RaffleUseCaseInvoker(this.PersistenceContext);
+            FileServices = fileServices;
+            PersistenceContext = persistenceContext;
         }
 
-        public async Task<IViewModel> CreateRaffleAsync(CreateRaffleInputPort inputPort, ICreateRaffleOutputPort outputPort)
-            => await this.RaffleUseCaseInvoker.InvokeCreateRaffle(inputPort, outputPort);
+        public async Task CreateRaffleAsync(CreateRaffleInputPort inputPort, ICreateRaffleOutputPort outputPort)
+        {
+            var _Pipeline = new UseCasePipeline<CreateRaffleInputPort, ICreateRaffleOutputPort>(
+                                new CreateRaffleInteractor(PersistenceContext),
+                                _inputPortValidator: new CreateRaffleInputPortValidator(),
+                                _entityExistenceChecker: new CreateRaffleEntityExistenceChecker(FileServices, PersistenceContext));
+
+            await _Pipeline.InvokeUseCaseAsync(inputPort, outputPort);
+        }
     }
 }

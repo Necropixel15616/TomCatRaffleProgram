@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using TomCatRaffleProgram.Program.ApplicationLayer.Pipeline;
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffleEntry
 {
-    class CreateRaffleEntryInputPort
+    class CreateRaffleEntryInputPort : IInputPort<ICreateRaffleEntryOutputPort>
     {
 
         public string FirstName { get; set; }

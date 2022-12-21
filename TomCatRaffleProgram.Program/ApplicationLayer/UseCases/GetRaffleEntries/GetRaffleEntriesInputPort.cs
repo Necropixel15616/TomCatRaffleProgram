@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using TomCatRaffleProgram.Program.ApplicationLayer.Pipeline;
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.GetRaffleEntries
 {
-    class GetRaffleEntriesInputPort
+    class GetRaffleEntriesInputPort : IInputPort<IGetRaffleEntriesOutputPort>
     {
 
         public int RaffleId { get; set; }

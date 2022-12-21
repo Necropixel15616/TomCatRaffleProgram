@@ -11,14 +11,14 @@ namespace TomCatRaffleProgram.Program.Framework.Presentation.GetRaffleEntries
         public Task<GetRaffleEntriesViewModel> Result { get; set; }
         public bool PresentedSuccessfully { get; set; }
 
-        public Task<GetRaffleEntriesViewModel> PresentFileNotFoundAsync()
+        public Task PresentFileNotFoundAsync()
         {
             this.PresentedSuccessfully = false;
             this.Result = Task.FromResult(new GetRaffleEntriesViewModel { RaffleEntries = new List<RaffleEntryViewModel> { new RaffleEntryViewModel { Errors = "The File was not found." } } });
             return this.Result;
         }
 
-        public Task<GetRaffleEntriesViewModel> PresentRaffleEntriesAsync(List<RaffleEntryDto> entries)
+        public Task PresentRaffleEntriesAsync(List<RaffleEntryDto> entries)
         {
             this.PresentedSuccessfully = true;
             List<RaffleEntryViewModel> entriesViewModel = new List<RaffleEntryViewModel>();
@@ -27,7 +27,7 @@ namespace TomCatRaffleProgram.Program.Framework.Presentation.GetRaffleEntries
             return this.Result;
         }
 
-        public Task<GetRaffleEntriesViewModel> PresentRaffleNotFound(int raffleId)
+        public Task PresentRaffleNotFound(int raffleId)
         {
             this.PresentedSuccessfully = false;
             this.Result = Task.FromResult(new GetRaffleEntriesViewModel { RaffleEntries = new List<RaffleEntryViewModel> { new RaffleEntryViewModel { Errors = $"A raffle with the Id '{raffleId}' was not found." } } });

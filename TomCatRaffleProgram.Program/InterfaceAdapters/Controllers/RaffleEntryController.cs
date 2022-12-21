@@ -1,32 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using TomCatRaffleProgram.Program.ApplicationLayer.Pipeline;
 using TomCatRaffleProgram.Program.ApplicationLayer.Services;
-using TomCatRaffleProgram.Program.ApplicationLayer.UseCaseInvokers;
 using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffleEntry;
 using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.GetRaffleEntries;
-using TomCatRaffleProgram.Program.Framework.Presentation.CommonViewModels;
 
 namespace TomCatRaffleProgram.Program.InterfaceAdapters.Controllers
 {
     class RaffleEntryController
     {
-
-        private readonly RaffleEntryUseCaseInvoker UseCaseInvoker;
+        private readonly IFileServices FileServices;
         private readonly IRaffleRepository PersistenceContext;
 
-        public RaffleEntryController(IRaffleRepository persistenceContext)
+        public RaffleEntryController(IFileServices fileServices, IRaffleRepository persistenceContext)
         {
-            this.PersistenceContext = persistenceContext;
-            this.UseCaseInvoker = new RaffleEntryUseCaseInvoker(this.PersistenceContext);
+            FileServices = fileServices;
+            PersistenceContext = persistenceContext;
         }
 
-        public async Task<IViewModel> CreateRaffleEntryAsync(CreateRaffleEntryInputPort inputPort, ICreateRaffleEntryOutputPort outputPort)
-            => await this.UseCaseInvoker.InvokeCreateRaffleEntryAsync(inputPort, outputPort);
+        public async Task CreateRaffleEntryAsync(CreateRaffleEntryInputPort inputPort, ICreateRaffleEntryOutputPort outputPort)
+        {
+            var _Pipeline = new UseCasePipeline<CreateRaffleEntryInputPort, ICreateRaffleEntryOutputPort>(
+                    new CreateRaffleEntryInteractor(PersistenceContext),
+                    _inputPortValidator: new CreateRaffleEntryInputPortValidator(),
+                    _entityExistenceChecker: new CreateRaffleEntryEntityExistenceChecker(FileServices, PersistenceContext));
 
-        public async Task<IViewModel> GetRaffleEntriesAsync(GetRaffleEntriesInputPort inputPort, IGetRaffleEntriesOutputPort outputPort)
-            => await this.UseCaseInvoker.InvokeGetRaffleEntriesAsync(inputPort, outputPort);
+            await _Pipeline.InvokeUseCaseAsync(inputPort, outputPort);
+        }
+
+        public async Task GetRaffleEntriesAsync(GetRaffleEntriesInputPort inputPort, IGetRaffleEntriesOutputPort outputPort)
+        {
+            var _Pipeline = new UseCasePipeline<GetRaffleEntriesInputPort, IGetRaffleEntriesOutputPort>(
+                                new GetRaffleEntriesInteractor(PersistenceContext),
+                                _entityExistenceChecker: new GetRaffleEntriesEntityExistenceChecker(FileServices, PersistenceContext));
+
+            await _Pipeline.InvokeUseCaseAsync(inputPort, outputPort);
+        }
 
     }
 }
