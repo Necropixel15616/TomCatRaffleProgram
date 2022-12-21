@@ -23,11 +23,11 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.GetRaffleEntries
         {
             var raffle = this.PersistenceContext.Find<Raffle>(inputPort.RaffleId);
             List<RaffleEntry> entries = new List<RaffleEntry>();
-            raffle.Descendants(typeof(RaffleEntry).Name).ToList().ForEach(re
-                => entries.Add(new RaffleEntry(
-                    re.Attribute("FirstName").Value,
-                    re.Attribute("LastName").Value,
-                    int.Parse(re.Element("Tickets").Value))));
+            //raffle.Descendants(typeof(RaffleEntry).Name).ToList().ForEach(re
+            //    => entries.Add(new RaffleEntry(
+            //        re.Attribute("FirstName").Value,
+            //        re.Attribute("LastName").Value,
+            //        int.Parse(re.Element("Tickets").Value))));
 
             return await outputPort.PresentRaffleEntriesAsync(new List<RaffleEntryDto>(entries.Select(re => new RaffleEntryDto(re))));
         }

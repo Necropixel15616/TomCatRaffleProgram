@@ -33,7 +33,7 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.Pipeline
                 InputPortValidator.ValidateAsync(inputPort, outputPort);
 
             if (EntityExistenceChecker != null)
-                EntityExistenceChecker.ValidateEntityExistAsync(inputPort, outputPort);
+                EntityExistenceChecker.ValidateEntityExist(inputPort, outputPort);
 
             if (BusinessRuleValidator != null)
                 BusinessRuleValidator.ValidateAsync(inputPort, outputPort);

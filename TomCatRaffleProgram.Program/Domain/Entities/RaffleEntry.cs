@@ -1,6 +1,9 @@
-﻿namespace TomCatRaffleProgram.Program.Domain.Entities
+﻿using System.Xml.Serialization;
+
+namespace TomCatRaffleProgram.Program.Domain.Entities
 {
-    class RaffleEntry
+    [XmlType("Entry")]
+    public class RaffleEntry
     {
         public RaffleEntry() { }
 
@@ -11,10 +14,13 @@
             this.Tickets = _tickets;
         }
 
+        [XmlAttribute("FirstName")]
         public string FirstName { get; set; }
 
+        [XmlAttribute("LastName")]
         public string LastName { get; set; }
 
+        [XmlElement("Tickets")]
         public int Tickets { get; set; }
 
     }

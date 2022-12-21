@@ -1,12 +1,11 @@
 ﻿using System.Linq;
-using System.Threading.Tasks;
+using TomCatRaffleProgram.Program.ApplicationLayer.Pipeline;
 using TomCatRaffleProgram.Program.ApplicationLayer.Services;
 using TomCatRaffleProgram.Program.Domain.Entities;
-using TomCatRaffleProgram.Program.Framework.Presentation.CommonViewModels;
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffle
 {
-    class CreateRaffleEntityExistenceChecker
+    class CreateRaffleEntityExistenceChecker : IEntityExistenceCheckerPipe<CreateRaffleInputPort, ICreateRaffleOutputPort>
     {
 
         private FileServices FileServices = new FileServices();
@@ -20,15 +19,23 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffle
             this.Interactor = new CreateRaffleInteractor(this.PersistenceContext);
         }
 
-        public async Task<IViewModel> ValidateAsync(CreateRaffleInputPort inputPort, ICreateRaffleOutputPort outputPort)
+        bool IEntityExistenceCheckerPipe<CreateRaffleInputPort, ICreateRaffleOutputPort>.ValidateEntityExist(CreateRaffleInputPort inputPort, ICreateRaffleOutputPort outputPort)
         {
             if (!this.FileServices.DoesFileExist())
-                await outputPort.PresentFileNotFoundAsync();
+            {
+                outputPort.PresentFileNotFoundAsync();
+                return false;
+            }
 
-            if (this.PersistenceContext.GetEntities<Raffle>().Where(r => r.Attribute("Name").Value == inputPort.RaffleName).SingleOrDefault() != null)
-                return await outputPort.PresentRaffleExistsAsync(inputPort.RaffleName);
+            if (this.PersistenceContext.GetEntities<Raffle>()
+                    .Where(r => r.Name.ToUpper().Equals(inputPort.RaffleName.ToUpper()))
+                    .SingleOrDefault() != null)
+            {
+                outputPort.PresentRaffleExistsAsync(inputPort.RaffleName);
+                return false;
+            }
 
-            return await this.Interactor.CreateRaffleAsync(inputPort, outputPort);
+            return true;
         }
     }
 }

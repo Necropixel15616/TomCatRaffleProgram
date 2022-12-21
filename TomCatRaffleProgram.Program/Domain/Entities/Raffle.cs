@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace TomCatRaffleProgram.Program.Domain.Entities
 {
-    class Raffle
+    [XmlType("Raffle")]
+    public class Raffle
     {
         public Raffle() { }
 
@@ -14,9 +14,15 @@ namespace TomCatRaffleProgram.Program.Domain.Entities
             this.Id = _id;
         }
 
+        [XmlAttribute("Name")]
         public string Name { get; set; }
 
+        [XmlAttribute("Id")]
         public int Id { get; set; }
+
+        [XmlArray("Entries")]
+        [XmlArrayItem("Entry")]
+        public List<RaffleEntry> Entries { get; set; }
 
     }
 }

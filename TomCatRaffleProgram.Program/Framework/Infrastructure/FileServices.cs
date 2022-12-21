@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.Services
 {
+    //Probably want to make this a Service
     class FileServices
     {
 
