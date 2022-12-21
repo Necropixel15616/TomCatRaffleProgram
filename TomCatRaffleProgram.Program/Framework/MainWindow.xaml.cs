@@ -15,7 +15,7 @@ namespace TomCatRaffleProgram.Program
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow(IPersistenceContext persistenceContext)
+        public MainWindow(IRaffleRepository persistenceContext)
         {
             var raffleController = new RaffleController(persistenceContext);
             var rafflePresenter = new CreateRafflePresenter();

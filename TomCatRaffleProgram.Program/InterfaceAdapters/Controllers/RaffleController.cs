@@ -11,10 +11,10 @@ namespace TomCatRaffleProgram.Program.InterfaceAdapters.Controllers
 {
     class RaffleController
     {
-        private readonly IPersistenceContext PersistenceContext;
+        private readonly IRaffleRepository PersistenceContext;
         public RaffleUseCaseInvoker RaffleUseCaseInvoker;
 
-        public RaffleController(IPersistenceContext persistenceContext)
+        public RaffleController(IRaffleRepository persistenceContext)
         {
             this.PersistenceContext = persistenceContext;
             this.RaffleUseCaseInvoker = new RaffleUseCaseInvoker(this.PersistenceContext);

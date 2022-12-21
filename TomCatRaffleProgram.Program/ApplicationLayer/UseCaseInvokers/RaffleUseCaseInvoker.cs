@@ -7,10 +7,10 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCaseInvokers
 {
     class RaffleUseCaseInvoker
     {
-        private readonly IPersistenceContext PersistenceContext;
+        private readonly IRaffleRepository PersistenceContext;
         private CreateRaffleInputPortValidator BusinessRuleValidator;
 
-        public RaffleUseCaseInvoker(IPersistenceContext persistenceContext)
+        public RaffleUseCaseInvoker(IRaffleRepository persistenceContext)
         {
             this.PersistenceContext = persistenceContext;
             this.BusinessRuleValidator = new CreateRaffleInputPortValidator(this.PersistenceContext);

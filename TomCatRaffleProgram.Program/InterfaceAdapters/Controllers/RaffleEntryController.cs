@@ -14,9 +14,9 @@ namespace TomCatRaffleProgram.Program.InterfaceAdapters.Controllers
     {
 
         private readonly RaffleEntryUseCaseInvoker UseCaseInvoker;
-        private readonly IPersistenceContext PersistenceContext;
+        private readonly IRaffleRepository PersistenceContext;
 
-        public RaffleEntryController(IPersistenceContext persistenceContext)
+        public RaffleEntryController(IRaffleRepository persistenceContext)
         {
             this.PersistenceContext = persistenceContext;
             this.UseCaseInvoker = new RaffleEntryUseCaseInvoker(this.PersistenceContext);

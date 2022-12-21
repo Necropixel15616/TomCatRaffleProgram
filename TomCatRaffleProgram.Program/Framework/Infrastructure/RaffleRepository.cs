@@ -8,33 +8,34 @@ using TomCatRaffleProgram.Program.Domain.Entities;
 
 namespace TomCatRaffleProgram.Program.Framework.Infrastructure
 {
-    public class PersistenceContext : IPersistenceContext
+    public class RaffleRepository : IRaffleRepository
     {
         private static readonly XmlSerializer XmlSerializer = new XmlSerializer(typeof(List<Raffle>), new XmlRootAttribute("Raffles"));
 
         private static List<Raffle> Entities;
 
         private readonly FileServices FileServices = new FileServices();
-        public PersistenceContext()
-        {
 
+        public RaffleRepository() { }
+
+        void IRaffleRepository.AddRaffle(Raffle entity)
+            => Entities.Add(entity);
+
+        object IRaffleRepository.Find(int raffleId, int? entryId = null)
+        {
+            if (entryId.HasValue)
+                return Entities.Where(e => e.Id == raffleId).SelectMany(e => e.Entries).SingleOrDefault(e => e.Id == entryId);
+            else
+                return Entities.SingleOrDefault(e => e.Id == raffleId);
         }
 
-        void IPersistenceContext.Add(object entity) { }
+        List<Raffle> IRaffleRepository.GetRaffles()
+            => Entities;
 
-        TEntity IPersistenceContext.Find<TEntity>(int id)
-            => default;
+        void IRaffleRepository.RemoveRaffle(int id)
+            => Entities.Remove(Entities.SingleOrDefault(e => e.Id == id));
 
-        List<TEntity> IPersistenceContext.GetEntities<TEntity>()
-            => null;
-
-        void IPersistenceContext.Remove<TEntity>(int id)
-        {
-            var entity = Entities.SingleOrDefault(e => e.Id == id);
-            Entities.Remove(entity);
-        }
-
-        void IPersistenceContext.Save()
+        void IRaffleRepository.Save()
         {
             using var sw = new StreamWriter(FileServices.GetFilePath());
             XmlSerializer.Serialize(sw, Entities);

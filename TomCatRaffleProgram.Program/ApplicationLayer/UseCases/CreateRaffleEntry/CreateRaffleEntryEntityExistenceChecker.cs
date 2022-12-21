@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using TomCatRaffleProgram.Program.ApplicationLayer.Services;
-using TomCatRaffleProgram.Program.Domain.Entities;
 using TomCatRaffleProgram.Program.Framework.Presentation.CommonViewModels;
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffleEntry
@@ -10,9 +9,9 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffleEntr
         private readonly FileServices FileServices = new FileServices();
 
         public CreateRaffleEntryInteractor Interactor;
-        private readonly IPersistenceContext PersistenceContext;
+        private readonly IRaffleRepository PersistenceContext;
 
-        public CreateRaffleEntryEntityExistenceChecker(IPersistenceContext persistenceContext)
+        public CreateRaffleEntryEntityExistenceChecker(IRaffleRepository persistenceContext)
         {
             this.PersistenceContext = persistenceContext;
             this.Interactor = new CreateRaffleEntryInteractor(this.PersistenceContext);
@@ -22,7 +21,7 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffleEntr
         {
             if (!this.FileServices.DoesFileExist())
                 return await outputPort.PresentFileNotFoundAsync();
-            if (this.PersistenceContext.Find<Raffle>(inputPort.RaffleId) == null)
+            if (this.PersistenceContext.Find(inputPort.RaffleId) == null)
                 return await outputPort.PresentRaffleNotFoundAsync(inputPort.RaffleId);
 
             return await this.Interactor.HandleAsync(inputPort, outputPort);

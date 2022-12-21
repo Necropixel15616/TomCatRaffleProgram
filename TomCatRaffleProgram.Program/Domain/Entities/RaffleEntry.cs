@@ -14,6 +14,9 @@ namespace TomCatRaffleProgram.Program.Domain.Entities
             this.Tickets = _tickets;
         }
 
+        [XmlAttribute("Id")]
+        public int Id { get; set; }
+
         [XmlAttribute("FirstName")]
         public string FirstName { get; set; }
 
@@ -22,6 +25,5 @@ namespace TomCatRaffleProgram.Program.Domain.Entities
 
         [XmlElement("Tickets")]
         public int Tickets { get; set; }
-
     }
 }

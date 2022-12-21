@@ -12,9 +12,9 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffleEntr
     {
         private readonly CreateRaffleEntryEntityExistenceChecker EntityExistencePipeline;
 
-        private readonly IPersistenceContext PersistenceContext;
+        private readonly IRaffleRepository PersistenceContext;
 
-        public CreateRaffleEntryBusinessRuleValidator(IPersistenceContext persistenceContext)
+        public CreateRaffleEntryBusinessRuleValidator(IRaffleRepository persistenceContext)
         {
             this.PersistenceContext = persistenceContext;
             this.EntityExistencePipeline = new CreateRaffleEntryEntityExistenceChecker(this.PersistenceContext);

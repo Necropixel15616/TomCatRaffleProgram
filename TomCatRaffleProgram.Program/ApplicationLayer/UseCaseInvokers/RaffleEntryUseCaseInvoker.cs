@@ -8,12 +8,12 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCaseInvokers
 {
     class RaffleEntryUseCaseInvoker
     {
-        private readonly IPersistenceContext PersistenceContext;
+        private readonly IRaffleRepository PersistenceContext;
 
         private readonly GetRaffleEntriesEntityExistenceChecker GetRaffleEntriesEntityExistenceChecker;
         private readonly CreateRaffleEntryBusinessRuleValidator CreateRaffleEntryBusinessRuleValidator;
 
-        public RaffleEntryUseCaseInvoker(IPersistenceContext persistenceContext)
+        public RaffleEntryUseCaseInvoker(IRaffleRepository persistenceContext)
         {
             this.PersistenceContext = persistenceContext;
             this.CreateRaffleEntryBusinessRuleValidator = new CreateRaffleEntryBusinessRuleValidator(this.PersistenceContext);

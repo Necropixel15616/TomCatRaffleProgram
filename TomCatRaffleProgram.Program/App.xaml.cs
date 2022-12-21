@@ -24,9 +24,9 @@ namespace TomCatRaffleProgram.Program
             ConfigureServices(serviceCollection);
             this.ServiceProvider = serviceCollection.BuildServiceProvider();
 
-            var persistenceContext = new PersistenceContext();
+            var persistenceContext = new RaffleRepository();
             persistenceContext.LoadFile();
-            IPersistenceContext persistenceContext2 = persistenceContext;
+            IRaffleRepository persistenceContext2 = persistenceContext;
             persistenceContext2.Save();
             var mainWindow = this.ServiceProvider.GetRequiredService<MainWindow>();
             mainWindow.Show();
@@ -34,7 +34,7 @@ namespace TomCatRaffleProgram.Program
 
         private void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IPersistenceContext, PersistenceContext>();
+            services.AddScoped<IRaffleRepository, RaffleRepository>();
 
             services.AddTransient(typeof(MainWindow));
         }

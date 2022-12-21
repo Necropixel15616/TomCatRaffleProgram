@@ -6,9 +6,9 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffleEntr
 {
     class CreateRaffleEntryInteractor
     {
-        private readonly IPersistenceContext PersistenceContext;
+        private readonly IRaffleRepository PersistenceContext;
 
-        public CreateRaffleEntryInteractor(IPersistenceContext persistenceContext)
+        public CreateRaffleEntryInteractor(IRaffleRepository persistenceContext)
             => this.PersistenceContext = persistenceContext;
 
         public async Task<IViewModel> HandleAsync(CreateRaffleEntryInputPort inputPort, ICreateRaffleEntryOutputPort outputPort)

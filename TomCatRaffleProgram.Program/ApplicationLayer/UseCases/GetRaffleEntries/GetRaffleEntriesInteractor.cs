@@ -11,9 +11,9 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.GetRaffleEntries
     class GetRaffleEntriesInteractor
     {
         private readonly FileServices FileServices;
-        private readonly IPersistenceContext PersistenceContext;
+        private readonly IRaffleRepository PersistenceContext;
 
-        public GetRaffleEntriesInteractor(FileServices fileServices, IPersistenceContext persistenceContext)
+        public GetRaffleEntriesInteractor(FileServices fileServices, IRaffleRepository persistenceContext)
         {
             FileServices = fileServices ?? new FileServices();
             this.PersistenceContext = persistenceContext;
@@ -21,7 +21,7 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.GetRaffleEntries
 
         public async Task<IViewModel> HandleAsync(GetRaffleEntriesInputPort inputPort, IGetRaffleEntriesOutputPort outputPort)
         {
-            var raffle = this.PersistenceContext.Find<Raffle>(inputPort.RaffleId);
+            var raffle = this.PersistenceContext.Find(inputPort.RaffleId);
             List<RaffleEntry> entries = new List<RaffleEntry>();
             //raffle.Descendants(typeof(RaffleEntry).Name).ToList().ForEach(re
             //    => entries.Add(new RaffleEntry(
