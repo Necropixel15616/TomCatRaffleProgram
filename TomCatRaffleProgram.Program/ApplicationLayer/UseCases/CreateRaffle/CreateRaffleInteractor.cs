@@ -18,7 +18,7 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffle
 
         async Task<IViewModel> IInteractorPipe<CreateRaffleInputPort, ICreateRaffleOutputPort>.HandleAsync(CreateRaffleInputPort inputPort, ICreateRaffleOutputPort outputPort)
         {
-            List<Raffle> raffles = this.PersistenceContext.GetRaffles();
+            List<Raffle> raffles = PersistenceContext.GetRaffles();
             var id = 0;
             foreach (var r in raffles)
                 if (id < r.Id)
@@ -26,8 +26,8 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffle
             id++;
 
             var raffle = new Raffle(inputPort.RaffleName, id);
-            this.PersistenceContext.AddRaffle(raffle);
-            this.PersistenceContext.Save();
+            PersistenceContext.AddRaffle(raffle);
+            PersistenceContext.Save();
             return await outputPort.PresentRaffleCreatedAsync(new RaffleDto(raffle));
         }
     }

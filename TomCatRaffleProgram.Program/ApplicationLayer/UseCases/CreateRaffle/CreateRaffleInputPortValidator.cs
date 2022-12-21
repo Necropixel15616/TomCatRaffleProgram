@@ -8,13 +8,9 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffle
     class CreateRaffleInputPortValidator : IInputPortValidatorPipe<CreateRaffleInputPort, ICreateRaffleOutputPort>
     {
         private readonly IRaffleRepository PersistenceContext;
-        public CreateRaffleEntityExistenceChecker EntityExistenceChecker;
 
         public CreateRaffleInputPortValidator(IRaffleRepository persistenceContext)
-        {
-            this.PersistenceContext = persistenceContext;
-            this.EntityExistenceChecker = new CreateRaffleEntityExistenceChecker(this.PersistenceContext);
-        }
+            => PersistenceContext = persistenceContext;
 
         bool IInputPortValidatorPipe<CreateRaffleInputPort, ICreateRaffleOutputPort>.ValidateAsync(CreateRaffleInputPort inputPort, ICreateRaffleOutputPort outputPort)
         {

@@ -7,26 +7,24 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffle
     class CreateRaffleEntityExistenceChecker : IEntityExistenceCheckerPipe<CreateRaffleInputPort, ICreateRaffleOutputPort>
     {
 
-        private FileServices FileServices = new FileServices();
+        private readonly IFileServices FileServices;
         private readonly IRaffleRepository PersistenceContext;
 
-        public CreateRaffleInteractor Interactor;
-
-        public CreateRaffleEntityExistenceChecker(IRaffleRepository persistenceContext)
+        public CreateRaffleEntityExistenceChecker(IFileServices fileServices, IRaffleRepository persistenceContext)
         {
-            this.PersistenceContext = persistenceContext;
-            this.Interactor = new CreateRaffleInteractor(this.PersistenceContext);
+            FileServices = fileServices;
+            PersistenceContext = persistenceContext;
         }
 
         bool IEntityExistenceCheckerPipe<CreateRaffleInputPort, ICreateRaffleOutputPort>.ValidateEntityExist(CreateRaffleInputPort inputPort, ICreateRaffleOutputPort outputPort)
         {
-            if (!this.FileServices.DoesFileExist())
+            if (!FileServices.DoesFileExist())
             {
                 outputPort.PresentFileNotFoundAsync();
                 return false;
             }
 
-            if (this.PersistenceContext.GetRaffles()
+            if (PersistenceContext.GetRaffles()
                     .Where(r => r.Name.ToUpper().Equals(inputPort.RaffleName.ToUpper()))
                     .SingleOrDefault() != null)
             {
