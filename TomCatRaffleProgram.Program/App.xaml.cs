@@ -18,6 +18,7 @@ namespace TomCatRaffleProgram.Program
 
         private void ApplicationStartup(object sender, StartupEventArgs e)
         {
+            // Set up the Service Provider for Dependancy Injection
             var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory());
             Configuration = builder.Build();
             var serviceCollection = new ServiceCollection();
@@ -26,8 +27,6 @@ namespace TomCatRaffleProgram.Program
 
             var persistenceContext = new RaffleRepository();
             persistenceContext.LoadFile();
-            IRaffleRepository persistenceContext2 = persistenceContext;
-            persistenceContext2.Save();
             var mainWindow = this.ServiceProvider.GetRequiredService<MainWindow>();
             mainWindow.Show();
         }
