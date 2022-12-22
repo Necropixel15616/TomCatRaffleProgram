@@ -25,7 +25,7 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffleEntr
             });
             id++;
 
-            var raffleEntry = new RaffleEntry(inputPort.FirstName, inputPort.LastName, id);
+            var raffleEntry = new RaffleEntry(id, inputPort.FirstName, inputPort.LastName, inputPort.Tickets);
             raffle.Entries.Add(raffleEntry);
             PersistenceContext.Save();
             return outputPort.PresentRaffleEntryAsync(new RaffleEntryDto(raffleEntry));

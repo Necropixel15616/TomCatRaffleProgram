@@ -7,11 +7,12 @@ namespace TomCatRaffleProgram.Program.Domain.Entities
     {
         public RaffleEntry() { }
 
-        public RaffleEntry(string _firstName, string _lastName, int _tickets)
+        public RaffleEntry(int _id, string _firstName, string _lastName, int _tickets)
         {
-            this.FirstName = _firstName;
-            this.LastName = _lastName;
-            this.Tickets = _tickets;
+            Id = _id;
+            FirstName = _firstName;
+            LastName = _lastName;
+            Tickets = _tickets;
         }
 
         [XmlAttribute("Id")]

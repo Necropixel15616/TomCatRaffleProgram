@@ -35,6 +35,7 @@ namespace TomCatRaffleProgram.Program
         private void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IRaffleRepository, RaffleRepository>();
+            services.AddScoped<IFileServices, FileServices>();
 
             services.AddTransient(typeof(MainWindow));
         }

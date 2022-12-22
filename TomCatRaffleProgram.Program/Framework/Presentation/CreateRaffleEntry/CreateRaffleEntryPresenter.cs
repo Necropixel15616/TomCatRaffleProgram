@@ -6,40 +6,18 @@ using TomCatRaffleProgram.Program.Framework.Presentation.Common;
 
 namespace TomCatRaffleProgram.Program.Framework.Presentation.CreateRaffleEntry
 {
-    class CreateRaffleEntryPresenter : IOutputPortPresenter<RaffleEntryViewModel>, ICreateRaffleEntryOutputPort
+    class CreateRaffleEntryPresenter : BasePresenter<RaffleEntryViewModel>, ICreateRaffleEntryOutputPort
     {
-        public Task<RaffleEntryViewModel> Result { get; set; }
-
-        public bool PresentedSuccessfully { get; set; }
-
         Task ICreateRaffleEntryOutputPort.PresentFileNotFoundAsync()
-        {
-            this.PresentedSuccessfully = false;
-            this.Result = Task.FromResult(new RaffleEntryViewModel { Errors = "The File was not found." });
-            return this.Result;
-        }
+            => SetErrors(new List<string>() { "The File was not found." });
 
         Task ICreateRaffleEntryOutputPort.PresentRaffleEntryAsync(RaffleEntryDto entry)
-        {
-            this.PresentedSuccessfully = true;
-            this.Result = Task.FromResult(new RaffleEntryViewModel { FirstName = entry.FirstName, LastName = entry.LastName });
-            return this.Result;
-        }
+            => SetResult(new RaffleEntryViewModel(entry));
 
         Task ICreateRaffleEntryOutputPort.PresentRaffleNotFoundAsync(int raffleId)
-        {
-            this.PresentedSuccessfully = false;
-            this.Result = Task.FromResult(new RaffleEntryViewModel { Errors = $"A raffle with the Id '{raffleId} was not found." });
-            return this.Result;
-        }
+            => SetErrors(new List<string>() { $"A Raffle with the Id {raffleId} was not found." });
 
         Task ICreateRaffleEntryOutputPort.PresentValidationFailureAsync(List<string> failures)
-        {
-            this.PresentedSuccessfully = false;
-            var errorMessages = string.Empty;
-            failures.ForEach(f => errorMessages += $"{f}\n");
-            this.Result = Task.FromResult(new RaffleEntryViewModel { Errors = errorMessages });
-            return this.Result;
-        }
+            => SetErrors(failures);
     }
 }

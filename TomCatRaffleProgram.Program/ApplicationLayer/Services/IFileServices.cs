@@ -1,6 +1,6 @@
 ﻿namespace TomCatRaffleProgram.Program.ApplicationLayer.Services
 {
-    interface IFileServices
+    public interface IFileServices
     {
 
         public bool DoesFileExist();
