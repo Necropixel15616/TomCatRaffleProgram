@@ -1,34 +1,35 @@
-﻿using System.Threading.Tasks;
+﻿using TomCatRaffleProgram.Program.ApplicationLayer.Pipeline;
 using TomCatRaffleProgram.Program.ApplicationLayer.Services;
-using TomCatRaffleProgram.Program.Domain.Entities;
-using TomCatRaffleProgram.Program.Framework.Presentation.CommonViewModels;
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.GetRaffleEntries
 {
-    class GetRaffleEntriesEntityExistenceChecker
+    class GetRaffleEntriesEntityExistenceChecker : IEntityExistenceCheckerPipe<GetRaffleEntriesInputPort, IGetRaffleEntriesOutputPort>
     {
 
-        private readonly FileServices FileServices = new FileServices();
+        private readonly IFileServices FileServices;
+        private readonly IRaffleRepository PersistenceContext;
 
-        private readonly GetRaffleEntriesInteractor Interactor;
-        private readonly IPersistenceContext PersistenceContext;
-
-        public GetRaffleEntriesEntityExistenceChecker(IPersistenceContext persistenceContext)
+        public GetRaffleEntriesEntityExistenceChecker(IFileServices fileServices, IRaffleRepository persistenceContext)
         {
-            this.PersistenceContext = persistenceContext;
-            Interactor = new GetRaffleEntriesInteractor(FileServices, this.PersistenceContext);
+            FileServices = fileServices;
+            PersistenceContext = persistenceContext;
         }
 
-        public async Task<IViewModel> ValidateAsync(GetRaffleEntriesInputPort inputPort, IGetRaffleEntriesOutputPort outputPort)
+        bool IEntityExistenceCheckerPipe<GetRaffleEntriesInputPort, IGetRaffleEntriesOutputPort>.ValidateEntityExist(GetRaffleEntriesInputPort inputPort, IGetRaffleEntriesOutputPort outputPort)
         {
             if (!this.FileServices.DoesFileExist())
-                return await outputPort.PresentFileNotFoundAsync();
+            {
+                outputPort.PresentFileNotFoundAsync();
+                return false;
+            }
 
-            if (this.PersistenceContext.Find<Raffle>(inputPort.RaffleId) == null)
-                return await outputPort.PresentRaffleNotFound(inputPort.RaffleId);
+            if (this.PersistenceContext.Find(inputPort.RaffleId) == null)
+            {
+                outputPort.PresentRaffleNotFound(inputPort.RaffleId);
+                return false;
+            }
 
-            return await this.Interactor.HandleAsync(inputPort, outputPort);
+            return true;
         }
-
     }
 }

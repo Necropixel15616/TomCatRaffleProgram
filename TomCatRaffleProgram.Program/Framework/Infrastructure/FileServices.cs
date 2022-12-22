@@ -1,20 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.Services
 {
-    class FileServices
+    //Probably want to make this a Service
+    class FileServices : IFileServices
     {
 
         private string FilePath = $"{Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"TomCatRaffle\")}RaffleData.xml";
         private FileInfo File = new FileInfo($"{Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"TomCatRaffle\")}RaffleData.xml");
 
-        public bool DoesFileExist()
+        bool IFileServices.DoesFileExist()
             => this.File.Exists;
 
-        public string GetFilePath()
+        string IFileServices.GetFilePath()
             => this.FilePath;
     }
 }

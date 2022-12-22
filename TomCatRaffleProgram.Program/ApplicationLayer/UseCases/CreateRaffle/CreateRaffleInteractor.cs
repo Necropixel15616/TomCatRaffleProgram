@@ -1,42 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using TomCatRaffleProgram.Program.ApplicationLayer.Dtos;
+using TomCatRaffleProgram.Program.ApplicationLayer.Pipeline;
 using TomCatRaffleProgram.Program.ApplicationLayer.Services;
 using TomCatRaffleProgram.Program.Domain.Entities;
-using TomCatRaffleProgram.Program.Framework.Presentation.CommonViewModels;
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffle
 {
-    class CreateRaffleInteractor
+    class CreateRaffleInteractor : IInteractorPipe<CreateRaffleInputPort, ICreateRaffleOutputPort>
     {
 
-        public readonly IPersistenceContext PersistenceContext;
+        public readonly IRaffleRepository PersistenceContext;
 
-        public CreateRaffleInteractor(IPersistenceContext persistenceContext)
+        public CreateRaffleInteractor(IRaffleRepository persistenceContext)
             => PersistenceContext = persistenceContext;
 
-        public async Task<IViewModel> CreateRaffleAsync(CreateRaffleInputPort inputPort, ICreateRaffleOutputPort outputPort)
+        Task IInteractorPipe<CreateRaffleInputPort, ICreateRaffleOutputPort>.HandleAsync(CreateRaffleInputPort inputPort, ICreateRaffleOutputPort outputPort)
         {
-            List<XElement> raffles = this.PersistenceContext.GetEntities<Raffle>();
+            List<Raffle> raffles = PersistenceContext.GetRaffles();
             var id = 0;
             foreach (var r in raffles)
-                if (int.Parse(r.Attribute("Id").Value) > id)
-                    id = int.Parse(r.Attribute("Id").Value);
+                if (id < r.Id)
+                    id = r.Id;
             id++;
 
-            XElement raffle = new XElement(typeof(Raffle).Name);
-            raffle.Add(new XAttribute("Name", inputPort.RaffleName));
-            raffle.Add(new XAttribute("Id", id));
-            raffle.Add(new XAttribute("Open", true));
-
-            this.PersistenceContext.Add(raffle);
-            this.PersistenceContext.Save();
-            return await outputPort.PresentRaffleCreatedAsync(new RaffleDto(new Raffle(inputPort.RaffleName, id)));
+            var raffle = new Raffle(inputPort.RaffleName, id);
+            PersistenceContext.AddRaffle(raffle);
+            PersistenceContext.Save();
+            return outputPort.PresentRaffleCreatedAsync(new RaffleDto(raffle));
         }
-
     }
 }

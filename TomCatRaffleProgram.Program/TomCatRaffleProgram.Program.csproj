@@ -19,7 +19,6 @@
 
   <ItemGroup>
     <Folder Include="Framework\Controllers\" />
-    <Folder Include="Framework\Views\" />
   </ItemGroup>
 
   <ItemGroup>

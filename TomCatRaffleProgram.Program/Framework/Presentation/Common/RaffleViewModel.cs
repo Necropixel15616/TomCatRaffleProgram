@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TomCatRaffleProgram.Program.ApplicationLayer.Dtos;
-using TomCatRaffleProgram.Program.Framework.Presentation.CommonViewModels;
+﻿using TomCatRaffleProgram.Program.ApplicationLayer.Dtos;
 
 namespace TomCatRaffleProgram.Program.Framework.Presentation.Common
 {
-    class RaffleViewModel : IViewModel
+    class RaffleViewModel
     {
         public RaffleViewModel() { }
 

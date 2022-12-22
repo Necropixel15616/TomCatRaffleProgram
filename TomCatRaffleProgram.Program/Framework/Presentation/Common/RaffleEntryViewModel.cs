@@ -1,11 +1,15 @@
-﻿using TomCatRaffleProgram.Program.Framework.Presentation.CommonViewModels;
+﻿using TomCatRaffleProgram.Program.ApplicationLayer.Dtos;
 
 namespace TomCatRaffleProgram.Program.Framework.Presentation.Common
 {
-    class RaffleEntryViewModel : IViewModel
+    class RaffleEntryViewModel
     {
-        public string Errors { get; set; }
-
+        public RaffleEntryViewModel(RaffleEntryDto raffleEntryDto)
+        {
+            FirstName = raffleEntryDto.FirstName;
+            LastName = raffleEntryDto.LastName;
+            Tickets = raffleEntryDto.Tickets;
+        }
         public string FirstName { get; set; }
 
         public string LastName { get; set; }

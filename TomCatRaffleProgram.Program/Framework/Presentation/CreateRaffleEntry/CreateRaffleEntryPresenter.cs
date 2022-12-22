@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using TomCatRaffleProgram.Program.ApplicationLayer.Dtos;
 using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffleEntry;
@@ -8,40 +6,18 @@ using TomCatRaffleProgram.Program.Framework.Presentation.Common;
 
 namespace TomCatRaffleProgram.Program.Framework.Presentation.CreateRaffleEntry
 {
-    class CreateRaffleEntryPresenter : IOutputPortPresenter<RaffleEntryViewModel>, ICreateRaffleEntryOutputPort
+    class CreateRaffleEntryPresenter : BasePresenter<RaffleEntryViewModel>, ICreateRaffleEntryOutputPort
     {
-        public Task<RaffleEntryViewModel> Result { get; set; }
+        Task ICreateRaffleEntryOutputPort.PresentFileNotFoundAsync()
+            => SetErrors(new List<string>() { "The File was not found." });
 
-        public bool PresentedSuccessfully { get; set; }
+        Task ICreateRaffleEntryOutputPort.PresentRaffleEntryAsync(RaffleEntryDto entry)
+            => SetResult(new RaffleEntryViewModel(entry));
 
-        Task<RaffleEntryViewModel> ICreateRaffleEntryOutputPort.PresentFileNotFoundAsync()
-        {
-            this.PresentedSuccessfully = false;
-            this.Result = Task.FromResult(new RaffleEntryViewModel { Errors = "The File was not found." });
-            return this.Result;
-        }
+        Task ICreateRaffleEntryOutputPort.PresentRaffleNotFoundAsync(int raffleId)
+            => SetErrors(new List<string>() { $"A Raffle with the Id {raffleId} was not found." });
 
-        Task<RaffleEntryViewModel> ICreateRaffleEntryOutputPort.PresentRaffleEntryAsync(RaffleEntryDto entry)
-        {
-            this.PresentedSuccessfully = true;
-            this.Result = Task.FromResult(new RaffleEntryViewModel { FirstName = entry.FirstName, LastName = entry.LastName });
-            return this.Result;
-        }
-
-        Task<RaffleEntryViewModel> ICreateRaffleEntryOutputPort.PresentRaffleNotFoundAsync(int raffleId)
-        {
-            this.PresentedSuccessfully = false;
-            this.Result = Task.FromResult(new RaffleEntryViewModel { Errors = $"A raffle with the Id '{raffleId} was not found." });
-            return this.Result;
-        }
-
-        Task<RaffleEntryViewModel> ICreateRaffleEntryOutputPort.PresentValidationFailureAsync(List<string> failures)
-        {
-            this.PresentedSuccessfully = false;
-            var errorMessages = string.Empty;
-            failures.ForEach(f => errorMessages += $"{f}\n");
-            this.Result = Task.FromResult(new RaffleEntryViewModel { Errors = errorMessages });
-            return this.Result;
-        }
+        Task ICreateRaffleEntryOutputPort.PresentValidationFailureAsync(List<string> failures)
+            => SetErrors(failures);
     }
 }

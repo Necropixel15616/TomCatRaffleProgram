@@ -2,7 +2,7 @@
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.Pipeline
 {
-    public class UseCasePipeline<TInputPort, TOutputPort> where TInputPort : IInputPortPipe<TOutputPort>
+    public class UseCasePipeline<TInputPort, TOutputPort> where TInputPort : IInputPort<TOutputPort>
     {
 
         public UseCasePipeline(
@@ -30,16 +30,18 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.Pipeline
             TOutputPort outputPort)
         {
             if (InputPortValidator != null)
-                InputPortValidator.ValidateAsync(inputPort, outputPort);
+                if (!InputPortValidator.ValidateAsync(inputPort, outputPort))
+                    return outputPort;
 
             if (EntityExistenceChecker != null)
-                EntityExistenceChecker.ValidateEntityExistAsync(inputPort, outputPort);
+                if (!EntityExistenceChecker.ValidateEntityExist(inputPort, outputPort))
+                    return outputPort;
 
             if (BusinessRuleValidator != null)
-                BusinessRuleValidator.ValidateAsync(inputPort, outputPort);
+                if (!BusinessRuleValidator.ValidateAsync(inputPort, outputPort))
+                    return outputPort;
 
             await Interactor.HandleAsync(inputPort, outputPort);
-
             return outputPort;
         }
 
