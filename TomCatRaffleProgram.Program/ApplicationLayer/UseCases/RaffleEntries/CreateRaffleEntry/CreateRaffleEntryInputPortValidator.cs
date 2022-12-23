@@ -3,7 +3,7 @@ using System.Linq;
 using TomCatRaffleProgram.Program.ApplicationLayer.Pipeline;
 using TomCatRaffleProgram.Program.ApplicationLayer.Services;
 
-namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffleEntry
+namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.CreateRaffleEntry
 {
     class CreateRaffleEntryInputPortValidator : IInputPortValidatorPipe<CreateRaffleEntryInputPort, ICreateRaffleEntryOutputPort>
     {

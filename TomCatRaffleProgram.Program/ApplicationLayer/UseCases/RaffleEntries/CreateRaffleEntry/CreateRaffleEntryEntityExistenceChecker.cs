@@ -1,21 +1,20 @@
 ﻿using TomCatRaffleProgram.Program.ApplicationLayer.Pipeline;
 using TomCatRaffleProgram.Program.ApplicationLayer.Services;
 
-namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.GetRaffleEntries
+namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.CreateRaffleEntry
 {
-    class GetRaffleEntriesEntityExistenceChecker : IEntityExistenceCheckerPipe<GetRaffleEntriesInputPort, IGetRaffleEntriesOutputPort>
+    class CreateRaffleEntryEntityExistenceChecker : IEntityExistenceCheckerPipe<CreateRaffleEntryInputPort, ICreateRaffleEntryOutputPort>
     {
-
         private readonly IFileServices FileServices;
         private readonly IRaffleRepository PersistenceContext;
 
-        public GetRaffleEntriesEntityExistenceChecker(IFileServices fileServices, IRaffleRepository persistenceContext)
+        public CreateRaffleEntryEntityExistenceChecker(IFileServices fileServices, IRaffleRepository persistenceContext)
         {
             FileServices = fileServices;
             PersistenceContext = persistenceContext;
         }
 
-        bool IEntityExistenceCheckerPipe<GetRaffleEntriesInputPort, IGetRaffleEntriesOutputPort>.ValidateEntityExist(GetRaffleEntriesInputPort inputPort, IGetRaffleEntriesOutputPort outputPort)
+        bool IEntityExistenceCheckerPipe<CreateRaffleEntryInputPort, ICreateRaffleEntryOutputPort>.ValidateEntityExist(CreateRaffleEntryInputPort inputPort, ICreateRaffleEntryOutputPort outputPort)
         {
             if (!this.FileServices.DoesFileExist())
             {
@@ -25,7 +24,7 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.GetRaffleEntries
 
             if (this.PersistenceContext.Find(inputPort.RaffleId) == null)
             {
-                outputPort.PresentRaffleNotFound(inputPort.RaffleId);
+                outputPort.PresentRaffleNotFoundAsync(inputPort.RaffleId);
                 return false;
             }
 

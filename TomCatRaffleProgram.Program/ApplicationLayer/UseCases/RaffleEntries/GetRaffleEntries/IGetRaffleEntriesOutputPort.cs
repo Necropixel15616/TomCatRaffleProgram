@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using TomCatRaffleProgram.Program.ApplicationLayer.Dtos;
 
-namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.GetRaffleEntries
+namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.GetRaffleEntries
 {
     interface IGetRaffleEntriesOutputPort
     {

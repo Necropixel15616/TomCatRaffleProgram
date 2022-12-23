@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using TomCatRaffleProgram.Program.ApplicationLayer.Dtos;
 
-namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffle
+namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.Raffles.CreateRaffle
 {
     interface ICreateRaffleOutputPort
     {

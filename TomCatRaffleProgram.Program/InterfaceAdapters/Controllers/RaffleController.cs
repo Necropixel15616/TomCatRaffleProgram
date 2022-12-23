@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using TomCatRaffleProgram.Program.ApplicationLayer.Pipeline;
 using TomCatRaffleProgram.Program.ApplicationLayer.Services;
-using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffle;
+using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.Raffles.CreateRaffle;
 
 namespace TomCatRaffleProgram.Program.InterfaceAdapters.Controllers
 {

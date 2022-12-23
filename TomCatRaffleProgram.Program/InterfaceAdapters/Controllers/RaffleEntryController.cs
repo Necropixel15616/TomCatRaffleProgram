@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 using TomCatRaffleProgram.Program.ApplicationLayer.Pipeline;
 using TomCatRaffleProgram.Program.ApplicationLayer.Services;
-using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffleEntry;
-using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.GetRaffleEntries;
+using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.CreateRaffleEntry;
+using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.GetRaffleEntries;
 
 namespace TomCatRaffleProgram.Program.InterfaceAdapters.Controllers
 {
