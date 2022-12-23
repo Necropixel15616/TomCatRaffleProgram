@@ -2,26 +2,35 @@
 using TomCatRaffleProgram.Program.ApplicationLayer.Pipeline;
 using TomCatRaffleProgram.Program.ApplicationLayer.Services;
 using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.Raffles.CreateRaffle;
+using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.Raffles.GetRaffles;
 
 namespace TomCatRaffleProgram.Program.InterfaceAdapters.Controllers
 {
     class RaffleController
     {
         private readonly IFileServices FileServices;
-        private readonly IRaffleRepository PersistenceContext;
+        private readonly IRaffleRepository RaffleRepository;
 
-        public RaffleController(IFileServices fileServices, IRaffleRepository persistenceContext)
+        public RaffleController(IFileServices fileServices, IRaffleRepository raffleRepository)
         {
             FileServices = fileServices;
-            PersistenceContext = persistenceContext;
+            RaffleRepository = raffleRepository;
         }
 
         public async Task CreateRaffleAsync(CreateRaffleInputPort inputPort, ICreateRaffleOutputPort outputPort)
         {
             var _Pipeline = new UseCasePipeline<CreateRaffleInputPort, ICreateRaffleOutputPort>(
-                                new CreateRaffleInteractor(PersistenceContext),
+                                new CreateRaffleInteractor(RaffleRepository),
                                 _inputPortValidator: new CreateRaffleInputPortValidator(),
-                                _entityExistenceChecker: new CreateRaffleEntityExistenceChecker(FileServices, PersistenceContext));
+                                _entityExistenceChecker: new CreateRaffleEntityExistenceChecker(FileServices, RaffleRepository));
+
+            await _Pipeline.InvokeUseCaseAsync(inputPort, outputPort);
+        }
+
+        public async Task GetRafflesAsync(GetRafflesInputPort inputPort, IGetRafflesOutputPort outputPort)
+        {
+            var _Pipeline = new UseCasePipeline<GetRafflesInputPort, IGetRafflesOutputPort>(
+                                new GetRafflesInteractor(RaffleRepository));
 
             await _Pipeline.InvokeUseCaseAsync(inputPort, outputPort);
         }
