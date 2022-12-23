@@ -20,7 +20,7 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.Raffles.CreateRa
         {
             if (!FileServices.DoesFileExist())
             {
-                outputPort.PresentFileNotFoundAsync();
+                outputPort.PresentFileNotFound();
                 return false;
             }
 

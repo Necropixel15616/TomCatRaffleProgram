@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace TomCatRaffleProgram.Program.Framework.Presentation
 {
-    class BasePresenter<TEntity>
+    class BasePresenter<TEntity> : IFileValidation
     {
         public List<string> Errors { get; private set; }
 
@@ -17,5 +17,8 @@ namespace TomCatRaffleProgram.Program.Framework.Presentation
 
         protected Task SetResult(TEntity result)
             => Result = Task.FromResult(result);
+
+        Task IFileValidation.PresentFileNotFound()
+            => SetErrors(new List<string>() { "The File was not found." });
     }
 }

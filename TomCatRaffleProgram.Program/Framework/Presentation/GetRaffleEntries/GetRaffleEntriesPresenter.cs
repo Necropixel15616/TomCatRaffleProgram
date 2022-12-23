@@ -8,9 +8,6 @@ namespace TomCatRaffleProgram.Program.Framework.Presentation.GetRaffleEntries
 {
     class GetRaffleEntriesPresenter : BasePresenter<List<RaffleEntryViewModel>>, IGetRaffleEntriesOutputPort
     {
-        Task IGetRaffleEntriesOutputPort.PresentFileNotFoundAsync()
-            => SetErrors(new List<string>() { "The File was not found." });
-
         Task IGetRaffleEntriesOutputPort.PresentRaffleEntriesAsync(List<RaffleEntryDto> entries)
         {
             var viewModels = new List<RaffleEntryViewModel>();

@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using TomCatRaffleProgram.Program.ApplicationLayer.Dtos;
+using TomCatRaffleProgram.Program.Framework.Presentation;
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.CreateRaffleEntry
 {
-    interface ICreateRaffleEntryOutputPort
+    interface ICreateRaffleEntryOutputPort : IFileValidation
     {
-        Task PresentFileNotFoundAsync();
-
         Task PresentRaffleEntryAsync(RaffleEntryDto entry);
 
         Task PresentRaffleNotFoundAsync(int raffleId);

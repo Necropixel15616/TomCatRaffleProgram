@@ -8,9 +8,6 @@ namespace TomCatRaffleProgram.Program.Framework.Presentation.CreateRaffleEntry
 {
     class CreateRaffleEntryPresenter : BasePresenter<RaffleEntryViewModel>, ICreateRaffleEntryOutputPort
     {
-        Task ICreateRaffleEntryOutputPort.PresentFileNotFoundAsync()
-            => SetErrors(new List<string>() { "The File was not found." });
-
         Task ICreateRaffleEntryOutputPort.PresentRaffleEntryAsync(RaffleEntryDto entry)
             => SetResult(new RaffleEntryViewModel(entry));
 
