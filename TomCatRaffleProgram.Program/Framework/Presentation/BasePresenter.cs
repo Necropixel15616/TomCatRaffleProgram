@@ -7,7 +7,7 @@ namespace TomCatRaffleProgram.Program.Framework.Presentation
     {
         public List<string> Errors { get; private set; }
 
-        public Task<TEntity> Result { get; set; }
+        public Task<TEntity> Result { get; private set; }
 
         protected Task SetErrors(List<string> errors)
         {
