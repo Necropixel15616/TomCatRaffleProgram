@@ -2,7 +2,7 @@
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.Pipeline
 {
-    public interface IInteractorPipe<TInputPort, TOutputPort> where TInputPort : IInputPort<TOutputPort>
+    public interface IInteractor<TInputPort, TOutputPort> where TInputPort : IInputPort<TOutputPort>
     {
 
         Task HandleAsync(TInputPort inputPort, TOutputPort outputPort);

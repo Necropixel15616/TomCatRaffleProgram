@@ -4,7 +4,7 @@ using TomCatRaffleProgram.Program.ApplicationLayer.Services;
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.Raffles.CreateRaffle
 {
-    class CreateRaffleEntityExistenceChecker : IEntityExistenceCheckerPipe<CreateRaffleInputPort, ICreateRaffleOutputPort>
+    class CreateRaffleEntityExistenceChecker : IEntityExistenceChecker<CreateRaffleInputPort, ICreateRaffleOutputPort>
     {
 
         private readonly IFileServices FileServices;
@@ -16,7 +16,7 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.Raffles.CreateRa
             PersistenceContext = persistenceContext;
         }
 
-        bool IEntityExistenceCheckerPipe<CreateRaffleInputPort, ICreateRaffleOutputPort>.ValidateEntityExist(CreateRaffleInputPort inputPort, ICreateRaffleOutputPort outputPort)
+        bool IEntityExistenceChecker<CreateRaffleInputPort, ICreateRaffleOutputPort>.ValidateEntityExist(CreateRaffleInputPort inputPort, ICreateRaffleOutputPort outputPort)
         {
             if (!FileServices.DoesFileExist())
             {

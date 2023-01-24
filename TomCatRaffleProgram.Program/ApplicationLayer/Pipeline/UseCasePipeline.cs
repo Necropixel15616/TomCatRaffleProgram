@@ -6,10 +6,10 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.Pipeline
     {
 
         public UseCasePipeline(
-            IInteractorPipe<TInputPort, TOutputPort> _interactor,
-            IInputPortValidatorPipe<TInputPort, TOutputPort> _inputPortValidator = null,
-            IEntityExistenceCheckerPipe<TInputPort, TOutputPort> _entityExistenceChecker = null,
-            IBusinessRuleValidatorPipe<TInputPort, TOutputPort> _businessRuleValidator = null)
+            IInteractor<TInputPort, TOutputPort> _interactor,
+            IInputPortValidator<TInputPort, TOutputPort> _inputPortValidator = null,
+            IEntityExistenceChecker<TInputPort, TOutputPort> _entityExistenceChecker = null,
+            IBusinessRuleValidator<TInputPort, TOutputPort> _businessRuleValidator = null)
         {
             Interactor = _interactor;
             EntityExistenceChecker = _entityExistenceChecker;
@@ -17,13 +17,13 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.Pipeline
             InputPortValidator = _inputPortValidator;
         }
 
-        IInputPortValidatorPipe<TInputPort, TOutputPort> InputPortValidator;
+        IInputPortValidator<TInputPort, TOutputPort> InputPortValidator;
 
-        IEntityExistenceCheckerPipe<TInputPort, TOutputPort> EntityExistenceChecker;
+        IEntityExistenceChecker<TInputPort, TOutputPort> EntityExistenceChecker;
 
-        IBusinessRuleValidatorPipe<TInputPort, TOutputPort> BusinessRuleValidator;
+        IBusinessRuleValidator<TInputPort, TOutputPort> BusinessRuleValidator;
 
-        IInteractorPipe<TInputPort, TOutputPort> Interactor;
+        IInteractor<TInputPort, TOutputPort> Interactor;
 
         public async Task<TOutputPort> InvokeUseCaseAsync(
             TInputPort inputPort,
