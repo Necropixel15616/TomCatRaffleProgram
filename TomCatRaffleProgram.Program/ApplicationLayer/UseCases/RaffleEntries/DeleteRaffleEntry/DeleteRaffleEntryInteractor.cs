@@ -20,6 +20,7 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.De
 
             raffle.Entries.Remove(raffle.Entries.Where(re => re.Id == inputPort.RaffleEntryId).SingleOrDefault());
 
+            RaffleRepository.Save();
             return outputPort.PresentRaffleEntryDeleted();
         }
     }

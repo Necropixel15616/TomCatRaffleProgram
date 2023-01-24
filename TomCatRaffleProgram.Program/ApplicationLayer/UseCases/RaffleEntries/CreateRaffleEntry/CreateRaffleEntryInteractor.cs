@@ -18,7 +18,7 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.Cr
             Raffle raffle = (Raffle)PersistenceContext.Find(inputPort.RaffleId);
 
             var id = 0;
-            raffle.Entries.ForEach(e =>
+            raffle?.Entries.ForEach(e =>
             {
                 if (e.Id > id)
                     id = e.Id;
