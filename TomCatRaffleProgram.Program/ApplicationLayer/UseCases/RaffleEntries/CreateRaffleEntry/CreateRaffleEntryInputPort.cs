@@ -1,6 +1,6 @@
 ﻿using TomCatRaffleProgram.Program.ApplicationLayer.Pipeline;
 
-namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffleEntry
+namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.CreateRaffleEntry
 {
     class CreateRaffleEntryInputPort : IInputPort<ICreateRaffleEntryOutputPort>
     {

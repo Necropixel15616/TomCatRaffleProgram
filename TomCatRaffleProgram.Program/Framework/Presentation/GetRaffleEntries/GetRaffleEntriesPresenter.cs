@@ -1,16 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using TomCatRaffleProgram.Program.ApplicationLayer.Dtos;
-using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.GetRaffleEntries;
+using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.GetRaffleEntries;
 using TomCatRaffleProgram.Program.Framework.Presentation.Common;
 
 namespace TomCatRaffleProgram.Program.Framework.Presentation.GetRaffleEntries
 {
     class GetRaffleEntriesPresenter : BasePresenter<List<RaffleEntryViewModel>>, IGetRaffleEntriesOutputPort
     {
-        Task IGetRaffleEntriesOutputPort.PresentFileNotFoundAsync()
-            => SetErrors(new List<string>() { "The File was not found." });
-
         Task IGetRaffleEntriesOutputPort.PresentRaffleEntriesAsync(List<RaffleEntryDto> entries)
         {
             var viewModels = new List<RaffleEntryViewModel>();

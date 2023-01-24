@@ -1,7 +1,7 @@
 ﻿using TomCatRaffleProgram.Program.ApplicationLayer.Pipeline;
 using TomCatRaffleProgram.Program.ApplicationLayer.Services;
 
-namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.GetRaffleEntries
+namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.GetRaffleEntries
 {
     class GetRaffleEntriesEntityExistenceChecker : IEntityExistenceCheckerPipe<GetRaffleEntriesInputPort, IGetRaffleEntriesOutputPort>
     {
@@ -19,7 +19,7 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.GetRaffleEntries
         {
             if (!this.FileServices.DoesFileExist())
             {
-                outputPort.PresentFileNotFoundAsync();
+                outputPort.PresentFileNotFound();
                 return false;
             }
 

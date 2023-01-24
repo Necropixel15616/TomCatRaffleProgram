@@ -4,7 +4,7 @@ using TomCatRaffleProgram.Program.ApplicationLayer.Pipeline;
 using TomCatRaffleProgram.Program.ApplicationLayer.Services;
 using TomCatRaffleProgram.Program.Domain.Entities;
 
-namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.CreateRaffleEntry
+namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.CreateRaffleEntry
 {
     class CreateRaffleEntryInteractor : IInteractorPipe<CreateRaffleEntryInputPort, ICreateRaffleEntryOutputPort>
     {
