@@ -9,7 +9,5 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.De
 
         public int RaffleEntryId { get; set; }
 
-        public int? TicketsToRemove { get; set; }
-
     }
 }
