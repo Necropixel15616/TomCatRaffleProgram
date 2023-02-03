@@ -6,14 +6,14 @@ using TomCatRaffleProgram.Program.ApplicationLayer.Services;
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.Raffles.GetRaffles
 {
-    class GetRafflesInteractor : IInteractorPipe<GetRafflesInputPort, IGetRafflesOutputPort>
+    class GetRafflesInteractor : IInteractor<GetRafflesInputPort, IGetRafflesOutputPort>
     {
         private readonly IRaffleRepository RaffleRepository;
 
         public GetRafflesInteractor(IRaffleRepository raffleRepository)
             => RaffleRepository = raffleRepository;
 
-        Task IInteractorPipe<GetRafflesInputPort, IGetRafflesOutputPort>.HandleAsync(GetRafflesInputPort inputPort, IGetRafflesOutputPort outputPort)
+        Task IInteractor<GetRafflesInputPort, IGetRafflesOutputPort>.HandleAsync(GetRafflesInputPort inputPort, IGetRafflesOutputPort outputPort)
         {
             var raffles = RaffleRepository.GetRaffles();
             var raffleDtos = new List<RaffleDto>();

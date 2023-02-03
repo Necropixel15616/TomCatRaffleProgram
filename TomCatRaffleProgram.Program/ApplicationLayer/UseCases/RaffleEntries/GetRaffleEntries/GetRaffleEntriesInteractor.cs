@@ -7,14 +7,14 @@ using TomCatRaffleProgram.Program.Domain.Entities;
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.GetRaffleEntries
 {
-    class GetRaffleEntriesInteractor : IInteractorPipe<GetRaffleEntriesInputPort, IGetRaffleEntriesOutputPort>
+    class GetRaffleEntriesInteractor : IInteractor<GetRaffleEntriesInputPort, IGetRaffleEntriesOutputPort>
     {
         private readonly IRaffleRepository PersistenceContext;
 
         public GetRaffleEntriesInteractor(IRaffleRepository persistenceContext)
             => PersistenceContext = persistenceContext;
 
-        Task IInteractorPipe<GetRaffleEntriesInputPort, IGetRaffleEntriesOutputPort>.HandleAsync(GetRaffleEntriesInputPort inputPort, IGetRaffleEntriesOutputPort outputPort)
+        Task IInteractor<GetRaffleEntriesInputPort, IGetRaffleEntriesOutputPort>.HandleAsync(GetRaffleEntriesInputPort inputPort, IGetRaffleEntriesOutputPort outputPort)
         {
             var raffle = (Raffle)PersistenceContext.Find(inputPort.RaffleId);
 

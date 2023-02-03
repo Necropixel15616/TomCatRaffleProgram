@@ -4,7 +4,7 @@ using TomCatRaffleProgram.Program.ApplicationLayer.Dtos;
 using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.GetRaffleEntries;
 using TomCatRaffleProgram.Program.Framework.Presentation.Common;
 
-namespace TomCatRaffleProgram.Program.Framework.Presentation.GetRaffleEntries
+namespace TomCatRaffleProgram.Program.Framework.Presentation.RaffleEntry.GetRaffleEntries
 {
     class GetRaffleEntriesPresenter : BasePresenter<List<RaffleEntryViewModel>>, IGetRaffleEntriesOutputPort
     {

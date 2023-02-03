@@ -5,11 +5,11 @@ using TomCatRaffleProgram.Program.ApplicationLayer.Services;
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.Raffles.CreateRaffle
 {
-    class CreateRaffleInputPortValidator : IInputPortValidatorPipe<CreateRaffleInputPort, ICreateRaffleOutputPort>
+    class CreateRaffleInputPortValidator : IInputPortValidator<CreateRaffleInputPort, ICreateRaffleOutputPort>
     {
         public CreateRaffleInputPortValidator() { }
 
-        bool IInputPortValidatorPipe<CreateRaffleInputPort, ICreateRaffleOutputPort>.ValidateAsync(CreateRaffleInputPort inputPort, ICreateRaffleOutputPort outputPort)
+        bool IInputPortValidator<CreateRaffleInputPort, ICreateRaffleOutputPort>.ValidateAsync(CreateRaffleInputPort inputPort, ICreateRaffleOutputPort outputPort)
         {
             List<string> validationFailures = new List<string>();
             if (inputPort.RaffleName.IsNullOrWhitespaceOrEmpty())

@@ -7,7 +7,7 @@ using TomCatRaffleProgram.Program.Domain.Entities;
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.Raffles.CreateRaffle
 {
-    class CreateRaffleInteractor : IInteractorPipe<CreateRaffleInputPort, ICreateRaffleOutputPort>
+    class CreateRaffleInteractor : IInteractor<CreateRaffleInputPort, ICreateRaffleOutputPort>
     {
 
         public readonly IRaffleRepository PersistenceContext;
@@ -15,7 +15,7 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.Raffles.CreateRa
         public CreateRaffleInteractor(IRaffleRepository persistenceContext)
             => PersistenceContext = persistenceContext;
 
-        Task IInteractorPipe<CreateRaffleInputPort, ICreateRaffleOutputPort>.HandleAsync(CreateRaffleInputPort inputPort, ICreateRaffleOutputPort outputPort)
+        Task IInteractor<CreateRaffleInputPort, ICreateRaffleOutputPort>.HandleAsync(CreateRaffleInputPort inputPort, ICreateRaffleOutputPort outputPort)
         {
             List<Raffle> raffles = PersistenceContext.GetRaffles();
             var id = 0;

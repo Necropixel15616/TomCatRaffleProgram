@@ -6,19 +6,19 @@ using TomCatRaffleProgram.Program.Domain.Entities;
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.CreateRaffleEntry
 {
-    class CreateRaffleEntryInteractor : IInteractorPipe<CreateRaffleEntryInputPort, ICreateRaffleEntryOutputPort>
+    class CreateRaffleEntryInteractor : IInteractor<CreateRaffleEntryInputPort, ICreateRaffleEntryOutputPort>
     {
         private readonly IRaffleRepository PersistenceContext;
 
         public CreateRaffleEntryInteractor(IRaffleRepository persistenceContext)
             => this.PersistenceContext = persistenceContext;
 
-        Task IInteractorPipe<CreateRaffleEntryInputPort, ICreateRaffleEntryOutputPort>.HandleAsync(CreateRaffleEntryInputPort inputPort, ICreateRaffleEntryOutputPort outputPort)
+        Task IInteractor<CreateRaffleEntryInputPort, ICreateRaffleEntryOutputPort>.HandleAsync(CreateRaffleEntryInputPort inputPort, ICreateRaffleEntryOutputPort outputPort)
         {
             Raffle raffle = (Raffle)PersistenceContext.Find(inputPort.RaffleId);
 
             var id = 0;
-            raffle.Entries.ForEach(e =>
+            raffle?.Entries.ForEach(e =>
             {
                 if (e.Id > id)
                     id = e.Id;
