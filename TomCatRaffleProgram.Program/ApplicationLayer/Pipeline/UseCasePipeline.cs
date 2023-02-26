@@ -1,10 +1,23 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using TomCatRaffleProgram.Program.ApplicationLayer.Infrastructure;
+using TomCatRaffleProgram.Program.ApplicationLayer.Services;
+using TomCatRaffleProgram.Program.Framework.Presentation;
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.Pipeline
 {
-    public class UseCasePipeline<TInputPort, TOutputPort> where TInputPort : IInputPort<TOutputPort>
+    class UseCasePipeline<TInputPort, TOutputPort> where TInputPort : IInputPort<TOutputPort> where TOutputPort : IFileValidation
     {
+
+        IInputPortValidator<TInputPort, TOutputPort> InputPortValidator;
+
+        IEntityExistenceChecker<TInputPort, TOutputPort> EntityExistenceChecker;
+
+        IBusinessRuleValidator<TInputPort, TOutputPort> BusinessRuleValidator;
+
+        IInteractor<TInputPort, TOutputPort> Interactor;
+
+        IFileValidator<TOutputPort> FileValidation;
 
         public UseCasePipeline(
             IInteractor<TInputPort, TOutputPort> _interactor,
@@ -16,15 +29,8 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.Pipeline
             EntityExistenceChecker = _entityExistenceChecker;
             BusinessRuleValidator = _businessRuleValidator;
             InputPortValidator = _inputPortValidator;
+            FileValidation = new FileValidator<TOutputPort>(new FileServices());
         }
-
-        IInputPortValidator<TInputPort, TOutputPort> InputPortValidator;
-
-        IEntityExistenceChecker<TInputPort, TOutputPort> EntityExistenceChecker;
-
-        IBusinessRuleValidator<TInputPort, TOutputPort> BusinessRuleValidator;
-
-        IInteractor<TInputPort, TOutputPort> Interactor;
 
         public async Task<TOutputPort> InvokeUseCaseAsync(
             TInputPort inputPort,
@@ -34,6 +40,9 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.Pipeline
             if (InputPortValidator != null)
                 if (!await InputPortValidator.ValidateAsync(inputPort, outputPort, cancellationToken))
                     return outputPort;
+
+            if (!await FileValidation.ValidateFileExistsAsync(outputPort, cancellationToken))
+                return outputPort;
 
             if (EntityExistenceChecker != null)
                 if (!await EntityExistenceChecker.ValidateEntityExistAsync(inputPort, outputPort, cancellationToken))

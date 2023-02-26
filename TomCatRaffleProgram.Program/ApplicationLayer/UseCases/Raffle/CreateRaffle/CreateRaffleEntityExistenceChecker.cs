@@ -23,12 +23,6 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.Raffles.CreateRa
             ICreateRaffleOutputPort outputPort,
             CancellationToken cancellationToken)
         {
-            if (!FileServices.DoesFileExist())
-            {
-                await outputPort.PresentFileNotFoundAsync(cancellationToken);
-                return false;
-            }
-
             if (PersistenceContext.GetRaffles()
                     .Where(r => r.Name.ToUpper().Equals(inputPort.RaffleName.ToUpper()))
                     .SingleOrDefault() != null)
