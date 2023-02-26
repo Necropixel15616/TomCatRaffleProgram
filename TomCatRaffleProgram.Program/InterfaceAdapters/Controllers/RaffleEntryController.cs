@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using TomCatRaffleProgram.Program.ApplicationLayer.Pipeline;
 using TomCatRaffleProgram.Program.ApplicationLayer.Services;
 using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.CreateRaffleEntry;
@@ -18,32 +19,32 @@ namespace TomCatRaffleProgram.Program.InterfaceAdapters.Controllers
             PersistenceContext = persistenceContext;
         }
 
-        public async Task CreateRaffleEntryAsync(CreateRaffleEntryInputPort inputPort, ICreateRaffleEntryOutputPort outputPort)
+        public async Task CreateRaffleEntryAsync(CreateRaffleEntryInputPort inputPort, ICreateRaffleEntryOutputPort outputPort, CancellationToken cancellationToken)
         {
             var _Pipeline = new UseCasePipeline<CreateRaffleEntryInputPort, ICreateRaffleEntryOutputPort>(
                                 new CreateRaffleEntryInteractor(PersistenceContext),
                                 _inputPortValidator: new CreateRaffleEntryInputPortValidator(),
                                 _entityExistenceChecker: new CreateRaffleEntryEntityExistenceChecker(FileServices, PersistenceContext));
 
-            await _Pipeline.InvokeUseCaseAsync(inputPort, outputPort);
+            await _Pipeline.InvokeUseCaseAsync(inputPort, outputPort, cancellationToken);
         }
 
-        public async Task GetRaffleEntriesAsync(GetRaffleEntriesInputPort inputPort, IGetRaffleEntriesOutputPort outputPort)
+        public async Task GetRaffleEntriesAsync(GetRaffleEntriesInputPort inputPort, IGetRaffleEntriesOutputPort outputPort, CancellationToken cancellationToken)
         {
             var _Pipeline = new UseCasePipeline<GetRaffleEntriesInputPort, IGetRaffleEntriesOutputPort>(
                                 new GetRaffleEntriesInteractor(PersistenceContext),
                                 _entityExistenceChecker: new GetRaffleEntriesEntityExistenceChecker(FileServices, PersistenceContext));
 
-            await _Pipeline.InvokeUseCaseAsync(inputPort, outputPort);
+            await _Pipeline.InvokeUseCaseAsync(inputPort, outputPort, cancellationToken);
         }
 
-        public async Task DeleteRaffleEntryAsync(DeleteRaffleEntryInputPort inputPort, IDeleteRaffleEntryOutputPort outputPort)
+        public async Task DeleteRaffleEntryAsync(DeleteRaffleEntryInputPort inputPort, IDeleteRaffleEntryOutputPort outputPort, CancellationToken cancellationToken)
         {
             var _Pipeline = new UseCasePipeline<DeleteRaffleEntryInputPort, IDeleteRaffleEntryOutputPort>(
                                 new DeleteRaffleEntryInteractor(PersistenceContext),
                                 _entityExistenceChecker: new DeleteRaffleEntryEntityExistenceChecker(PersistenceContext, FileServices));
 
-            await _Pipeline.InvokeUseCaseAsync(inputPort, outputPort);
+            await _Pipeline.InvokeUseCaseAsync(inputPort, outputPort, cancellationToken);
         }
 
     }

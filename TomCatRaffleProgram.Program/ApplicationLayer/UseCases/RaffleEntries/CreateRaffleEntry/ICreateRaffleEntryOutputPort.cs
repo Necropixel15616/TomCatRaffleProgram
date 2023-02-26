@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using TomCatRaffleProgram.Program.ApplicationLayer.Dtos;
 using TomCatRaffleProgram.Program.Framework.Presentation;
@@ -7,10 +8,10 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.Cr
 {
     interface ICreateRaffleEntryOutputPort : IFileValidation
     {
-        Task PresentRaffleEntryAsync(RaffleEntryDto entry);
+        Task PresentRaffleEntryAsync(RaffleEntryDto entry, CancellationToken cancellationToken);
 
-        Task PresentRaffleNotFoundAsync(int raffleId);
+        Task PresentRaffleNotFoundAsync(int raffleId, CancellationToken cancellationToken);
 
-        Task PresentValidationFailureAsync(List<string> failures);
+        Task PresentValidationFailureAsync(List<string> failures, CancellationToken cancellationToken);
     }
 }

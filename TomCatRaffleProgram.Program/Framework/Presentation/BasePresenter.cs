@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace TomCatRaffleProgram.Program.Framework.Presentation
@@ -9,16 +10,16 @@ namespace TomCatRaffleProgram.Program.Framework.Presentation
 
         public Task<TEntity> Result { get; private set; }
 
-        protected Task SetErrors(List<string> errors)
+        protected Task SetErrorsAsync(List<string> errors, CancellationToken cancellationToken)
         {
             Errors = errors;
             return Task.CompletedTask;
         }
 
-        protected Task SetResult(TEntity result)
+        protected Task SetResultAsync(TEntity result, CancellationToken cancellationToken)
             => Result = Task.FromResult(result);
 
-        Task IFileValidation.PresentFileNotFound()
-            => SetErrors(new List<string>() { "The File was not found." });
+        Task IFileValidation.PresentFileNotFoundAsync(CancellationToken cancellationToken)
+            => SetErrorsAsync(new List<string>() { "The File was not found." }, cancellationToken);
     }
 }

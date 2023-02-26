@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using TomCatRaffleProgram.Program.ApplicationLayer.Pipeline;
 using TomCatRaffleProgram.Program.ApplicationLayer.Services;
 
@@ -9,7 +11,10 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.Cr
     {
         public CreateRaffleEntryInputPortValidator() { }
 
-        bool IInputPortValidator<CreateRaffleEntryInputPort, ICreateRaffleEntryOutputPort>.ValidateAsync(CreateRaffleEntryInputPort inputPort, ICreateRaffleEntryOutputPort outputPort)
+        async Task<bool> IInputPortValidator<CreateRaffleEntryInputPort, ICreateRaffleEntryOutputPort>.ValidateAsync(
+            CreateRaffleEntryInputPort inputPort,
+            ICreateRaffleEntryOutputPort outputPort,
+            CancellationToken cancellationToken)
         {
             List<string> validationFailures = new List<string>();
             if (inputPort.FirstName.IsNullOrWhitespaceOrEmpty())
@@ -19,10 +24,9 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.Cr
 
             if (validationFailures.Any())
             {
-                outputPort.PresentValidationFailureAsync(validationFailures);
+                await outputPort.PresentValidationFailureAsync(validationFailures, cancellationToken);
                 return false;
             }
-
 
             return true;
         }

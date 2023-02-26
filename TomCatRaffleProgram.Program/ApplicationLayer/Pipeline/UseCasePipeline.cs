@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.Pipeline
 {
@@ -27,21 +28,22 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.Pipeline
 
         public async Task<TOutputPort> InvokeUseCaseAsync(
             TInputPort inputPort,
-            TOutputPort outputPort)
+            TOutputPort outputPort,
+            CancellationToken cancellationToken)
         {
             if (InputPortValidator != null)
-                if (!InputPortValidator.ValidateAsync(inputPort, outputPort))
+                if (!await InputPortValidator.ValidateAsync(inputPort, outputPort, cancellationToken))
                     return outputPort;
 
             if (EntityExistenceChecker != null)
-                if (!EntityExistenceChecker.ValidateEntityExist(inputPort, outputPort))
+                if (!await EntityExistenceChecker.ValidateEntityExistAsync(inputPort, outputPort, cancellationToken))
                     return outputPort;
 
             if (BusinessRuleValidator != null)
-                if (!BusinessRuleValidator.ValidateAsync(inputPort, outputPort))
+                if (!await BusinessRuleValidator.ValidateAsync(inputPort, outputPort, cancellationToken))
                     return outputPort;
 
-            await Interactor.HandleAsync(inputPort, outputPort);
+            await Interactor.HandleAsync(inputPort, outputPort, cancellationToken);
             return outputPort;
         }
 

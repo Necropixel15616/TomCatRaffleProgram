@@ -25,7 +25,7 @@ namespace TomCatRaffleProgram.Program.Framework.Infrastructure
         object IRaffleRepository.Find(int raffleId, int? entryId = null)
         {
             if (entryId.HasValue)
-                return Entities.Where(e => e.Id == raffleId).SelectMany(e => e.Entries).SingleOrDefault(e => e.Id == entryId);
+                return Entities.Where(e => e.Id == raffleId)?.SelectMany(e => e.Entries).SingleOrDefault(e => e.Id == entryId);
             else
                 return Entities.SingleOrDefault(e => e.Id == raffleId);
         }

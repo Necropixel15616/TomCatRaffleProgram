@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using TomCatRaffleProgram.Program.ApplicationLayer.Pipeline;
 using TomCatRaffleProgram.Program.ApplicationLayer.Services;
@@ -14,14 +15,17 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.De
         public DeleteRaffleEntryInteractor(IRaffleRepository raffleRepository)
             => RaffleRepository = raffleRepository;
 
-        Task IInteractor<DeleteRaffleEntryInputPort, IDeleteRaffleEntryOutputPort>.HandleAsync(DeleteRaffleEntryInputPort inputPort, IDeleteRaffleEntryOutputPort outputPort)
+        Task IInteractor<DeleteRaffleEntryInputPort, IDeleteRaffleEntryOutputPort>.HandleAsync(
+            DeleteRaffleEntryInputPort inputPort,
+            IDeleteRaffleEntryOutputPort outputPort,
+            CancellationToken cancellationToken)
         {
             var raffle = (Raffle)RaffleRepository.Find(inputPort.RaffleId);
 
             raffle.Entries.Remove(raffle.Entries.Where(re => re.Id == inputPort.RaffleEntryId).SingleOrDefault());
 
             RaffleRepository.Save();
-            return outputPort.PresentRaffleEntryDeleted();
+            return outputPort.PresentRaffleEntryDeletedAsync(cancellationToken);
         }
     }
 }
