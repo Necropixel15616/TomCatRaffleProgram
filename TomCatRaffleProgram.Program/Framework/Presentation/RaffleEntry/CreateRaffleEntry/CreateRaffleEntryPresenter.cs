@@ -3,19 +3,18 @@ using System.Threading;
 using System.Threading.Tasks;
 using TomCatRaffleProgram.Program.ApplicationLayer.Dtos;
 using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.CreateRaffleEntry;
-using TomCatRaffleProgram.Program.Framework.Presentation.Common;
 
 namespace TomCatRaffleProgram.Program.Framework.Presentation.RaffleEntry.CreateRaffleEntry
 {
-    class CreateRaffleEntryPresenter : BasePresenter<RaffleEntryViewModel>, ICreateRaffleEntryOutputPort
+    class CreateRaffleEntryPresenter : BasePresenter<RaffleEntryDto>, ICreateRaffleEntryOutputPort
     {
-        async Task ICreateRaffleEntryOutputPort.PresentRaffleEntryAsync(RaffleEntryDto entry, CancellationToken cancellationToken)
-            => await SetResultAsync(new RaffleEntryViewModel(entry), cancellationToken);
+        Task ICreateRaffleEntryOutputPort.PresentRaffleEntryAsync(RaffleEntryDto entry, CancellationToken cancellationToken)
+            => SetResultAsync(entry, cancellationToken);
 
-        async Task ICreateRaffleEntryOutputPort.PresentRaffleNotFoundAsync(int raffleId, CancellationToken cancellationToken)
-            => await SetErrorsAsync(new List<string>() { $"A Raffle with the Id {raffleId} was not found." }, cancellationToken);
+        Task ICreateRaffleEntryOutputPort.PresentRaffleNotFoundAsync(int raffleId, CancellationToken cancellationToken)
+            => SetErrorsAsync(new List<string>() { $"A Raffle with the Id {raffleId} was not found." }, cancellationToken);
 
-        async Task ICreateRaffleEntryOutputPort.PresentValidationFailureAsync(List<string> failures, CancellationToken cancellationToken)
-            => await SetErrorsAsync(failures, cancellationToken);
+        Task ICreateRaffleEntryOutputPort.PresentValidationFailureAsync(List<string> failures, CancellationToken cancellationToken)
+            => SetErrorsAsync(failures, cancellationToken);
     }
 }
