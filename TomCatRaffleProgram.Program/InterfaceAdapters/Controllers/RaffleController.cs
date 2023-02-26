@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using TomCatRaffleProgram.Program.ApplicationLayer.Pipeline;
 using TomCatRaffleProgram.Program.ApplicationLayer.Services;
 using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.Raffles.CreateRaffle;
+using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.Raffles.DeleteRaffle;
 using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.Raffles.GetRaffles;
 
 namespace TomCatRaffleProgram.Program.InterfaceAdapters.Controllers
@@ -32,6 +33,15 @@ namespace TomCatRaffleProgram.Program.InterfaceAdapters.Controllers
         {
             var _Pipeline = new UseCasePipeline<GetRafflesInputPort, IGetRafflesOutputPort>(
                                 new GetRafflesInteractor(RaffleRepository));
+
+            await _Pipeline.InvokeUseCaseAsync(inputPort, outputPort, cancellationToken);
+        }
+
+        public async Task DeleteRaffleAsync(DeleteRaffleInputPort inputPort, IDeleteRaffleOutputPort outputPort, CancellationToken cancellationToken)
+        {
+            var _Pipeline = new UseCasePipeline<DeleteRaffleInputPort, IDeleteRaffleOutputPort>(
+                    new DeleteRaffleInteractor(RaffleRepository),
+                    _entityExistenceChecker: new DeleteRaffleEntityExistenceChecker(FileServices, RaffleRepository));
 
             await _Pipeline.InvokeUseCaseAsync(inputPort, outputPort, cancellationToken);
         }
