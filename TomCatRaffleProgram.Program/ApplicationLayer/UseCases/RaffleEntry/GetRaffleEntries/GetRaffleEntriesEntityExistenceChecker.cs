@@ -22,12 +22,6 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.Ge
             IGetRaffleEntriesOutputPort outputPort,
             CancellationToken cancellationToken)
         {
-            if (!this.FileServices.DoesFileExist())
-            {
-                await outputPort.PresentFileNotFoundAsync(cancellationToken);
-                return false;
-            }
-
             if (this.PersistenceContext.Find(inputPort.RaffleId) == null)
             {
                 await outputPort.PresentRaffleNotFoundAsync(inputPort.RaffleId, cancellationToken);
