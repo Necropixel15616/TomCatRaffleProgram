@@ -9,16 +9,16 @@
   <ItemGroup>
     <Compile Remove="ApplicationLayer\UseCases - Copy\**" />
     <Compile Remove="Application\**" />
+    <Compile Remove="Framework\Controllers\**" />
     <EmbeddedResource Remove="ApplicationLayer\UseCases - Copy\**" />
     <EmbeddedResource Remove="Application\**" />
+    <EmbeddedResource Remove="Framework\Controllers\**" />
     <None Remove="ApplicationLayer\UseCases - Copy\**" />
     <None Remove="Application\**" />
+    <None Remove="Framework\Controllers\**" />
     <Page Remove="ApplicationLayer\UseCases - Copy\**" />
     <Page Remove="Application\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Framework\Controllers\" />
+    <Page Remove="Framework\Controllers\**" />
   </ItemGroup>
 
   <ItemGroup>
