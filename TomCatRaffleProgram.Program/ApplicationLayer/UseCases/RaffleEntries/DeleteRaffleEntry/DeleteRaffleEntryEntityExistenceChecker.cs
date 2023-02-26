@@ -24,19 +24,19 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.De
         {
             if (!FileServices.DoesFileExist())
             {
-                await outputPort.PresentFileNotFound(cancellationToken);
+                await outputPort.PresentFileNotFoundAsync(cancellationToken);
                 return false;
             }
 
             if (RaffleRepository.Find(inputPort.RaffleId) == null)
             {
-                await outputPort.PresentRaffleNotFound(inputPort.RaffleId, cancellationToken);
+                await outputPort.PresentRaffleNotFoundAsync(inputPort.RaffleId, cancellationToken);
                 return false;
             }
 
             if (RaffleRepository.Find(inputPort.RaffleId, inputPort.RaffleEntryId) == null)
             {
-                await outputPort.PresentRaffleEntryNotFound(inputPort.RaffleEntryId, inputPort.RaffleId, cancellationToken);
+                await outputPort.PresentRaffleEntryNotFoundAsync(inputPort.RaffleEntryId, inputPort.RaffleId, cancellationToken);
                 return false;
             }
 

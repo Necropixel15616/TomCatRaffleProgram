@@ -22,7 +22,7 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.Raffles.GetRaffl
             var raffles = RaffleRepository.GetRaffles();
             var raffleDtos = new List<RaffleDto>();
             raffles.ForEach(r => raffleDtos.Add(new RaffleDto(r)));
-            return outputPort.PresentRaffles(raffleDtos, cancellationToken);
+            return outputPort.PresentRafflesAsync(raffleDtos, cancellationToken);
         }
     }
 }

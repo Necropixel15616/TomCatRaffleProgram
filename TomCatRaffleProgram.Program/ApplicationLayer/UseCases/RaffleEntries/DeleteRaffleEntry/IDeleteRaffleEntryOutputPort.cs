@@ -7,11 +7,11 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.De
     interface IDeleteRaffleEntryOutputPort : IFileValidation
     {
 
-        Task PresentRaffleNotFound(int raffleId, CancellationToken cancellationToken);
+        Task PresentRaffleNotFoundAsync(int raffleId, CancellationToken cancellationToken);
 
-        Task PresentRaffleEntryNotFound(int raffleEntryId, int raffleId, CancellationToken cancellationToken);
+        Task PresentRaffleEntryNotFoundAsync(int raffleEntryId, int raffleId, CancellationToken cancellationToken);
 
-        Task PresentRaffleEntryDeleted(CancellationToken cancellationToken);
+        Task PresentRaffleEntryDeletedAsync(CancellationToken cancellationToken);
 
     }
 }

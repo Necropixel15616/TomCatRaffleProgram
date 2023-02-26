@@ -9,7 +9,7 @@ namespace TomCatRaffleProgram.Program.Framework.Presentation.Raffle.GetRaffles
 {
     class GetRafflesPresenter : BasePresenter<List<RaffleViewModel>>, IGetRafflesOutputPort
     {
-        Task IGetRafflesOutputPort.PresentRaffles(List<RaffleDto> raffleDtos, CancellationToken cancellationToken)
+        Task IGetRafflesOutputPort.PresentRafflesAsync(List<RaffleDto> raffleDtos, CancellationToken cancellationToken)
         {
             var viewModels = new List<RaffleViewModel>();
             raffleDtos.ForEach(r => viewModels.Add(new RaffleViewModel(r)));

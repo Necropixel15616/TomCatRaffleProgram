@@ -23,7 +23,7 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.Cr
         {
             if (!this.FileServices.DoesFileExist())
             {
-                await outputPort.PresentFileNotFound(cancellationToken);
+                await outputPort.PresentFileNotFoundAsync(cancellationToken);
                 return false;
             }
 

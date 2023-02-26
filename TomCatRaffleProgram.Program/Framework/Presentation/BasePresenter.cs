@@ -19,7 +19,7 @@ namespace TomCatRaffleProgram.Program.Framework.Presentation
         protected Task SetResult(TEntity result, CancellationToken cancellationToken)
             => Result = Task.FromResult(result);
 
-        Task IFileValidation.PresentFileNotFound(CancellationToken cancellationToken)
+        Task IFileValidation.PresentFileNotFoundAsync(CancellationToken cancellationToken)
             => SetErrors(new List<string>() { "The File was not found." }, cancellationToken);
     }
 }

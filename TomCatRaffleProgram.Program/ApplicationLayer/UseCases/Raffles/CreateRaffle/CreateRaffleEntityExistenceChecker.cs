@@ -25,7 +25,7 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.Raffles.CreateRa
         {
             if (!FileServices.DoesFileExist())
             {
-                await outputPort.PresentFileNotFound(cancellationToken);
+                await outputPort.PresentFileNotFoundAsync(cancellationToken);
                 return false;
             }
 

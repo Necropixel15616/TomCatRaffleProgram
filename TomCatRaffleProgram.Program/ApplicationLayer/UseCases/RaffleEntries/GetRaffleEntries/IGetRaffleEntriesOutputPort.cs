@@ -11,7 +11,7 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.Ge
 
         Task PresentRaffleEntriesAsync(List<RaffleEntryDto> entries, CancellationToken cancellationToken);
 
-        Task PresentRaffleNotFound(int raffleId, CancellationToken cancellationToken);
+        Task PresentRaffleNotFoundAsync(int raffleId, CancellationToken cancellationToken);
 
     }
 }

@@ -6,7 +6,7 @@ namespace TomCatRaffleProgram.Program.Framework.Presentation
     interface IFileValidation
     {
 
-        Task PresentFileNotFound(CancellationToken cancellationToken);
+        Task PresentFileNotFoundAsync(CancellationToken cancellationToken);
 
     }
 }

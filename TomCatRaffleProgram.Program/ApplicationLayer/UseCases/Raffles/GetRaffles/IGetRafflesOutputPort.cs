@@ -9,7 +9,7 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.Raffles.GetRaffl
     interface IGetRafflesOutputPort : IFileValidation
     {
 
-        Task PresentRaffles(List<RaffleDto> raffleDtos, CancellationToken cancellationToken);
+        Task PresentRafflesAsync(List<RaffleDto> raffleDtos, CancellationToken cancellationToken);
 
     }
 }

@@ -16,7 +16,7 @@ namespace TomCatRaffleProgram.Program.Framework.Presentation.RaffleEntry.GetRaff
             return SetResult(viewModels, cancellationToken);
         }
 
-        Task IGetRaffleEntriesOutputPort.PresentRaffleNotFound(int raffleId, CancellationToken cancellationToken)
+        Task IGetRaffleEntriesOutputPort.PresentRaffleNotFoundAsync(int raffleId, CancellationToken cancellationToken)
             => SetErrors(new List<string>() { $"A Raffle with the Id '{raffleId}' was not found." }, cancellationToken);
     }
 }
