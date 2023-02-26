@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using TomCatRaffleProgram.Program.Framework.Presentation;
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.DeleteRaffleEntry
@@ -6,11 +7,11 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.De
     interface IDeleteRaffleEntryOutputPort : IFileValidation
     {
 
-        Task PresentRaffleNotFound(int raffleId);
+        Task PresentRaffleNotFound(int raffleId, CancellationToken cancellationToken);
 
-        Task PresentRaffleEntryNotFound(int raffleEntryId, int raffleId);
+        Task PresentRaffleEntryNotFound(int raffleEntryId, int raffleId, CancellationToken cancellationToken);
 
-        Task PresentRaffleEntryDeleted();
+        Task PresentRaffleEntryDeleted(CancellationToken cancellationToken);
 
     }
 }

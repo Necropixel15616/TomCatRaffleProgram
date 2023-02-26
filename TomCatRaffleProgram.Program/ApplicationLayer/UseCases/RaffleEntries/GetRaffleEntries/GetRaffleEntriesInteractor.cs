@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using TomCatRaffleProgram.Program.ApplicationLayer.Dtos;
 using TomCatRaffleProgram.Program.ApplicationLayer.Pipeline;
@@ -14,14 +15,17 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.Ge
         public GetRaffleEntriesInteractor(IRaffleRepository persistenceContext)
             => PersistenceContext = persistenceContext;
 
-        Task IInteractor<GetRaffleEntriesInputPort, IGetRaffleEntriesOutputPort>.HandleAsync(GetRaffleEntriesInputPort inputPort, IGetRaffleEntriesOutputPort outputPort)
+        Task IInteractor<GetRaffleEntriesInputPort, IGetRaffleEntriesOutputPort>.HandleAsync(
+            GetRaffleEntriesInputPort inputPort,
+            IGetRaffleEntriesOutputPort outputPort,
+            CancellationToken cancellationToken)
         {
             var raffle = (Raffle)PersistenceContext.Find(inputPort.RaffleId);
 
             var raffleEntryDtos = new List<RaffleEntryDto>();
             raffle.Entries.ForEach(e => raffleEntryDtos.Add(new RaffleEntryDto(e)));
 
-            return outputPort.PresentRaffleEntriesAsync(raffleEntryDtos);
+            return outputPort.PresentRaffleEntriesAsync(raffleEntryDtos, cancellationToken);
         }
     }
 }

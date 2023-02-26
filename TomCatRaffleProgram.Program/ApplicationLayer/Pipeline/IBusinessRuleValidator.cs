@@ -1,9 +1,12 @@
-﻿namespace TomCatRaffleProgram.Program.ApplicationLayer.Pipeline
+﻿using System.Threading;
+using System.Threading.Tasks;
+
+namespace TomCatRaffleProgram.Program.ApplicationLayer.Pipeline
 {
     public interface IBusinessRuleValidator<TInputPort, TOutportPort> where TInputPort : IInputPort<TOutportPort>
     {
 
-        bool ValidateAsync(TInputPort inputPort, TOutportPort outportPort);
+        Task<bool> ValidateAsync(TInputPort inputPort, TOutportPort outportPort, CancellationToken cancellationToken);
 
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using TomCatRaffleProgram.Program.ApplicationLayer.Dtos;
 using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.GetRaffleEntries;
@@ -8,14 +9,14 @@ namespace TomCatRaffleProgram.Program.Framework.Presentation.RaffleEntry.GetRaff
 {
     class GetRaffleEntriesPresenter : BasePresenter<List<RaffleEntryViewModel>>, IGetRaffleEntriesOutputPort
     {
-        Task IGetRaffleEntriesOutputPort.PresentRaffleEntriesAsync(List<RaffleEntryDto> entries)
+        Task IGetRaffleEntriesOutputPort.PresentRaffleEntriesAsync(List<RaffleEntryDto> entries, CancellationToken cancellationToken)
         {
             var viewModels = new List<RaffleEntryViewModel>();
             entries.ForEach(e => viewModels.Add(new RaffleEntryViewModel(e)));
-            return SetResult(viewModels);
+            return SetResult(viewModels, cancellationToken);
         }
 
-        Task IGetRaffleEntriesOutputPort.PresentRaffleNotFound(int raffleId)
-            => SetErrors(new List<string>() { $"A Raffle with the Id '{raffleId}' was not found." });
+        Task IGetRaffleEntriesOutputPort.PresentRaffleNotFound(int raffleId, CancellationToken cancellationToken)
+            => SetErrors(new List<string>() { $"A Raffle with the Id '{raffleId}' was not found." }, cancellationToken);
     }
 }

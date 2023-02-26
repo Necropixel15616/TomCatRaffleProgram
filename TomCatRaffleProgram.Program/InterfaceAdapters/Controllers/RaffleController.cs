@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using TomCatRaffleProgram.Program.ApplicationLayer.Pipeline;
 using TomCatRaffleProgram.Program.ApplicationLayer.Services;
 using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.Raffles.CreateRaffle;
@@ -17,22 +18,22 @@ namespace TomCatRaffleProgram.Program.InterfaceAdapters.Controllers
             RaffleRepository = raffleRepository;
         }
 
-        public async Task CreateRaffleAsync(CreateRaffleInputPort inputPort, ICreateRaffleOutputPort outputPort)
+        public async Task CreateRaffleAsync(CreateRaffleInputPort inputPort, ICreateRaffleOutputPort outputPort, CancellationToken cancellationToken)
         {
             var _Pipeline = new UseCasePipeline<CreateRaffleInputPort, ICreateRaffleOutputPort>(
                                 new CreateRaffleInteractor(RaffleRepository),
                                 _inputPortValidator: new CreateRaffleInputPortValidator(),
                                 _entityExistenceChecker: new CreateRaffleEntityExistenceChecker(FileServices, RaffleRepository));
 
-            await _Pipeline.InvokeUseCaseAsync(inputPort, outputPort);
+            await _Pipeline.InvokeUseCaseAsync(inputPort, outputPort, cancellationToken);
         }
 
-        public async Task GetRafflesAsync(GetRafflesInputPort inputPort, IGetRafflesOutputPort outputPort)
+        public async Task GetRafflesAsync(GetRafflesInputPort inputPort, IGetRafflesOutputPort outputPort, CancellationToken cancellationToken)
         {
             var _Pipeline = new UseCasePipeline<GetRafflesInputPort, IGetRafflesOutputPort>(
                                 new GetRafflesInteractor(RaffleRepository));
 
-            await _Pipeline.InvokeUseCaseAsync(inputPort, outputPort);
+            await _Pipeline.InvokeUseCaseAsync(inputPort, outputPort, cancellationToken);
         }
     }
 }

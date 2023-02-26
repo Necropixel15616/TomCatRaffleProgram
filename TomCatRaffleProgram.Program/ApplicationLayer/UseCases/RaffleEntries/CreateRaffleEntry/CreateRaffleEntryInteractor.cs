@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using TomCatRaffleProgram.Program.ApplicationLayer.Dtos;
 using TomCatRaffleProgram.Program.ApplicationLayer.Pipeline;
 using TomCatRaffleProgram.Program.ApplicationLayer.Services;
@@ -13,7 +14,10 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.Cr
         public CreateRaffleEntryInteractor(IRaffleRepository persistenceContext)
             => this.PersistenceContext = persistenceContext;
 
-        Task IInteractor<CreateRaffleEntryInputPort, ICreateRaffleEntryOutputPort>.HandleAsync(CreateRaffleEntryInputPort inputPort, ICreateRaffleEntryOutputPort outputPort)
+        async Task IInteractor<CreateRaffleEntryInputPort, ICreateRaffleEntryOutputPort>.HandleAsync(
+            CreateRaffleEntryInputPort inputPort,
+            ICreateRaffleEntryOutputPort outputPort,
+            CancellationToken cancellationToken)
         {
             Raffle raffle = (Raffle)PersistenceContext.Find(inputPort.RaffleId);
 
@@ -28,7 +32,7 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.Cr
             var raffleEntry = new RaffleEntry(id, inputPort.FirstName, inputPort.LastName, inputPort.Tickets);
             raffle.Entries.Add(raffleEntry);
             PersistenceContext.Save();
-            return outputPort.PresentRaffleEntryAsync(new RaffleEntryDto(raffleEntry));
+            await outputPort.PresentRaffleEntryAsync(new RaffleEntryDto(raffleEntry), cancellationToken);
         }
     }
 }

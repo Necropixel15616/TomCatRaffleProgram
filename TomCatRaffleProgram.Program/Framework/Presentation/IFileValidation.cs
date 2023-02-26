@@ -1,11 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 
 namespace TomCatRaffleProgram.Program.Framework.Presentation
 {
     interface IFileValidation
     {
 
-        Task PresentFileNotFound();
+        Task PresentFileNotFound(CancellationToken cancellationToken);
 
     }
 }

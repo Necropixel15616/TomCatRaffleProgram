@@ -1,4 +1,6 @@
 ﻿using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using TomCatRaffleProgram.Program.ApplicationLayer.Pipeline;
 using TomCatRaffleProgram.Program.ApplicationLayer.Services;
 
@@ -16,11 +18,14 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.Raffles.CreateRa
             PersistenceContext = persistenceContext;
         }
 
-        bool IEntityExistenceChecker<CreateRaffleInputPort, ICreateRaffleOutputPort>.ValidateEntityExist(CreateRaffleInputPort inputPort, ICreateRaffleOutputPort outputPort)
+        async Task<bool> IEntityExistenceChecker<CreateRaffleInputPort, ICreateRaffleOutputPort>.ValidateEntityExistAsync(
+            CreateRaffleInputPort inputPort,
+            ICreateRaffleOutputPort outputPort,
+            CancellationToken cancellationToken)
         {
             if (!FileServices.DoesFileExist())
             {
-                outputPort.PresentFileNotFound();
+                await outputPort.PresentFileNotFound(cancellationToken);
                 return false;
             }
 
@@ -28,7 +33,7 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.Raffles.CreateRa
                     .Where(r => r.Name.ToUpper().Equals(inputPort.RaffleName.ToUpper()))
                     .SingleOrDefault() != null)
             {
-                outputPort.PresentRaffleExistsAsync(inputPort.RaffleName);
+                await outputPort.PresentRaffleExistsAsync(inputPort.RaffleName, cancellationToken);
                 return false;
             }
 

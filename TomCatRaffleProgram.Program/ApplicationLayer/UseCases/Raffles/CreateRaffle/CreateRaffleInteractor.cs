@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using TomCatRaffleProgram.Program.ApplicationLayer.Dtos;
 using TomCatRaffleProgram.Program.ApplicationLayer.Pipeline;
@@ -15,7 +16,10 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.Raffles.CreateRa
         public CreateRaffleInteractor(IRaffleRepository persistenceContext)
             => PersistenceContext = persistenceContext;
 
-        Task IInteractor<CreateRaffleInputPort, ICreateRaffleOutputPort>.HandleAsync(CreateRaffleInputPort inputPort, ICreateRaffleOutputPort outputPort)
+        Task IInteractor<CreateRaffleInputPort, ICreateRaffleOutputPort>.HandleAsync(
+            CreateRaffleInputPort inputPort,
+            ICreateRaffleOutputPort outputPort,
+            CancellationToken cancellationToken)
         {
             List<Raffle> raffles = PersistenceContext.GetRaffles();
             var id = 0;
@@ -27,7 +31,7 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.Raffles.CreateRa
             var raffle = new Raffle(inputPort.RaffleName, id);
             PersistenceContext.AddRaffle(raffle);
             PersistenceContext.Save();
-            return outputPort.PresentRaffleCreatedAsync(new RaffleDto(raffle));
+            return outputPort.PresentRaffleCreatedAsync(new RaffleDto(raffle), cancellationToken);
         }
     }
 }

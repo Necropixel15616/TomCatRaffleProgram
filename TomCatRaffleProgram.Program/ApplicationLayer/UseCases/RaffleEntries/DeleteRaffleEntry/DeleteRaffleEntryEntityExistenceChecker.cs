@@ -1,4 +1,6 @@
-﻿using TomCatRaffleProgram.Program.ApplicationLayer.Pipeline;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using TomCatRaffleProgram.Program.ApplicationLayer.Pipeline;
 using TomCatRaffleProgram.Program.ApplicationLayer.Services;
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.DeleteRaffleEntry
@@ -15,23 +17,26 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.De
             RaffleRepository = raffleRepository;
         }
 
-        bool IEntityExistenceChecker<DeleteRaffleEntryInputPort, IDeleteRaffleEntryOutputPort>.ValidateEntityExist(DeleteRaffleEntryInputPort inputPort, IDeleteRaffleEntryOutputPort outputPort)
+        async Task<bool> IEntityExistenceChecker<DeleteRaffleEntryInputPort, IDeleteRaffleEntryOutputPort>.ValidateEntityExistAsync(
+            DeleteRaffleEntryInputPort inputPort,
+            IDeleteRaffleEntryOutputPort outputPort,
+            CancellationToken cancellationToken)
         {
             if (!FileServices.DoesFileExist())
             {
-                outputPort.PresentFileNotFound();
+                await outputPort.PresentFileNotFound(cancellationToken);
                 return false;
             }
 
             if (RaffleRepository.Find(inputPort.RaffleId) == null)
             {
-                outputPort.PresentRaffleNotFound(inputPort.RaffleId);
+                await outputPort.PresentRaffleNotFound(inputPort.RaffleId, cancellationToken);
                 return false;
             }
 
             if (RaffleRepository.Find(inputPort.RaffleId, inputPort.RaffleEntryId) == null)
             {
-                outputPort.PresentRaffleEntryNotFound(inputPort.RaffleEntryId, inputPort.RaffleId);
+                await outputPort.PresentRaffleEntryNotFound(inputPort.RaffleEntryId, inputPort.RaffleId, cancellationToken);
                 return false;
             }
 
