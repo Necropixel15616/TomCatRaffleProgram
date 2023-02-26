@@ -10,12 +10,12 @@ namespace TomCatRaffleProgram.Program.Framework.Presentation.Raffle.CreateRaffle
     class CreateRafflePresenter : BasePresenter<RaffleViewModel>, ICreateRaffleOutputPort
     {
         Task ICreateRaffleOutputPort.PresentRaffleCreatedAsync(RaffleDto raffle, CancellationToken cancellationToken)
-            => SetResult(new RaffleViewModel(raffle), cancellationToken);
+            => SetResultAsync(new RaffleViewModel(raffle), cancellationToken);
 
         Task ICreateRaffleOutputPort.PresentRaffleExistsAsync(string name, CancellationToken cancellationToken)
-            => SetErrors(new List<string>() { $"A Raffle with the Name '{name}' already exists." }, cancellationToken);
+            => SetErrorsAsync(new List<string>() { $"A Raffle with the Name '{name}' already exists." }, cancellationToken);
 
         Task ICreateRaffleOutputPort.PresentValidationFailureAsync(List<string> failures, CancellationToken cancellationToken)
-            => SetErrors(failures, cancellationToken);
+            => SetErrorsAsync(failures, cancellationToken);
     }
 }

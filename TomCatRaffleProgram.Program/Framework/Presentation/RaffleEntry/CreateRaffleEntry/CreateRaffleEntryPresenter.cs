@@ -10,12 +10,12 @@ namespace TomCatRaffleProgram.Program.Framework.Presentation.RaffleEntry.CreateR
     class CreateRaffleEntryPresenter : BasePresenter<RaffleEntryViewModel>, ICreateRaffleEntryOutputPort
     {
         async Task ICreateRaffleEntryOutputPort.PresentRaffleEntryAsync(RaffleEntryDto entry, CancellationToken cancellationToken)
-            => await SetResult(new RaffleEntryViewModel(entry), cancellationToken);
+            => await SetResultAsync(new RaffleEntryViewModel(entry), cancellationToken);
 
         async Task ICreateRaffleEntryOutputPort.PresentRaffleNotFoundAsync(int raffleId, CancellationToken cancellationToken)
-            => await SetErrors(new List<string>() { $"A Raffle with the Id {raffleId} was not found." }, cancellationToken);
+            => await SetErrorsAsync(new List<string>() { $"A Raffle with the Id {raffleId} was not found." }, cancellationToken);
 
         async Task ICreateRaffleEntryOutputPort.PresentValidationFailureAsync(List<string> failures, CancellationToken cancellationToken)
-            => await SetErrors(failures, cancellationToken);
+            => await SetErrorsAsync(failures, cancellationToken);
     }
 }

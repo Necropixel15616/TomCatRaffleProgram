@@ -13,7 +13,7 @@ namespace TomCatRaffleProgram.Program.Framework.Presentation.Raffle.GetRaffles
         {
             var viewModels = new List<RaffleViewModel>();
             raffleDtos.ForEach(r => viewModels.Add(new RaffleViewModel(r)));
-            return SetResult(viewModels, cancellationToken);
+            return SetResultAsync(viewModels, cancellationToken);
         }
     }
 }

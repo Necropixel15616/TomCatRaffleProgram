@@ -13,10 +13,10 @@ namespace TomCatRaffleProgram.Program.Framework.Presentation.RaffleEntry.GetRaff
         {
             var viewModels = new List<RaffleEntryViewModel>();
             entries.ForEach(e => viewModels.Add(new RaffleEntryViewModel(e)));
-            return SetResult(viewModels, cancellationToken);
+            return SetResultAsync(viewModels, cancellationToken);
         }
 
         Task IGetRaffleEntriesOutputPort.PresentRaffleNotFoundAsync(int raffleId, CancellationToken cancellationToken)
-            => SetErrors(new List<string>() { $"A Raffle with the Id '{raffleId}' was not found." }, cancellationToken);
+            => SetErrorsAsync(new List<string>() { $"A Raffle with the Id '{raffleId}' was not found." }, cancellationToken);
     }
 }

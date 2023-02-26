@@ -10,16 +10,16 @@ namespace TomCatRaffleProgram.Program.Framework.Presentation
 
         public Task<TEntity> Result { get; private set; }
 
-        protected Task SetErrors(List<string> errors, CancellationToken cancellationToken)
+        protected Task SetErrorsAsync(List<string> errors, CancellationToken cancellationToken)
         {
             Errors = errors;
             return Task.CompletedTask;
         }
 
-        protected Task SetResult(TEntity result, CancellationToken cancellationToken)
+        protected Task SetResultAsync(TEntity result, CancellationToken cancellationToken)
             => Result = Task.FromResult(result);
 
         Task IFileValidation.PresentFileNotFoundAsync(CancellationToken cancellationToken)
-            => SetErrors(new List<string>() { "The File was not found." }, cancellationToken);
+            => SetErrorsAsync(new List<string>() { "The File was not found." }, cancellationToken);
     }
 }
