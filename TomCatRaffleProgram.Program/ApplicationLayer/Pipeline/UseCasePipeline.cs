@@ -1,6 +1,5 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using TomCatRaffleProgram.Program.ApplicationLayer.Infrastructure;
 using TomCatRaffleProgram.Program.ApplicationLayer.Services;
 using TomCatRaffleProgram.Program.Framework.Presentation;
 
@@ -25,11 +24,11 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.Pipeline
             IEntityExistenceChecker<TInputPort, TOutputPort> _entityExistenceChecker = null,
             IBusinessRuleValidator<TInputPort, TOutputPort> _businessRuleValidator = null)
         {
-            Interactor = _interactor;
+            Interactor = (IInteractor<TInputPort, TOutputPort>)App.ServiceProvider.GetService(typeof(IInteractor<TInputPort, TOutputPort>));
             EntityExistenceChecker = _entityExistenceChecker;
             BusinessRuleValidator = _businessRuleValidator;
             InputPortValidator = _inputPortValidator;
-            FileValidation = new FileValidator<TOutputPort>(new FileServices());
+            FileValidation = (IFileValidator<TOutputPort>)App.ServiceProvider.GetService(typeof(IFileValidator<TOutputPort>));
         }
 
         public async Task<TOutputPort> InvokeUseCaseAsync(
