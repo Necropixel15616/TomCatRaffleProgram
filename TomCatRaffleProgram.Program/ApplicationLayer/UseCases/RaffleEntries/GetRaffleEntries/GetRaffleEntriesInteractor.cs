@@ -20,7 +20,7 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.Ge
             IGetRaffleEntriesOutputPort outputPort,
             CancellationToken cancellationToken)
         {
-            var raffle = (Raffle)PersistenceContext.Find(inputPort.RaffleId);
+            var raffle = PersistenceContext.Find<Raffle>(inputPort.RaffleId);
 
             var raffleEntryDtos = new List<RaffleEntryDto>();
             raffle.Entries.ForEach(e => raffleEntryDtos.Add(new RaffleEntryDto(e)));

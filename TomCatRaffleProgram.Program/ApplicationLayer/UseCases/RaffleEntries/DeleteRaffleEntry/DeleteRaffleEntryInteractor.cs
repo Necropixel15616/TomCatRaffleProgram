@@ -20,7 +20,7 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.De
             IDeleteRaffleEntryOutputPort outputPort,
             CancellationToken cancellationToken)
         {
-            var raffle = (Raffle)RaffleRepository.Find(inputPort.RaffleId);
+            var raffle = RaffleRepository.Find<Raffle>(inputPort.RaffleId);
 
             raffle.Entries.Remove(raffle.Entries.Where(re => re.Id == inputPort.RaffleEntryId).SingleOrDefault());
             return outputPort.PresentRaffleEntryDeletedAsync(cancellationToken);
