@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TomCatRaffleProgram.Program.Domain.Entities;
+﻿using TomCatRaffleProgram.Program.Domain.Entities;
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.Dtos
 {
-    class RaffleDto
+    public class RaffleDto
     {
         public RaffleDto() { }
 
