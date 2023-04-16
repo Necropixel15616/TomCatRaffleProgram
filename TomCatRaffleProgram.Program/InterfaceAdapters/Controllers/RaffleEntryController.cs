@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using TomCatRaffleProgram.Program.ApplicationLayer.Pipeline;
 using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.CreateRaffleEntry;
 using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.DeleteRaffleEntry;
+using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.DrawRaffleEntry;
 using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.GetRaffleEntries;
 using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.UpdateRaffleEntry;
 
@@ -24,6 +25,9 @@ namespace TomCatRaffleProgram.Program.InterfaceAdapters.Controllers
 
         public async Task UpdateRaffleEntryAsync(UpdateRaffleEntryInputPort inputPort, IUpdateRaffleEntryOutputPort outputPort, CancellationToken cancellationToken)
             => await new UseCasePipeline<UpdateRaffleEntryInputPort, IUpdateRaffleEntryOutputPort>().InvokeUseCaseAsync(inputPort, outputPort, cancellationToken);
+
+        public async Task DrawRaffleEntryAsync(DrawRaffleEntryInputPort inputPort, IDrawRaffleEntryOutputPort outputPort, CancellationToken cancellationToken)
+            => await new UseCasePipeline<DrawRaffleEntryInputPort, IDrawRaffleEntryOutputPort>().InvokeUseCaseAsync(inputPort, outputPort, cancellationToken);
 
     }
 }
