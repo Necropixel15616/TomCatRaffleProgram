@@ -15,7 +15,6 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.Raffles.DeleteRa
         Task IInteractor<DeleteRaffleInputPort, IDeleteRaffleOutputPort>.HandleAsync(DeleteRaffleInputPort inputPort, IDeleteRaffleOutputPort outputPort, CancellationToken cancellationToken)
         {
             RaffleRepository.RemoveRaffle(inputPort.RaffleId);
-            RaffleRepository.Save();
             return outputPort.PresentRaffleDeletedAsync(cancellationToken);
         }
     }
