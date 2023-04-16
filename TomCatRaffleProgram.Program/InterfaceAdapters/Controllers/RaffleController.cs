@@ -4,6 +4,7 @@ using TomCatRaffleProgram.Program.ApplicationLayer.Pipeline;
 using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.Raffles.CreateRaffle;
 using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.Raffles.DeleteRaffle;
 using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.Raffles.GetRaffles;
+using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.Raffles.UpdateRaffle;
 
 namespace TomCatRaffleProgram.Program.InterfaceAdapters.Controllers
 {
@@ -20,5 +21,8 @@ namespace TomCatRaffleProgram.Program.InterfaceAdapters.Controllers
 
         public async Task DeleteRaffleAsync(DeleteRaffleInputPort inputPort, IDeleteRaffleOutputPort outputPort, CancellationToken cancellationToken)
             => await new UseCasePipeline<DeleteRaffleInputPort, IDeleteRaffleOutputPort>().InvokeUseCaseAsync(inputPort, outputPort, cancellationToken);
+
+        public async Task UpdateRaffleAsync(UpdateRaffleInputPort inputPort, IUpdateRaffleOutputPort outputPort, CancellationToken cancellationToken)
+            => await new UseCasePipeline<UpdateRaffleInputPort, IUpdateRaffleOutputPort>().InvokeUseCaseAsync(inputPort, outputPort, cancellationToken);
     }
 }

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace TomCatRaffleProgram.Program.Framework.Presentation
 {
-    interface IFileValidation
+    public interface IFileValidation
     {
 
         Task PresentFileNotFoundAsync(CancellationToken cancellationToken);
