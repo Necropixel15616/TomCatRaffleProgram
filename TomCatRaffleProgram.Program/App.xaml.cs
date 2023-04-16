@@ -41,9 +41,10 @@ namespace TomCatRaffleProgram.Program
 
             services.Scan(scan
                 => scan.FromAssemblies(AssemblyUtility.GetAssembly())
-                .AddClasses(c
-                    => c.AssignableTo(typeof(IInteractor<,>)))
-                .AsImplementedInterfaces());
+                .AddClasses(c => c.AssignableTo(typeof(IInteractor<,>))).AsImplementedInterfaces()
+                .AddClasses(c => c.AssignableTo(typeof(IEntityExistenceChecker<,>))).AsImplementedInterfaces()
+                .AddClasses(c => c.AssignableTo(typeof(IBusinessRuleValidator<,>))).AsImplementedInterfaces()
+                .AddClasses(c => c.AssignableTo(typeof(IInputPortValidator<,>))).AsImplementedInterfaces());
 
             services.AddTransient<MainWindow>();
         }

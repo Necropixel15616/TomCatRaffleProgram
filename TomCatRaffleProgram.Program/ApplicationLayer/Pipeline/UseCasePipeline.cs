@@ -8,27 +8,19 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.Pipeline
     class UseCasePipeline<TInputPort, TOutputPort> where TInputPort : IInputPort<TOutputPort> where TOutputPort : IFileValidation
     {
 
-        IInputPortValidator<TInputPort, TOutputPort> InputPortValidator;
+        private readonly IBusinessRuleValidator<TInputPort, TOutputPort> BusinessRuleValidator;
+        private readonly IEntityExistenceChecker<TInputPort, TOutputPort> EntityExistenceChecker;
+        private readonly IFileValidator<TOutputPort> FileValidation;
+        private readonly IInputPortValidator<TInputPort, TOutputPort> InputPortValidator;
+        private readonly IInteractor<TInputPort, TOutputPort> Interactor;
 
-        IEntityExistenceChecker<TInputPort, TOutputPort> EntityExistenceChecker;
-
-        IBusinessRuleValidator<TInputPort, TOutputPort> BusinessRuleValidator;
-
-        IInteractor<TInputPort, TOutputPort> Interactor;
-
-        IFileValidator<TOutputPort> FileValidation;
-
-        public UseCasePipeline(
-            IInteractor<TInputPort, TOutputPort> _interactor,
-            IInputPortValidator<TInputPort, TOutputPort> _inputPortValidator = null,
-            IEntityExistenceChecker<TInputPort, TOutputPort> _entityExistenceChecker = null,
-            IBusinessRuleValidator<TInputPort, TOutputPort> _businessRuleValidator = null)
+        public UseCasePipeline()
         {
-            Interactor = (IInteractor<TInputPort, TOutputPort>)App.ServiceProvider.GetService(typeof(IInteractor<TInputPort, TOutputPort>));
-            EntityExistenceChecker = _entityExistenceChecker;
-            BusinessRuleValidator = _businessRuleValidator;
-            InputPortValidator = _inputPortValidator;
+            BusinessRuleValidator = (IBusinessRuleValidator<TInputPort, TOutputPort>)App.ServiceProvider.GetService(typeof(IBusinessRuleValidator<TInputPort, TOutputPort>));
+            EntityExistenceChecker = (IEntityExistenceChecker<TInputPort, TOutputPort>)App.ServiceProvider.GetService(typeof(IEntityExistenceChecker<TInputPort, TOutputPort>));
             FileValidation = (IFileValidator<TOutputPort>)App.ServiceProvider.GetService(typeof(IFileValidator<TOutputPort>));
+            InputPortValidator = (IInputPortValidator<TInputPort, TOutputPort>)App.ServiceProvider.GetService(typeof(IInputPortValidator<TInputPort, TOutputPort>));
+            Interactor = (IInteractor<TInputPort, TOutputPort>)App.ServiceProvider.GetService(typeof(IInteractor<TInputPort, TOutputPort>));
         }
 
         public async Task<TOutputPort> InvokeUseCaseAsync(
