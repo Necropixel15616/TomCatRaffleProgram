@@ -6,7 +6,7 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.Services
     public interface IRaffleRepository
     {
 
-        public object Find(int raffleId, int? entryId = null);
+        public TEntity Find<TEntity>(int raffleId, int? entryId = null);
 
         public List<Raffle> GetRaffles();
 

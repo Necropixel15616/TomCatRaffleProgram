@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using TomCatRaffleProgram.Program.ApplicationLayer.Dtos;
 using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.CreateRaffleEntry;
 
-namespace TomCatRaffleProgram.Program.Framework.Presentation.RaffleEntry.CreateRaffleEntry
+namespace TomCatRaffleProgram.Program.Framework.Presentation.RaffleEntries.CreateRaffleEntry
 {
     class CreateRaffleEntryPresenter : BasePresenter<RaffleEntryDto>, ICreateRaffleEntryOutputPort
     {

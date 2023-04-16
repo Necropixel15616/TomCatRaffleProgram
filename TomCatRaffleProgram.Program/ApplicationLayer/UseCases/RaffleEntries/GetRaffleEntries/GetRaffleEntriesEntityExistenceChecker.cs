@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using TomCatRaffleProgram.Program.ApplicationLayer.Pipeline;
 using TomCatRaffleProgram.Program.ApplicationLayer.Services;
+using TomCatRaffleProgram.Program.Domain.Entities;
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.GetRaffleEntries
 {
@@ -22,7 +23,7 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.Ge
             IGetRaffleEntriesOutputPort outputPort,
             CancellationToken cancellationToken)
         {
-            if (this.PersistenceContext.Find(inputPort.RaffleId) == null)
+            if (this.PersistenceContext.Find<Raffle>(inputPort.RaffleId) == null)
             {
                 await outputPort.PresentRaffleNotFoundAsync(inputPort.RaffleId, cancellationToken);
                 return false;

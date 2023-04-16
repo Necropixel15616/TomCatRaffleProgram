@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using TomCatRaffleProgram.Program.ApplicationLayer.Dtos;
 using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.GetRaffleEntries;
 
-namespace TomCatRaffleProgram.Program.Framework.Presentation.RaffleEntry.GetRaffleEntries
+namespace TomCatRaffleProgram.Program.Framework.Presentation.RaffleEntries.GetRaffleEntries
 {
     class GetRaffleEntriesPresenter : BasePresenter<List<RaffleEntryDto>>, IGetRaffleEntriesOutputPort
     {

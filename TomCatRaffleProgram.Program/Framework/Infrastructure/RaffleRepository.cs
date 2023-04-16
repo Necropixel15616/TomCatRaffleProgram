@@ -22,12 +22,12 @@ namespace TomCatRaffleProgram.Program.Framework.Infrastructure
         void IRaffleRepository.AddRaffle(Raffle entity)
             => Entities.Add(entity);
 
-        object IRaffleRepository.Find(int raffleId, int? entryId = null)
+        TEntity IRaffleRepository.Find<TEntity>(int raffleId, int? entryId = null)
         {
             if (entryId.HasValue)
-                return Entities.Where(e => e.Id == raffleId)?.SelectMany(e => e.Entries).SingleOrDefault(e => e.Id == entryId);
+                return (TEntity)Convert.ChangeType(Entities.Where(e => e.Id == raffleId)?.SelectMany(e => e.Entries).SingleOrDefault(e => e.Id == entryId), typeof(TEntity));
             else
-                return Entities.SingleOrDefault(e => e.Id == raffleId);
+                return (TEntity)Convert.ChangeType(Entities.SingleOrDefault(e => e.Id == raffleId), typeof(TEntity));
         }
 
         List<Raffle> IRaffleRepository.GetRaffles()

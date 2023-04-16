@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using TomCatRaffleProgram.Program.ApplicationLayer.Dtos;
 using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.DeleteRaffleEntry;
 
-namespace TomCatRaffleProgram.Program.Framework.Presentation.RaffleEntry.DeleteRaffleEntries
+namespace TomCatRaffleProgram.Program.Framework.Presentation.RaffleEntries.DeleteRaffleEntries
 {
     class DeleteRaffleEntryPresenter : BasePresenter<RaffleEntryDto>, IDeleteRaffleEntryOutputPort
     {
