@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace TomCatRaffleProgram.Program.Framework.Presentation
 {
-    class BasePresenter<TEntity> : IFileValidation
+    public class BasePresenter<TEntity> : IFileValidation
     {
         public List<string> Errors { get; private set; }
 

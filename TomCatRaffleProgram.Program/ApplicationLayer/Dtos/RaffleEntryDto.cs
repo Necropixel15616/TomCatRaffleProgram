@@ -2,7 +2,7 @@
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.Dtos
 {
-    class RaffleEntryDto
+    public class RaffleEntryDto
     {
         public RaffleEntryDto() { }
         public RaffleEntryDto(RaffleEntry _entry)
