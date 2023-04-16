@@ -15,14 +15,13 @@ namespace TomCatRaffleProgram.Program
     /// </summary>
     public partial class App : Application
     {
-        public static IServiceProvider ServiceProvider { get; set; }
-        public IConfiguration Configuration { get; set; }
+        private static IServiceProvider ServiceProvider { get; set; }
+        private IConfiguration Configuration { get; set; }
 
         private void ApplicationStartup(object sender, StartupEventArgs e)
         {
             // Set up the Service Provider for Dependancy Injection
-            var builder = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory());
-            Configuration = builder.Build();
+            Configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).Build();
             var serviceCollection = new ServiceCollection();
             ConfigureServices(serviceCollection);
             ServiceProvider = serviceCollection.BuildServiceProvider();
@@ -48,6 +47,9 @@ namespace TomCatRaffleProgram.Program
 
             services.AddTransient<MainWindow>();
         }
+
+        public static IServiceProvider GetServiceProvider()
+            => ServiceProvider;
 
     }
 }

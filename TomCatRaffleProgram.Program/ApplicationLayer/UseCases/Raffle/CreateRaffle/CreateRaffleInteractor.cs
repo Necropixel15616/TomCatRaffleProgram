@@ -30,7 +30,6 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.Raffles.CreateRa
 
             var raffle = new Raffle(inputPort.RaffleName, id);
             PersistenceContext.AddRaffle(raffle);
-            PersistenceContext.Save();
             return outputPort.PresentRaffleCreatedAsync(new RaffleDto(raffle), cancellationToken);
         }
     }

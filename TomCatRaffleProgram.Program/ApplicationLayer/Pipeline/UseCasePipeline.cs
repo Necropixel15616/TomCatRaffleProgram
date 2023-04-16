@@ -16,11 +16,12 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.Pipeline
 
         public UseCasePipeline()
         {
-            BusinessRuleValidator = (IBusinessRuleValidator<TInputPort, TOutputPort>)App.ServiceProvider.GetService(typeof(IBusinessRuleValidator<TInputPort, TOutputPort>));
-            EntityExistenceChecker = (IEntityExistenceChecker<TInputPort, TOutputPort>)App.ServiceProvider.GetService(typeof(IEntityExistenceChecker<TInputPort, TOutputPort>));
-            FileValidation = (IFileValidator<TOutputPort>)App.ServiceProvider.GetService(typeof(IFileValidator<TOutputPort>));
-            InputPortValidator = (IInputPortValidator<TInputPort, TOutputPort>)App.ServiceProvider.GetService(typeof(IInputPortValidator<TInputPort, TOutputPort>));
-            Interactor = (IInteractor<TInputPort, TOutputPort>)App.ServiceProvider.GetService(typeof(IInteractor<TInputPort, TOutputPort>));
+            var serviceProvider = App.GetServiceProvider();
+            BusinessRuleValidator = (IBusinessRuleValidator<TInputPort, TOutputPort>)serviceProvider.GetService(typeof(IBusinessRuleValidator<TInputPort, TOutputPort>));
+            EntityExistenceChecker = (IEntityExistenceChecker<TInputPort, TOutputPort>)serviceProvider.GetService(typeof(IEntityExistenceChecker<TInputPort, TOutputPort>));
+            FileValidation = (IFileValidator<TOutputPort>)serviceProvider.GetService(typeof(IFileValidator<TOutputPort>));
+            InputPortValidator = (IInputPortValidator<TInputPort, TOutputPort>)serviceProvider.GetService(typeof(IInputPortValidator<TInputPort, TOutputPort>));
+            Interactor = (IInteractor<TInputPort, TOutputPort>)serviceProvider.GetService(typeof(IInteractor<TInputPort, TOutputPort>));
         }
 
         public async Task<TOutputPort> InvokeUseCaseAsync(
