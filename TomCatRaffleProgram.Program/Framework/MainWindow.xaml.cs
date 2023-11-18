@@ -1,5 +1,6 @@
-﻿using System.Windows;
-using TomCatRaffleProgram.Program.ApplicationLayer.Services;
+﻿using System;
+using System.Windows;
+using TomCatRaffleProgram.Program.Framework.Views;
 
 namespace TomCatRaffleProgram.Program
 {
@@ -8,9 +9,10 @@ namespace TomCatRaffleProgram.Program
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow(IRaffleRepository persistenceContext)
+        public MainWindow(IServiceProvider serviceProvider)
         {
             InitializeComponent();
+            mainWindowFrame.Navigate(serviceProvider.GetService(typeof(MainPage)));
         }
     }
 }

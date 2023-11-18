@@ -2,7 +2,7 @@
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.Services
 {
-    static class StringExtensions
+    static public class StringExtensions
     {
 
         private static readonly Regex Regex = new Regex(@"^\s+$");

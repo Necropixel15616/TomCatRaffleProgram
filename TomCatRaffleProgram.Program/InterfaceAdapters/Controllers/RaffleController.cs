@@ -8,7 +8,7 @@ using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.Raffles.UpdateRaffle
 
 namespace TomCatRaffleProgram.Program.InterfaceAdapters.Controllers
 {
-    class RaffleController
+    public class RaffleController
     {
         public RaffleController()
         { }

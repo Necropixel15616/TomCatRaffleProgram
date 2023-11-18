@@ -6,7 +6,7 @@ using TomCatRaffleProgram.Program.Framework.Presentation;
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.UpdateRaffleEntry
 {
-    interface IUpdateRaffleEntryOutputPort :
+    public interface IUpdateRaffleEntryOutputPort :
         IFileValidation
     {
 

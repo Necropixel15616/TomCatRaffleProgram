@@ -17,7 +17,11 @@ namespace TomCatRaffleProgram.Program.Framework.Infrastructure
         private readonly IFileServices FileServices;
 
         public RaffleRepository()
-            => this.FileServices = new FileServices();
+        {
+            this.FileServices = new FileServices();
+
+            this.LoadFile();
+        }
 
         void IRaffleRepository.AddRaffle(Raffle entity)
             => Entities.Add(entity);

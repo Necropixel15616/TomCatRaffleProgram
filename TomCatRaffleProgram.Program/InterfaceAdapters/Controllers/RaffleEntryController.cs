@@ -9,7 +9,7 @@ using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.Update
 
 namespace TomCatRaffleProgram.Program.InterfaceAdapters.Controllers
 {
-    class RaffleEntryController
+    public class RaffleEntryController
     {
         public RaffleEntryController()
         { }

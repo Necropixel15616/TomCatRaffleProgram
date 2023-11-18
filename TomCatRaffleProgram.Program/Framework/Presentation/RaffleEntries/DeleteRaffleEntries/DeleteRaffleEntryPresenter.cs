@@ -6,7 +6,7 @@ using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.Delete
 
 namespace TomCatRaffleProgram.Program.Framework.Presentation.RaffleEntries.DeleteRaffleEntries
 {
-    class DeleteRaffleEntryPresenter : BasePresenter<RaffleEntryDto>, IDeleteRaffleEntryOutputPort
+    public class DeleteRaffleEntryPresenter : BasePresenter<RaffleEntryDto>, IDeleteRaffleEntryOutputPort
     {
         Task IDeleteRaffleEntryOutputPort.PresentRaffleEntryDeletedAsync(CancellationToken cancellationToken)
             => SetResultAsync(null, cancellationToken);

@@ -5,7 +5,7 @@ using TomCatRaffleProgram.Program.Framework.Presentation;
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.Pipeline
 {
-    class UseCasePipeline<TInputPort, TOutputPort> where TInputPort : IInputPort<TOutputPort> where TOutputPort : IFileValidation
+    public class UseCasePipeline<TInputPort, TOutputPort> where TInputPort : IInputPort<TOutputPort> where TOutputPort : IFileValidation
     {
 
         private readonly IBusinessRuleValidator<TInputPort, TOutputPort> BusinessRuleValidator;

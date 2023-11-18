@@ -6,7 +6,7 @@ using TomCatRaffleProgram.Program.Framework.Presentation;
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.Raffles.CreateRaffle
 {
-    interface ICreateRaffleOutputPort : IFileValidation
+    public interface ICreateRaffleOutputPort : IFileValidation
     {
         Task PresentValidationFailureAsync(List<string> failures, CancellationToken cancellationToken);
 

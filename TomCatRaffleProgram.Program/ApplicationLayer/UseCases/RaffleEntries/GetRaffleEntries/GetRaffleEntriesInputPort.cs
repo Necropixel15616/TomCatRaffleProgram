@@ -2,7 +2,7 @@
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.GetRaffleEntries
 {
-    class GetRaffleEntriesInputPort : IInputPort<IGetRaffleEntriesOutputPort>
+    public class GetRaffleEntriesInputPort : IInputPort<IGetRaffleEntriesOutputPort>
     {
 
         public int RaffleId { get; set; }

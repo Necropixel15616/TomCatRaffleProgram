@@ -6,7 +6,7 @@ using TomCatRaffleProgram.Program.ApplicationLayer.Services;
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.Raffles.CreateRaffle
 {
-    class CreateRaffleEntityExistenceChecker : IEntityExistenceChecker<CreateRaffleInputPort, ICreateRaffleOutputPort>
+    public class CreateRaffleEntityExistenceChecker : IEntityExistenceChecker<CreateRaffleInputPort, ICreateRaffleOutputPort>
     {
 
         private readonly IFileServices FileServices;

@@ -7,7 +7,7 @@ using TomCatRaffleProgram.Program.ApplicationLayer.Services;
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.CreateRaffleEntry
 {
-    class CreateRaffleEntryInputPortValidator : IInputPortValidator<CreateRaffleEntryInputPort, ICreateRaffleEntryOutputPort>
+    public class CreateRaffleEntryInputPortValidator : IInputPortValidator<CreateRaffleEntryInputPort, ICreateRaffleEntryOutputPort>
     {
         public CreateRaffleEntryInputPortValidator() { }
 

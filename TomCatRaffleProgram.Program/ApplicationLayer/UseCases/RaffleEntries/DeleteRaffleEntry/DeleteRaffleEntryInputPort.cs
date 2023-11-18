@@ -2,7 +2,7 @@
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.DeleteRaffleEntry
 {
-    class DeleteRaffleEntryInputPort : IInputPort<IDeleteRaffleEntryOutputPort>
+    public class DeleteRaffleEntryInputPort : IInputPort<IDeleteRaffleEntryOutputPort>
     {
 
         public int RaffleId { get; set; }

@@ -4,7 +4,7 @@ using TomCatRaffleProgram.Program.Framework.Presentation;
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.DeleteRaffleEntry
 {
-    interface IDeleteRaffleEntryOutputPort : IFileValidation
+    public interface IDeleteRaffleEntryOutputPort : IFileValidation
     {
 
         Task PresentRaffleNotFoundAsync(int raffleId, CancellationToken cancellationToken);

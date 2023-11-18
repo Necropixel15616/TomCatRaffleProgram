@@ -8,7 +8,7 @@ using TomCatRaffleProgram.Program.Domain.Entities;
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.GetRaffleEntries
 {
-    class GetRaffleEntriesInteractor : IInteractor<GetRaffleEntriesInputPort, IGetRaffleEntriesOutputPort>
+    public class GetRaffleEntriesInteractor : IInteractor<GetRaffleEntriesInputPort, IGetRaffleEntriesOutputPort>
     {
         private readonly IRaffleRepository PersistenceContext;
 

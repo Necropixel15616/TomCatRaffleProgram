@@ -6,7 +6,7 @@ using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.Create
 
 namespace TomCatRaffleProgram.Program.Framework.Presentation.RaffleEntries.CreateRaffleEntry
 {
-    class CreateRaffleEntryPresenter : BasePresenter<RaffleEntryDto>, ICreateRaffleEntryOutputPort
+    public class CreateRaffleEntryPresenter : BasePresenter<RaffleEntryDto>, ICreateRaffleEntryOutputPort
     {
         Task ICreateRaffleEntryOutputPort.PresentRaffleEntryAsync(RaffleEntryDto entry, CancellationToken cancellationToken)
             => SetResultAsync(entry, cancellationToken);

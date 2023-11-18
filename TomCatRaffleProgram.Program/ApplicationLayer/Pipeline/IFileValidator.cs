@@ -4,7 +4,7 @@ using TomCatRaffleProgram.Program.Framework.Presentation;
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.Services
 {
-    interface IFileValidator<TOutputPort> where TOutputPort : IFileValidation
+    public interface IFileValidator<TOutputPort> where TOutputPort : IFileValidation
     {
 
         Task<bool> ValidateFileExistsAsync(TOutputPort outputPort, CancellationToken cancellationToken);

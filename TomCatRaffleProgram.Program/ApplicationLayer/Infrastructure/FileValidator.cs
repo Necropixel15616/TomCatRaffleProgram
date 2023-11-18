@@ -5,7 +5,7 @@ using TomCatRaffleProgram.Program.Framework.Presentation;
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.Infrastructure
 {
-    class FileValidator<TOutputPort> : IFileValidator<TOutputPort> where TOutputPort : IFileValidation
+    public class FileValidator<TOutputPort> : IFileValidator<TOutputPort> where TOutputPort : IFileValidation
     {
         private readonly IFileServices FileServices;
 

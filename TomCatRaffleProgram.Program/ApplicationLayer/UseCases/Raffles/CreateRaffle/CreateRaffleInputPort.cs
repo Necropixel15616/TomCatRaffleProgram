@@ -2,7 +2,7 @@
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.Raffles.CreateRaffle
 {
-    class CreateRaffleInputPort : IInputPort<ICreateRaffleOutputPort>
+    public class CreateRaffleInputPort : IInputPort<ICreateRaffleOutputPort>
     {
 
         public string RaffleName { get; set; }

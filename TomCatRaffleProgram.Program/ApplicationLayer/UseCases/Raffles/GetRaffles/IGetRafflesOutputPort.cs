@@ -6,7 +6,7 @@ using TomCatRaffleProgram.Program.Framework.Presentation;
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.Raffles.GetRaffles
 {
-    interface IGetRafflesOutputPort : IFileValidation
+    public interface IGetRafflesOutputPort : IFileValidation
     {
 
         Task PresentRafflesAsync(List<RaffleDto> raffleDtos, CancellationToken cancellationToken);

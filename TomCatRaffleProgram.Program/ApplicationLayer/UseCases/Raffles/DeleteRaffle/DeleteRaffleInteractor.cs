@@ -5,7 +5,7 @@ using TomCatRaffleProgram.Program.ApplicationLayer.Services;
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.Raffles.DeleteRaffle
 {
-    class DeleteRaffleInteractor : IInteractor<DeleteRaffleInputPort, IDeleteRaffleOutputPort>
+    public class DeleteRaffleInteractor : IInteractor<DeleteRaffleInputPort, IDeleteRaffleOutputPort>
     {
         private readonly IRaffleRepository RaffleRepository;
 

@@ -6,7 +6,7 @@ using TomCatRaffleProgram.Program.Framework.Presentation;
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.GetRaffleEntries
 {
-    interface IGetRaffleEntriesOutputPort : IFileValidation
+    public interface IGetRaffleEntriesOutputPort : IFileValidation
     {
 
         Task PresentRaffleEntriesAsync(List<RaffleEntryDto> entries, CancellationToken cancellationToken);

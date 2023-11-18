@@ -7,6 +7,7 @@ using TomCatRaffleProgram.Program.ApplicationLayer.Infrastructure;
 using TomCatRaffleProgram.Program.ApplicationLayer.Pipeline;
 using TomCatRaffleProgram.Program.ApplicationLayer.Services;
 using TomCatRaffleProgram.Program.Framework.Infrastructure;
+using TomCatRaffleProgram.Program.Framework.Views;
 
 namespace TomCatRaffleProgram.Program
 {
@@ -20,32 +21,35 @@ namespace TomCatRaffleProgram.Program
 
         private void ApplicationStartup(object sender, StartupEventArgs e)
         {
-            // Set up the Service Provider for Dependancy Injection
+            // Set up the Service Provider for Dependency Injection
             Configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).Build();
             var serviceCollection = new ServiceCollection();
             ConfigureServices(serviceCollection);
             ServiceProvider = serviceCollection.BuildServiceProvider();
 
-            var persistenceContext = new RaffleRepository();
-            persistenceContext.LoadFile();
             var mainWindow = ServiceProvider.GetRequiredService<MainWindow>();
             mainWindow.Show();
         }
 
         private void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<IRaffleRepository, RaffleRepository>();
-            services.AddScoped<IFileServices, FileServices>();
-            services.AddScoped(typeof(IFileValidator<>), typeof(FileValidator<>));
+            // Register Infrastructure
+            services.AddScoped<IRaffleRepository, RaffleRepository>()
+                .AddScoped<IFileServices, FileServices>()
+                .AddScoped(typeof(IFileValidator<>), typeof(FileValidator<>));
 
+            // Register Pipe Services
             services.Scan(scan
                 => scan.FromAssemblies(AssemblyUtility.GetAssembly())
-                .AddClasses(c => c.AssignableTo(typeof(IInteractor<,>))).AsImplementedInterfaces()
-                .AddClasses(c => c.AssignableTo(typeof(IEntityExistenceChecker<,>))).AsImplementedInterfaces()
-                .AddClasses(c => c.AssignableTo(typeof(IBusinessRuleValidator<,>))).AsImplementedInterfaces()
-                .AddClasses(c => c.AssignableTo(typeof(IInputPortValidator<,>))).AsImplementedInterfaces());
+                .AddClasses(c => c.AssignableTo(typeof(IInteractor<,>))).AsImplementedInterfaces().WithScopedLifetime()
+                .AddClasses(c => c.AssignableTo(typeof(IEntityExistenceChecker<,>))).AsImplementedInterfaces().WithScopedLifetime()
+                .AddClasses(c => c.AssignableTo(typeof(IBusinessRuleValidator<,>))).AsImplementedInterfaces().WithScopedLifetime()
+                .AddClasses(c => c.AssignableTo(typeof(IInputPortValidator<,>))).AsImplementedInterfaces().WithScopedLifetime()
+                .AddClasses(c => c.Where(e => e.Name.EndsWith("Controller"))));
 
-            services.AddTransient<MainWindow>();
+            // Register Windows and Pages
+            services.AddTransient<MainWindow>()
+                .AddScoped<MainPage>();
         }
 
         public static IServiceProvider GetServiceProvider()

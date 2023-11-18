@@ -6,7 +6,7 @@ using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.Raffles.GetRaffles;
 
 namespace TomCatRaffleProgram.Program.Framework.Presentation.Raffle.GetRaffles
 {
-    class GetRafflesPresenter : BasePresenter<List<RaffleDto>>, IGetRafflesOutputPort
+    public class GetRafflesPresenter : BasePresenter<List<RaffleDto>>, IGetRafflesOutputPort
     {
         Task IGetRafflesOutputPort.PresentRafflesAsync(List<RaffleDto> raffleDtos, CancellationToken cancellationToken)
             => SetResultAsync(raffleDtos, cancellationToken);

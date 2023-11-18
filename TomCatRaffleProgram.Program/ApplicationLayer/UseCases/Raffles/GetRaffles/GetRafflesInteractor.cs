@@ -7,7 +7,7 @@ using TomCatRaffleProgram.Program.ApplicationLayer.Services;
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.Raffles.GetRaffles
 {
-    class GetRafflesInteractor : IInteractor<GetRafflesInputPort, IGetRafflesOutputPort>
+    public class GetRafflesInteractor : IInteractor<GetRafflesInputPort, IGetRafflesOutputPort>
     {
         private readonly IRaffleRepository RaffleRepository;
 

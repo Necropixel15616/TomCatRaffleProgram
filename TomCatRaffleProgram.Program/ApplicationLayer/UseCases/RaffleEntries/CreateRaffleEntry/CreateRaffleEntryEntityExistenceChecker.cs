@@ -6,7 +6,7 @@ using TomCatRaffleProgram.Program.Domain.Entities;
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.CreateRaffleEntry
 {
-    class CreateRaffleEntryEntityExistenceChecker : IEntityExistenceChecker<CreateRaffleEntryInputPort, ICreateRaffleEntryOutputPort>
+    public class CreateRaffleEntryEntityExistenceChecker : IEntityExistenceChecker<CreateRaffleEntryInputPort, ICreateRaffleEntryOutputPort>
     {
         private readonly IFileServices FileServices;
         private readonly IRaffleRepository PersistenceContext;

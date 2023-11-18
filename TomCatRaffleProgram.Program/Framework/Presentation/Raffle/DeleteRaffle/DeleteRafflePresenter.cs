@@ -6,7 +6,7 @@ using TomCatRaffleProgram.Program.ApplicationLayer.UseCases.Raffles.DeleteRaffle
 
 namespace TomCatRaffleProgram.Program.Framework.Presentation.Raffle.DeleteRaffle
 {
-    class DeleteRafflePresenter : BasePresenter<RaffleDto>, IDeleteRaffleOutputPort
+    public class DeleteRafflePresenter : BasePresenter<RaffleDto>, IDeleteRaffleOutputPort
     {
         Task IDeleteRaffleOutputPort.PresentRaffleDeletedAsync(CancellationToken cancellationToken)
             => SetResultAsync(null, cancellationToken);

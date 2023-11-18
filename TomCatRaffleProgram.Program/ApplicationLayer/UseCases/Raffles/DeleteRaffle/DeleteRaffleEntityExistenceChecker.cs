@@ -6,7 +6,7 @@ using TomCatRaffleProgram.Program.Domain.Entities;
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.Raffles.DeleteRaffle
 {
-    class DeleteRaffleEntityExistenceChecker : IEntityExistenceChecker<DeleteRaffleInputPort, IDeleteRaffleOutputPort>
+    public class DeleteRaffleEntityExistenceChecker : IEntityExistenceChecker<DeleteRaffleInputPort, IDeleteRaffleOutputPort>
     {
         private readonly IFileServices FileServices;
         private readonly IRaffleRepository RaffleRepository;
