@@ -28,7 +28,7 @@
             
             <RowDefinition x:Name="row_bottomBorder" MaxHeight="10" Height="10" MinHeight="10"/>
         </Grid.RowDefinitions>
-        
+
         <DataGrid x:Name="dg_raffle" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" MaxWidth="300" MinWidth="219" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="dg_raffle_raffleID" Binding="{Binding RaffleId}" Header="ID" Width="40" Visibility="Hidden" />

@@ -6,7 +6,7 @@ namespace TomCatRaffleProgram.Program.Framework.Presentation
 {
     public class BasePresenter<TEntity> : IFileValidation
     {
-        public List<string> Errors { get; private set; }
+        public List<string> Errors { get; private set; } = new List<string>();
 
         public TEntity Result { get; private set; }
 
