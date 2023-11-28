@@ -22,7 +22,7 @@ namespace TomCatRaffleProgram.Program.Domain.Entities
 
         [XmlArray("Entries")]
         [XmlArrayItem("Entry")]
-        public List<RaffleEntry> Entries { get; set; }
+        public List<RaffleEntry> Entries { get; set; } = new List<RaffleEntry>();
 
     }
 }

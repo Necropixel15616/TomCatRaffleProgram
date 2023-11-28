@@ -49,8 +49,8 @@ namespace TomCatRaffleProgram.Program
 
             // Register Windows and Pages
             services.AddTransient<MainWindow>()
-                .AddScoped<MainPage>()
-                .AddScoped<CreateRaffle>();
+                .AddTransient<MainPage>()
+                .AddTransient<CreateRaffle>();
         }
 
         public static IServiceProvider GetServiceProvider()

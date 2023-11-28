@@ -1,56 +1,64 @@
-﻿<Page x:Class="TomCatRaffleProgram.Program.Framework.Views.CreateRaffle"
+﻿<Page
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:TomCatRaffleProgram.Program.Framework.Views"
+      xmlns:Dtos="clr-namespace:TomCatRaffleProgram.Program.ApplicationLayer.Dtos" x:Class="TomCatRaffleProgram.Program.Framework.Views.CreateRaffle"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="CreateRaffle">
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="10" MinWidth="10" MaxWidth="10"/> <!-- Border -->
+            <ColumnDefinition Width="10" MinWidth="10" MaxWidth="10"/>
+            <!-- Border -->
 
             <!-- Input Fields -->
-            <ColumnDefinition Width="*" MinWidth="10"/>
-            <ColumnDefinition Width="150" MinWidth="100" MaxWidth="200"/>
+            <ColumnDefinition Width="100*" MinWidth="100"/>
+            <ColumnDefinition Width="5" MinWidth="5"/>
+            <ColumnDefinition Width="150*" MinWidth="150"/>
             <ColumnDefinition Width="10" MinWidth="10" MaxWidth="10"/>
-            <ColumnDefinition Width="150" MinWidth="100" MaxWidth="200"/>
-            <ColumnDefinition Width="*" MinWidth="10"/>
+            <ColumnDefinition Width="150*" MinWidth="150"/>
+            <ColumnDefinition Width="100*" MinWidth="10"/>
 
             <!-- Raffle Entries DataGrid -->
             <ColumnDefinition Width="30" MinWidth="30" MaxWidth="30" />
             <ColumnDefinition Width="10" MaxWidth="10" MinWidth="10"/>
-            <ColumnDefinition Width="200" MaxWidth="200" MinWidth="200"/>
-            
-            <ColumnDefinition Width="10" MinWidth="10" MaxWidth="10"/> <!-- Border -->
+            <ColumnDefinition Width="200*" MinWidth="200"/>
+
+            <ColumnDefinition Width="10" MinWidth="10" MaxWidth="10"/>
+            <!-- Border -->
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="10" MinHeight="10" MaxHeight="10" /> <!-- Border -->
+            <RowDefinition Height="10" MinHeight="10" MaxHeight="10" />
+            <!-- Border -->
 
             <!-- Title -->
             <RowDefinition Height="50" MinHeight="50" MaxHeight="50"/>
             <RowDefinition Height="10" MinHeight="10" MaxHeight="10"/>
-            
+
             <!-- Input Fields-->
             <RowDefinition Height="40" MinHeight="40" MaxHeight="40"/>
 
             <!-- Raffle Entries DataGrid -->
-            <RowDefinition Height="*" MinHeight="100" /> 
-            
-            <RowDefinition Height="10" MinHeight="10" MaxHeight="10" /> <!-- Border -->
-        </Grid.RowDefinitions>
-        
-        <!-- Add Raffle Entry-->
-        <Button x:Name="btnAddRaffleEntry" Content="+" Foreground="Green" Grid.Column="6" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center" Width="20" Click="btnAddRaffleEntry_Click"/>
+            <RowDefinition Height="*" MinHeight="100" />
 
-        <!-- Raffle Entries Datagrid-->
-        <DataGrid x:Name="dgRaffleEntries" Grid.Row="1" Grid.RowSpan="4" Grid.Column="8">
+            <RowDefinition Height="10" MinHeight="10" MaxHeight="10" />
+            <!-- Border -->
+        </Grid.RowDefinitions>
+
+        <!-- Title -->
+        <Label Content="Create Raffle" Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="UltraBold" FontSize="30" FontFamily="Verdana"/>
+
+        <!-- Add Raffle Entry-->
+        <Button x:Name="btnAddRaffleEntry" Content="+" Foreground="Green" Grid.Column="7" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center" Width="20" Click="btnAddRaffleEntry_Click"/>
+
+        <DataGrid x:Name="dgRaffleEntries" CanUserAddRows="False" AutoGenerateColumns="False" Grid.Row="1" Grid.RowSpan="4" Grid.Column="9">
             <DataGrid.Columns>
-                <DataGridTextColumn x:Name="dgRaffleEntries_FirstName" Header="First Name" Width="60*" MinWidth="60" IsReadOnly="False"/>
-                <DataGridTextColumn x:Name="dgRaffleEntries_LastName" Header="Surname" Width="50*" MinWidth="50" IsReadOnly="False"/>
-                <DataGridTextColumn x:Name="dgRaffleEntries_Tickets" Header="Tickets" Width="40*" MinWidth="40" IsReadOnly="False"/>
+                <DataGridTextColumn x:Name="dgRaffleEntries_FirstName" Header="First Name" Binding="{Binding FirstName}" Width="60*" MinWidth="60" IsReadOnly="False"/>
+                <DataGridTextColumn x:Name="dgRaffleEntries_LastName" Header="Surname" Binding="{Binding LastName}" Width="50*" MinWidth="50" IsReadOnly="False"/>
+                <DataGridTextColumn x:Name="dgRaffleEntries_Tickets" Header="Tickets" Binding="{Binding Tickets, StringFormat={}{0:N0}}" Width="45*" MinWidth="45" IsReadOnly="False"/>
                 <DataGridTemplateColumn x:Name="dgRaffleEntries_Delete">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -59,6 +67,19 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
+            <DataGrid.DataContext>
+                <Dtos:RaffleEntryDto/>
+            </DataGrid.DataContext>
         </DataGrid>
+        
+        <!-- Input Fields -->
+        <Label Content="Raffle Name" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="3" VerticalAlignment="Top" HorizontalAlignment="Center" FontWeight="Bold"/>
+        <TextBox x:Name="txbxRaffleName" TextChanged="txbxRaffleName_TextChanged" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="3" VerticalAlignment="Bottom" HorizontalAlignment="Center" MinWidth="150"/>
+        
+        <!-- Create Raffle Button -->
+        <Button x:Name="btnCreateRaffle" Content="Create Raffle" Grid.Column="1" Grid.Row="1" MinWidth="100" MaxWidth="100" Click="btnCreateRaffle_Click" HorizontalAlignment="Left" VerticalAlignment="Center" Height="50"/>
+    
+        <!-- Back Button-->
+        <Button x:Name="btnReturnToMenu" Content="Cancel" Grid.Column="1" Grid.Row="3" MinWidth="100" MaxWidth="100" Height="40" Click="btnReturnToMenu_Click" HorizontalAlignment="Left" VerticalAlignment="Center"/>
     </Grid>
 </Page>

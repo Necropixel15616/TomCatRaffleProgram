@@ -22,6 +22,9 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.Cr
             if (inputPort.LastName.IsNullOrWhitespaceOrEmpty())
                 validationFailures.Add("The Last Name of a customer cannot be empty.");
 
+            if (inputPort.Tickets < 1)
+                validationFailures.Add("You cannot have less than 1 Ticket.");
+
             if (validationFailures.Any())
             {
                 await outputPort.PresentValidationFailureAsync(validationFailures, cancellationToken);

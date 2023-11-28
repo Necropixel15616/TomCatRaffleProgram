@@ -22,7 +22,7 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.UseCases.RaffleEntries.Cr
             var raffle = PersistenceContext.Find<Raffle>(inputPort.RaffleId);
 
             var id = 0;
-            raffle?.Entries.ForEach(e =>
+            raffle.Entries.ForEach(e =>
             {
                 if (e.Id > id)
                     id = e.Id;

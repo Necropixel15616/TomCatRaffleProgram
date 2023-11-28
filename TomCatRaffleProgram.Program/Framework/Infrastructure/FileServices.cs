@@ -3,10 +3,8 @@ using System.IO;
 
 namespace TomCatRaffleProgram.Program.ApplicationLayer.Services
 {
-    //Probably want to make this a Service
     public class FileServices : IFileServices
     {
-
         private string FilePath = $"{Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"TomCatRaffle\")}RaffleData.xml";
         private FileInfo File = new FileInfo($"{Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"TomCatRaffle\")}RaffleData.xml");
 

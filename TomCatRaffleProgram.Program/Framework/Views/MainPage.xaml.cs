@@ -23,6 +23,7 @@ namespace TomCatRaffleProgram.Program.Framework.Views
         private readonly RaffleController m_RaffleController;
         private readonly IRaffleRepository m_RaffleRepository;
         private readonly IServiceProvider m_ServiceProvider;
+
         private List<RaffleDto> m_Raffles;
 
         public MainPage(RaffleController raffleController, IRaffleRepository raffleRepository, IServiceProvider serviceProvider)
@@ -40,8 +41,13 @@ namespace TomCatRaffleProgram.Program.Framework.Views
             var _GetRafflesPresenter = new GetRafflesPresenter();
             await this.m_RaffleController.GetRafflesAsync(new GetRafflesInputPort(), _GetRafflesPresenter, CancellationToken.None);
 
-            this.m_Raffles = _GetRafflesPresenter.Result.ToList();
-            dg_raffle.ItemsSource = this.m_Raffles.ToArray();
+            if (_GetRafflesPresenter.Errors.Any())
+                MessageBox.Show($"Unable to load Raffles. Encountered the following error(s): {string.Join(',', _GetRafflesPresenter.Errors.Select(e => "\n\"" + e + "\""))}", "Unable to load Raffles.", MessageBoxButton.OK);
+            else
+            {
+                this.m_Raffles = _GetRafflesPresenter.Result.ToList();
+                dg_raffle.ItemsSource = this.m_Raffles.ToList();
+            }
         }
 
         private async void dg_raffle_btnDeleteRaffle_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -53,10 +59,10 @@ namespace TomCatRaffleProgram.Program.Framework.Views
                 await this.m_RaffleController.DeleteRaffleAsync(_DeleteRaffleInputPort, _DeleteRafflePresenter, CancellationToken.None);
 
                 if (_DeleteRafflePresenter.Errors.Any())
-                    MessageBox.Show($"Could not find the Raffle to be deleted. Encountered the following error(s): {string.Join(',', _DeleteRafflePresenter.Errors)}", "Raffle was not deleted.", MessageBoxButton.OK);
+                    MessageBox.Show($"Raffle was unable to be deleted. Encountered the following error(s): {string.Join(',', _DeleteRafflePresenter.Errors.Select(e => "\n\"" + e + "\""))}", "Raffle was not deleted.", MessageBoxButton.OK);
 
                 this.m_Raffles.Remove(((RaffleDto)((Button)e.Source).DataContext));
-                dg_raffle.ItemsSource = this.m_Raffles.ToArray();
+                dg_raffle.ItemsSource = this.m_Raffles.ToList();
             }
         }
 

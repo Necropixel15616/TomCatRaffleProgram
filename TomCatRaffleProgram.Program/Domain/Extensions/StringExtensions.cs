@@ -8,7 +8,7 @@ namespace TomCatRaffleProgram.Program.ApplicationLayer.Services
         private static readonly Regex Regex = new Regex(@"^\s+$");
 
         public static bool IsNullOrWhitespaceOrEmpty(this string _string)
-            => _string.Equals(null) || _string.Equals(string.Empty) || Regex.IsMatch(_string);
+            => string.IsNullOrWhiteSpace(_string) || _string.Equals(string.Empty) || Regex.IsMatch(_string);
 
     }
 }
